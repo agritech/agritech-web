@@ -1,4 +1,4 @@
--[![Build Status](https://travis-ci.org/agritech/agritech-web.svg)](https://travis-ci.org/agritech/agritech-web)
+[![Build Status](https://travis-ci.org/agritech/agritech-web.svg)](https://travis-ci.org/agritech/agritech-web)
 -
 
 # dossoagri
