@@ -1,4 +1,4 @@
--[![Build Status](https://travis-ci.org/defus/dossoagri.svg?branch=master)](https://travis-ci.org/defus/dossoagri)		
+-[![Build Status](https://travis-ci.org/agritech/agritech-web.svg)](https://travis-ci.org/agritech/agritech-web)
 -
 
 # dossoagri
