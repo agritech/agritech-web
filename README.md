@@ -117,6 +117,6 @@ Pour lancer les tests d'intégration, il faut :
 * part1/part1 : partenaire (état, ministère de l'agriculture, ONG, ...)  (opérateur)
 
 ## En savoir plus
-* [Le Wiki](https://github.com/defus/dossoagri/wiki)
+* [Le Wiki](https://github.com/agritech/agritech-web/wiki)
 * Twitter
 * ...
