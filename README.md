@@ -1,45 +1,51 @@
 [![Build Status](https://travis-ci.org/agritech/agritech-web.svg)](https://travis-ci.org/agritech/agritech-web)
 -
 
-# dossoagri
-Bienvenu sur le site du projet DOSSIAGRI
+# AGRITECH
+Bienvenu sur le site du projet AGRITECH
 
 ## Personnes concernées
-DOSSO Agri est une initiative qui a pour but de mettre en relation :
+AGRITECH est une initiative qui a pour but de mettre en relation :
 
 * Les petits agriculteurs ;
 * Les acheteur finaux ;
+* Les professionnels de l'agriculture ;
 * Et les pouvoir publics et ONG qui travaillent dans l'agriculture.
 
-## Objectifs de la plateforme DOSSOAGRI
+## Objectifs de la plateforme AGRITECH
 Aujourd'hui, la plateforme permet de :
 * Aider les agriculteurs à réguler leur production en fonction du climat et du marché
-* Cartographier les zones agricoles exploitables du Niger avec les caractéristiques liées a la zone et proposer des types de culture propice a la zone
-* Permettre aux éleveurs et agriculteurs de connaitre les points d'eau et mettre en place un système de réservation pour faciliter l’accès a la ressource.
+* Cartographier les zones agricoles exploitables avec les caractéristiques liées a la zone et proposer des types de culture propice a la zone ;
+* Permettre aux éleveurs et agriculteurs de connaitre les points d'eau et mettre en place un système de réservation pour faciliter l’accès a la ressource ;
+* Mettre en place un système d'alerte pour faciliter la communucation des professionnels avec les agriculteurs.
 
 ## Architecture
 Pour l'architecture, rien de mieux que les [micro services] Il faut faire plein de petites appli avec plein de langages et les faire communiquer par Web services. C'est fini les grosses appli avec 50us.
 
 Du coup pour le premier pavé voici la vision (à mettre-à-jour) :
 * Application SMS pour les fonctionnalités agriculteurs ;
-* Application Web pour les internautes (négociation de prix des recoltes postés) ;
-* Application autre pour le reste (par exemple le template WPF d'Alain )
+* Application Web pour les internautes (négociation de prix des recoltes postés, rapports divers pour les professionels du monde agricole ) ;
+* Application mobile pour consulter les zones cltivables et autres informations utiles.
 
 ## Production
 
 * Lavravel fonctionnel avec PHP > =5.4.0
 
 ## Développement
-* Exécuter la base de données `/dev.sql` sur le serveur de données MySQL
 * Changer les paramètres de la base de données dans le fichier `/app/config/database.php`
+* effectuer une migration artisan dans le but de créer la base de données
+```
+php artisan migrate:refresh --seed
+```
 * Vérifier l'URL de l'application dans le repertoire `/app/config/app.php`
+* Vérifier les paramètres de l'application dans `/app/config/agritech.php`
 * Mettre à jour le repertoire vendor contenant les dépendances composer
 ```
 composer update
 ```
 * Faire pointer Apache sur le repertoire `/public`
 * Dans le fichier `.htaccess` qui se trouve dans le repertoire `/public`, 
-   * utiliser la sytaxe suivante (dans le cas où le site est déployé dans le repertoire `/dossoagri`)
+   * utiliser la sytaxe suivante (dans le cas où le site est déployé dans le repertoire `/agritech`)
 ```
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
@@ -54,7 +60,7 @@ composer update
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ /dossoagri/index.php [L]
+    RewriteRule ^ /agritech/index.php [L]
 </IfModule>
 ```
    * utiliser la sytaxe suivante (dans le cas où le site est déployé dans le repertoire `/`)
@@ -113,7 +119,7 @@ Pour lancer les tests d'intégration, il faut :
 
 * admin/admin : administrateur (super utilisateur)
 * agri1/agri1 : agriculteur (opérateur)
-* vend1/vend1 : acheteur (opérateur)
+* achat1/achat1 : acheteur (opérateur)
 * part1/part1 : partenaire (état, ministère de l'agriculture, ONG, ...)  (opérateur)
 
 ## En savoir plus
