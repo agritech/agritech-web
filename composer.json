@@ -8,8 +8,7 @@
 		"laravel/framework": "4.2.*",
 		"phpunit/phpunit": "4.0.*",
 		"playsms/webservices": "1.0.*",
-		"predis/predis": "0.8.7",
-		"guzzle/guzzle": "3.0"
+		"predis/predis": "0.8.7"
 		
 	},
 	"autoload": {

@@ -65,12 +65,44 @@ $(document).ready(function() {
                                     {{ $errors->first('Username', '<span class="error">:message</span>' ) }}
                                 </div>
                                 <div class="form-group">
-                                    <label>Est un administrateur ?</label>
-                                    {{ Form::checkbox('isadmin', Input::old('isadmin') ) }}
+                                    <label>Nom</label>
+                                    {{ Form::text('nom', Input::old('nom'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Prénom</label>
+                                    {{ Form::text('prenom', Input::old('prenom'), array('class' => 'form-control')) }}
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
                                     {{ Form::email('Mail', Input::old('Mail'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Téléphone</label>
+                                    {{ Form::text('telephone', Input::old('telephone'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Adresse</label>
+                                    {{ Form::text('adresse', Input::old('adresse'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Ville</label>
+                                    {{ Form::text('ville', Input::old('ville'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Pays</label>
+                                    {{ Form::text('pays', Input::old('pays'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Fonction</label>
+                                    {{ Form::text('fonction', Input::old('fonction'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Société</label>
+                                    {{ Form::text('societe', Input::old('societe'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Est un administrateur ?</label>
+                                    {{ Form::checkbox('isadmin', Input::old('isadmin') ) }}
                                 </div>
                                 <div class="form-group">
                                     <label>Mot de passe</label>
@@ -93,6 +125,37 @@ $(document).ready(function() {
         </div>
         <!-- /.col-lg-4 -->
         <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Ajouter une photo à l'utilisateur
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            @if(isset($user->photo))
+                                <img src="{{ URL::to('admin/user/'. $user->UtilisateurID . '/photo/' . $user->photo) }}" alt="Photo" width="100px" height="100px"/>
+                            @else
+                                <i class="fa fa-user fa-fw fa-5x"></i>
+                            @endif
+                        </div>
+                        <!-- /.col-lg-6 (nested) -->
+                        <div class="col-lg-9">
+                            {{ Form::open(array('url' => URL::to('admin/user/'. $user->UtilisateurID .'/photo') , 'role' => 'form','files' => true)) }}
+                                <div class="form-group @if($errors->first('photo') != '') has-error @endif">
+                                    <label>Photo (100x100 px) *</label>
+                                    {{ Form::file('photo', array('class' => 'form-control' ) ) }}
+                                    {{ $errors->first('photo', '<span class="error">:message</span>' ) }}
+                                </div>
+                                {{ Form::submit('Ajouter', array('class'=>'btn btn-primary')) }}
+                            {{ Form::close() }}
+                        </div>
+                        <!-- /.col-lg-6 (nested) -->
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- panel -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Ajouter un rôle à l'utilisateur

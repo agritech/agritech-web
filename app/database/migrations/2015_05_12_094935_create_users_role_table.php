@@ -22,8 +22,15 @@ class CreateUsersRoleTable extends Migration {
 			$table->string('nom')->nullable();
 			$table->string('prenom')->nullable();
 			$table->string('telephone')->nullable();
+			$table->string('adresse')->nullable();
+			$table->string('ville')->nullable();
+			$table->string('pays')->nullable();
+			$table->string('fonction')->nullable();
+			$table->string('societe')->nullable();
+			$table->string('photo')->nullable();
 			$table->string('isadmin', 1)->default(0);
 			$table->string('remember_token', 100)->nullable();
+			$table->timestamp('login_date')->nullable();
           });
 		}
 		

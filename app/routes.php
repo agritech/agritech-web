@@ -51,6 +51,8 @@ Route::group(array('prefix','/'), function() {
 
       // Admin
       Route::resource('admin/user', 'UserController');
+      Route::post('admin/user/{user}/photo', 'UserController@photoPost');
+      Route::get('admin/user/{user}/photo/{photo}', 'UserController@photoGet');
 
       Route::resource('admin/role', 'RoleController');
       

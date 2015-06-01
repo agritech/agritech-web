@@ -71,18 +71,38 @@ $(document).ready(function() {
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                                 <tr>
+                                    <th>Photo</th>
                                     <th>Login</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
                                     <th>Email</th>
                                     <th>Est administrateur</th>
+                                    <th>Roles</th>
+                                    <th>Dernière connection</th>
                                     <th class="no-sort" style="width:17px;min-width:75px;max-width:75px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($users as $key => $value)
                                 <tr>
+                                    <td>
+                                        @if(isset($value->photo))
+                                            <img src="{{ URL::to('admin/user/'. $value->UtilisateurID . '/photo/' . $value->photo) }}" alt="Photo" width="50px" height="50px"/>
+                                        @else
+                                            <i class="fa fa-user fa-fw fa-3x"></i>
+                                        @endif                                        
+                                    </td>
                                     <td>{{$value->Username}}</td>
+                                    <td>{{$value->nom}}</td>
+                                    <td>{{$value->prenom}}</td>
                                     <td>{{$value->Mail}}</td>
-                                    <td>{{$value->isadmin}}</td>
+                                        <td>{{($value->isadmin == 1) ? 'OUI' : 'NON'}}</td>
+                                    <td>
+                                        @foreach($value->roles as $key => $role)
+                                            {{$role->Role}}<br/>
+                                        @endforeach
+                                    </td>
+                                    <td>{{$value->login_date}}</td>
                                     <td nowrap="nowrap">
                                         <a href="{{ URL::to('admin/user/' . $value->UtilisateurID . '/edit') }}" class="btn btn-sm btn-success"> <i class="fa fa-edit"></i> </a>&nbsp;
                                         {{ Form::open(array('url' => 'admin/user/' . $value->UtilisateurID, 'class' => 'pull-right')) }}

@@ -59,12 +59,44 @@
                                     {{ $errors->first('Username', '<span class="error">:message</span>' ) }}
                                 </div>
                                 <div class="form-group">
-                                    <label>Est un administrateur ?</label>
-                                    {{ Form::checkbox('isadmin', Input::old('isadmin') ) }}
+                                    <label>Nom</label>
+                                    {{ Form::text('nom', Input::old('nom'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Prénom</label>
+                                    {{ Form::text('prenom', Input::old('prenom'), array('class' => 'form-control')) }}
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
                                     {{ Form::email('Mail', Input::old('Mail'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Téléphone</label>
+                                    {{ Form::text('telephone', Input::old('telephone'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Adresse</label>
+                                    {{ Form::text('adresse', Input::old('adresse'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Ville</label>
+                                    {{ Form::text('ville', Input::old('ville'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Pays</label>
+                                    {{ Form::text('pays', Input::old('pays'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Fonction</label>
+                                    {{ Form::text('fonction', Input::old('fonction'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Société</label>
+                                    {{ Form::text('societe', Input::old('societe'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Est un administrateur ?</label>
+                                    {{ Form::checkbox('isadmin', Input::old('isadmin') ) }}
                                 </div>
                                 <div class="form-group @if($errors->first('password') != '') has-error @endif">
                                     <label>Mot de passe *</label>
