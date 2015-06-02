@@ -75,10 +75,17 @@
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> {{ Auth::user()->Username }} <i class="fa fa-caret-down"></i>
+                @if(Auth::user()->photo)
+                    <img class="avatar" src="{{ URL::to('admin/user/'. Auth::user()->UtilisateurID . '/photo/' . Auth::user()->photo) }}" alt="Photo" width="20px" height="20px"/>
+                @else
+                    <i class="fa fa-user fa-fw"></i>
+                @endif
+                {{ Auth::user()->Username }}
+                <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> Profile utilisateur</a>
+                <li>
+                    <a href="#"><i class="fa fa-user fa-fw"></i> Profile utilisateur</a>
                 </li>
                 <li class="divider"></li>
                 <li><a href="{{ URL::to('logout') }}"><i class="fa fa-sign-out fa-fw"></i> Déconnection</a>
