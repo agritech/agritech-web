@@ -193,7 +193,6 @@ class UserController extends \BaseController {
       );
 
       if ($validation->fails()) {
-          dd($validation);
           return Redirect::to('admin/user/' . $id . '/edit')
               ->withErrors($validation)
               ->withInput(\Input::all());

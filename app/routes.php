@@ -25,6 +25,10 @@ Route::group(array('prefix','/'), function() {
   {
       Route::get('', 'DashboardController@showDashboard');
       
+      Route::resource('profile', 'ProfileController');
+      Route::post('profile/{user}/photo', 'ProfileController@photoPost');
+      Route::get('profile/{user}/photo/{photo}', 'ProfileController@photoGet');
+      
       Route::resource('recolte', 'RecolteController');  
       Route::get('recolte/datatable/ajax', 'RecolteController@datatable');
       

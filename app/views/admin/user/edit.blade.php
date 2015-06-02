@@ -143,7 +143,7 @@ $(document).ready(function() {
                         <div class="col-lg-9">
                             {{ Form::open(array('url' => URL::to('admin/user/'. $user->UtilisateurID .'/photo') , 'role' => 'form','files' => true)) }}
                                 <div class="form-group @if($errors->first('photo') != '') has-error @endif">
-                                    <label>Photo (100x100 px) *</label>
+                                    <label>Photo (taille minimum 100x100 px) *</label>
                                     {{ Form::file('photo', array('class' => 'form-control' ) ) }}
                                     {{ $errors->first('photo', '<span class="error">:message</span>' ) }}
                                 </div>
