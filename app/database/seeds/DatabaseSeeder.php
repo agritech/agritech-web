@@ -28,13 +28,15 @@ class TestDataSeeder extends Seeder {
         DB::table('utilisateur')->delete();
 
         User::create(array('Mail' => 'admin@agritech.com', 'Username' => 'admin', 'password' => Hash::make('admin'), 'nom' => 'Admin', 'prenom' => 'Utilisateur', 'telephone' => '22793339999', 'isadmin' => 1));
-        User::create(array('Mail' => 'agri1@agritech.com', 'Username' => 'agri1', 'password' => Hash::make('agri1'), 'nom' => 'agri1', 'prenom' => 'agri1', 'telephone' => '22790339999', 'isadmin' => 0));
-		User::create(array('Mail' => 'achat1@agritech.com', 'Username' => 'achat1', 'password' => Hash::make('achat1'), 'nom' => 'achat1', 'prenom' => 'achat1', 'telephone' => '22794339999', 'isadmin' => 0));
-		User::create(array('Mail' => 'part1@agritech.com', 'Username' => 'part1', 'password' => Hash::make('part1'), 'nom' => 'part1', 'prenom' => 'part1', 'telephone' => '22797339999', 'isadmin' => 0));
+        User::create(array('Mail' => 'agri1@agritech.com', 'Username' => 'agri1', 'password' => Hash::make('agri1'), 'nom' => 'agri1', 'prenom' => 'agri1', 'telephone' => '22790339999', 'isadmin' => 0, 'pays' => 'Niger', 'ville' => 'Dosso'));
+        User::create(array('Mail' => 'agri2@agritech.com', 'Username' => 'agri2', 'password' => Hash::make('agri2'), 'nom' => 'agri2', 'prenom' => 'agri2', 'telephone' => '22790339999', 'isadmin' => 0, 'pays' => 'Cameroun', 'ville' => 'Yaoundé'));
+		User::create(array('Mail' => 'achat1@agritech.com', 'Username' => 'achat1', 'password' => Hash::make('achat1'), 'nom' => 'achat1', 'prenom' => 'achat1', 'telephone' => '22794339999', 'isadmin' => 0, 'pays' => 'Niger', 'ville' => 'Dosso'));
+		User::create(array('Mail' => 'part1@agritech.com', 'Username' => 'part1', 'password' => Hash::make('part1'), 'nom' => 'part1', 'prenom' => 'part1', 'telephone' => '22797339999', 'isadmin' => 0, 'pays' => 'Niger', 'ville' => 'Dosso'));
         
         $admin = User::where('Username', 'admin')->firstOrFail();
         $part1 = User::where('Username', 'part1')->firstOrFail();
         $agri1 = User::where('Username', 'agri1')->firstOrFail();
+        $agri2 = User::where('Username', 'agri2')->firstOrFail();
         $achat1 = User::where('Username', 'achat1')->firstOrFail();
         
         Roles::create(array('Username' => $part1->Username, 'Role' => 'PARTENAIRE'));
@@ -43,6 +45,7 @@ class TestDataSeeder extends Seeder {
         Roles::create(array('Username' => $achat1->Username, 'Role' => 'ACHETEUR')); 
         Roles::create(array('Username' => $achat1->Username, 'Role' => 'NEGOCIATIONRECOLTE')); // L'acheteur gÃ¨re les nÃ©gociations de recolte en ligne
         Roles::create(array('Username' => $agri1->Username, 'Role' => 'AGRICULTEUR'));
+        Roles::create(array('Username' => $agri2->Username, 'Role' => 'AGRICULTEUR'));
         
         // Charger les produits
         Produit::create(array('Ref' => 'PAPAYE', 'Nom' => 'Papaye'));

@@ -7,7 +7,6 @@
  * @created Nov 13, 2014
  * 
  */
-
 class ProfileController extends \BaseController {
     
     private $_userModel;

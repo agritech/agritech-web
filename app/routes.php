@@ -24,6 +24,7 @@ Route::group(array('prefix','/'), function() {
   Route::group(array('before' => array('auth')), function()
   {
       Route::get('', 'DashboardController@showDashboard');
+      Route::get('jsonp', 'DashboardController@jsonp');
       
       Route::resource('profile', 'ProfileController');
       Route::post('profile/{user}/photo', 'ProfileController@photoPost');
