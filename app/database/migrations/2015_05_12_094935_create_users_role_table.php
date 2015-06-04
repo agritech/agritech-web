@@ -21,6 +21,8 @@ class CreateUsersRoleTable extends Migration {
 			$table->string('password');
 			$table->string('nom')->nullable();
 			$table->string('prenom')->nullable();
+			$table->date('date_naissance')->nullable();
+			$table->enum('sexe', ['MASCULIN', 'FEMININ'])->nullable();
 			$table->string('telephone')->nullable();
 			$table->string('adresse')->nullable();
 			$table->string('ville')->nullable();
@@ -42,10 +44,28 @@ class CreateUsersRoleTable extends Migration {
 			$table->enum('Role', ['OPERATEUR','SUPERUTILISATEUR','ALERT','AGRICULTEUR','ACHETEUR','PARTENAIRE', 'RECOLTE', 'NEGOCIATIONRECOLTE'])
 				->default('OPERATEUR');
 	      });
+		  
 		  Schema::table('roles', function($table){
 			$table->foreign('Username')->references('Username')->on('utilisateur')->onDelete('cascade')->onUpdate('cascade');
 		  });
-	    }		
+		}
+		  
+		if(!Schema::hasTable('user_provider')){
+	      Schema::create('user_provider', function($table)
+	      {
+	        $table->increments('UserProviderID');
+			$table->integer('UtilisateurID')->unsigned();
+	        $table->enum('provider', ['FACEBOOK', 'TWITTER', 'GOOGLE', 'YAHOO']);
+			$table->string('provider_uid');
+			$table->string('email');
+			$table->timestamps();
+	      });
+	  
+		  
+		  Schema::table('user_provider', function($table){
+			$table->foreign('UtilisateurID')->references('UtilisateurID')->on('utilisateur');
+		  });
+	    }
 		
 	}
 
@@ -56,6 +76,7 @@ class CreateUsersRoleTable extends Migration {
 	 */
 	public function down()
 	{
+		Schema::dropIfExists('user_provider');
 		Schema::dropIfExists('roles');
 		Schema::dropIfExists('utilisateur');
 	}

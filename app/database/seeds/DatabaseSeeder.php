@@ -64,7 +64,7 @@ class TestDataSeeder extends Seeder {
         $recolte->InitiateurID = $agri1->UtilisateurID;
         $recolte->save();
         
-        //Charger les nÃ©gociations de recoltes
+        //Charger les négociations de recoltes
         $negociationrecolte = new NegociationRecolte();
         $negociationrecolte->Prix = 10;
         $negociationrecolte->AcheteurID = $achat1->UtilisateurID;
@@ -90,7 +90,10 @@ class TestDataSeeder extends Seeder {
 		$alerte->InitiateurID = $admin->UtilisateurID;
 		$alerte->save();
 		
-        
+        // Charger les logs
+        $log = new DBLog();
+        $log->log_type = 'USER_LIST';
+        $log->save();
     }
 
 }

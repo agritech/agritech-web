@@ -31,7 +31,7 @@
 
 <div class="container">
     <div class="row" style="margin-top:10%">
-        <div class="col-md-8">
+        <div class="col-md-8 hidden-sm hidden-xs">
             <div class="jumbotron" >
                 <h1 class="text-center" style="margin-top: 10%">AGRITECH</h1>
                 <div class="row">
@@ -45,12 +45,29 @@
                 <p class="lead text-center">Plateforme d'échange entre les agriculteurs, les acheteurs et les pouvoirs publiques</p>
             </div>
         </div>
+        <div class="col-md-8 visible-xs-block visible-sm-block">
+            <img src="{{ URL::to('/') }}/assets/images/agritech-logo.png" class="img-responsive center-block" alt="AGRITECH" />
+        </div>
         <div class="col-md-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Veuillez vous connecter</h3>
                 </div>
                 <div class="panel-body">
+                    <!-- Success-Messages -->
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ $message }}
+                        </div>
+                    @endif
+                    <!-- Error-Messages -->
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ $message }}
+                        </div>
+                    @endif
                     {{ Form::open(array('url' => Request::url() , 'id' => 'login',  'role' => 'form' )) }}
                         <fieldset>
                             <div class="form-group">
@@ -70,6 +87,30 @@
                             {{ Form::submit('Connection', array('class'=>'btn btn-lg btn-success btn-block')) }}
                         </fieldset>
                     {{ Form::close() }}
+                </div>
+            </div>
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Utilisez aussi votre réseau social</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <td style="vertical-align: middle;" colspan="2">
+                                    <a class="btn btn-danger btn-lg btn-block" href="{{URL::to('register')}}" role="button">Créer un compte (agriculteur)</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle;"><a href="{{URL::to('oauth/provider/facebook')}}"><i class="fa fa-facebook-official fa-2x"></i></a></td>
+                                <td style="vertical-align: middle;"><a href="{{URL::to('oauth/provider/facebook')}}">Facebook</a></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle;"><a href="{{URL::to('oauth/provider/google')}}"><i class="fa fa-google-plus fa-2x"></i></a></td>
+                                <td style="vertical-align: middle;"><a href="{{URL::to('oauth/provider/google')}}">Google</a></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

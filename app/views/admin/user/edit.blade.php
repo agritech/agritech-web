@@ -26,6 +26,8 @@
 <script>
 $(document).ready(function() {
     $('#dataTables-example').dataTable();
+    
+    $('#date_naissance').datepicker( $.datepicker.regional["fr"]);
 });
 </script>
 @stop
@@ -71,6 +73,18 @@ $(document).ready(function() {
                                 <div class="form-group">
                                     <label>Prénom</label>
                                     {{ Form::text('prenom', Input::old('prenom'), array('class' => 'form-control')) }}
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Date de naissance</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="date_naissance" id="date_naissance" value="{{Input::old('date_naissance')}}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Sexe</label>
+                                    <div class="col-lg-9">
+                                        {{ Form::select('sexe', array('MASCULIN' => 'Masculin', 'FEMININ' => 'Feminin'), Input::old('sexe'), array('class' => 'form-control' ) ) }}
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>

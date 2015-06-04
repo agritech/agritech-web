@@ -20,6 +20,11 @@ Route::group(array('prefix','/'), function() {
 
   Route::get('recolte/addsms/ajax', 'RecolteController@storeSMS');
   
+  Route::get('oauth/provider/{provider}', 'OAuthController@login');
+  
+  Route::get('register', 'RegisterController@create');
+  Route::post('register', 'RegisterController@store');
+  
   // Secure-Routes
   Route::group(array('before' => array('auth')), function()
   {

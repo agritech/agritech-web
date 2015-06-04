@@ -20,9 +20,15 @@ class ProfileController extends \BaseController {
 
     public function show($id) {
         $user = User::find($id);
-
+        
+        $userProvider = new stdClass;
+        $userProvider->facebookLogin = null;
+        $userProvider->twitterLogin = null;
+        $userProvider->yahooLogin = null;
+        $userProvider->googleLogin = null;
+        
         return \View::make('profile.show', array(
-            'user' => $user
+            'user' => $user, 'userProvider'=> $userProvider
         ));
     }
 
@@ -63,6 +69,8 @@ class ProfileController extends \BaseController {
           $user->Mail = \Input::get('Mail');
           $user->nom = \Input::get('nom');
           $user->prenom = \Input::get('prenom');
+          $user->date_naissance = \Input::get('date_naissance');
+          $user->sexe = \Input::get('sexe');
           $user->telephone = \Input::get('telephone');
           $user->adresse = \Input::get('adresse');
           $user->ville = \Input::get('ville');

@@ -77,6 +77,18 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-lg-3 control-label">Date de naissance</label>
+                                    <div class="col-lg-6">
+                                        <p class="form-control-static">{{$user->date_naissance}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Sexe</label>
+                                    <div class="col-lg-6">
+                                        <p class="form-control-static">{{$user->sexe}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-3 control-label">Email</label>
                                     <div class="col-lg-6">
                                         <p class="form-control-static">{{$user->Mail}}</p>
@@ -146,6 +158,40 @@ $(document).ready(function() {
                 <!-- /.panel-body -->
             </div>
             <!-- panel -->
+            @if(Auth::user()->UtilisateurID == $user->UtilisateurID)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Réseaux
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <td style="vertical-align: middle;"><i class="fa fa-facebook-official fa-3x"></i></td>
+                                <td style="vertical-align: middle;">Facebook</td>
+                                <td style="vertical-align: middle;">{{$userProvider->facebookLogin}}</td>
+                                <td style="vertical-align: middle;">
+                                    <a href="{{URL::to('oauth/provider/facebook')}}" _target="_new">Associer</a>
+                                    <a href="{{URL::to('oauth/provider/facebook/delete')}}">Dissocier</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle;"><i class="fa fa-google-plus fa-3x"></i></td>
+                                <td style="vertical-align: middle;">Google</td>
+                                <td style="vertical-align: middle;">{{$userProvider->googleLogin}}</td>
+                                <td style="vertical-align: middle;">
+                                    <a href="{{URL::to('oauth/provider/google')}}" _target="_new">Associer</a>
+                                    <a href="{{URL::to('oauth/provider/google/delete')}}">Dissocier</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- panel -->
+            @endif
         </div>
         <!-- /.col-lg-4 -->
     </div>
