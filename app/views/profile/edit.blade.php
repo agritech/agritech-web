@@ -17,14 +17,14 @@
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
 @section('css')
-<!-- DataTables CSS -->
-{{ HTML::style('assets/css/plugins/dataTables.bootstrap.css') }}
+{{ HTML::style('assets/jquery-ui-1.11.2/themes/base/all.css') }}
 @stop
 
 {{-- Page specific JS files --}}
 {{-- {{ HTML::script('--Path to js--') }} --}}
 @section('scripts')
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+{{ HTML::script('assets/jquery-ui-1.11.2/ui/datepicker.js') }}
+{{ HTML::script('assets/jquery-ui-1.11.2/demos/datepicker/datepicker-fr.js') }}
 <script>
 $(document).ready(function() {
     $('#date_naissance').datepicker( $.datepicker.regional["fr"]);

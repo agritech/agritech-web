@@ -32,13 +32,25 @@ class UserController extends \BaseController {
     }
 
     public function store(){
+        Validator::extend('usernameUniqueValide', function($attribute, $value, $parameters){
+            if(empty($value)){
+                return false;
+            }
+            $user = User::where('Username', $value)->first();
+            if($user != null){
+                return false;
+            }
+            return true;
+        });
+        
       $validation = Validator::make(\Input::all(), 
         array(
-          'Username' => 'required',
+          'Username' => 'required|usernameUniqueValide',
           'password' => 'required|min:3|confirmed'
           ), 
         array(
           'Username.required' => "Le login est obligatoire !",
+          'Username.username_unique_valide' => 'Le compte existe déja dans le système',
           'password.required' => "Le mot de passe est obligatoire !",
           'password.min' => "Le mot de passe doit avoir au moins 3 caractères !",
           'password.confirmed' => "Les deux mots de passe saisis ne sont pas identiques !"

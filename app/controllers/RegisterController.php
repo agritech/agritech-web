@@ -32,11 +32,12 @@ class RegisterController extends \BaseController {
         $validation = Validator::make(\Input::all(), 
             array(
                 'email' => 'required|usernameUniqueValide',
-                'password' => 'required|confirmed'
+                'password' => 'required|min:3|confirmed'
             ), 
             array(
                 'email.required' => "Le login est obligatoire",
                 'email.username_unique_valide' => 'Le compte existe déja dans le système',
+                'password.min' => "Le mot de passe doit avoir au moins 3 caractères !",
                 'password.required' => "Le mot de passe est obligatoire",
                 'password.confirmed' => "Les deux mots de passe saisis ne sont pas identiques !"
             )
