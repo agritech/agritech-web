@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecolteTable extends Migration {
+class CreateProductionTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -21,10 +21,10 @@ class CreateRecolteTable extends Migration {
 	      });
 	    }
 		
-		if(!Schema::hasTable('recolte')){
-	      Schema::create('recolte', function($table)
+		if(!Schema::hasTable('production')){
+	      Schema::create('production', function($table)
 	      {
-	        $table->increments('RecolteID');
+	        $table->increments('ProductionID');
 	        $table->double('Poids', 15, 2);
 			$table->integer('ProduitID')->unsigned();
 			$table->integer('AgriculteurID')->unsigned();
@@ -35,13 +35,14 @@ class CreateRecolteTable extends Migration {
 			$table->timestamps();
 	      });
 		  
-		  Schema::table('recolte', function($table){
+		  Schema::table('production', function($table){
 			$table->foreign('ProduitID')->references('ProduitID')->on('produit');
 			$table->foreign('AgriculteurID')->references('UtilisateurID')->on('utilisateur');
 			$table->foreign('InitiateurID')->references('UtilisateurID')->on('utilisateur');
 			
 		  });
 	    }
+		
 	}
 
 	/**

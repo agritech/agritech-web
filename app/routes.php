@@ -18,7 +18,7 @@ Route::group(array('prefix','/'), function() {
 
   Route::get('logout','UserController@logout');
 
-  Route::get('recolte/addsms/ajax', 'RecolteController@storeSMS');
+  Route::get('production/addsms/ajax', 'ProductionController@storeSMS');
   
   Route::get('oauth/provider/{provider}', 'OAuthController@login');
   
@@ -35,8 +35,8 @@ Route::group(array('prefix','/'), function() {
       Route::post('profile/{user}/photo', 'ProfileController@photoPost');
       Route::get('profile/{user}/photo/{photo}', 'ProfileController@photoGet');
       
-      Route::resource('recolte', 'RecolteController');  
-      Route::get('recolte/datatable/ajax', 'RecolteController@datatable');
+      Route::resource('production', 'ProductionController');  
+      Route::get('production/datatable/ajax', 'ProductionController@datatable');
       
 	     Route::resource('admin/produit', 'ProduitController');
        Route::get('admin/produit/datatable/ajax', 'ProduitController@datatable');

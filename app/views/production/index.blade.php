@@ -35,12 +35,12 @@ $(document).ready(function() {
         "dom": 'T<"clear">lfrtip',
         "processing": true,
         "serverSide": true,
-        "ajax": "{{ URL::to('recolte/datatable/ajax') }}",
+        "ajax": "{{ URL::to('production/datatable/ajax') }}",
         "columns": [
-            {"name": "recolte.Poids", "targets": 0, "data": "Poids", className: "text-right"},
-            {"name": "recolte.StatutSoumission", "targets": 1, "data": "StatutSoumission", "type": "text", className: "text-left"},
-            {"name": "recolte.CanalSoumission", "targets": 2, "data": "CanalSoumission", "type": "text", className: "text-left"},
-            {"name": "recolte.DateSoumission", "targets": 3, "data": "DateSoumission", "type": "date", className: "text-right"},
+            {"name": "production.Poids", "targets": 0, "data": "Poids", className: "text-right"},
+            {"name": "production.StatutSoumission", "targets": 1, "data": "StatutSoumission", "type": "text", className: "text-left"},
+            {"name": "production.CanalSoumission", "targets": 2, "data": "CanalSoumission", "type": "text", className: "text-left"},
+            {"name": "production.DateSoumission", "targets": 3, "data": "DateSoumission", "type": "date", className: "text-right"},
             {"name": "Action", "targets": 4, "searchable": false, "orderable": false, "width":"60px"}
         ],
         "columnDefs": [
@@ -53,8 +53,8 @@ $(document).ready(function() {
             },{
                 "render": function ( data, type, row ) {
                     return  '<div class="pull-right">' +
-                                '<a href="' + baseUrl + '/recolte/' + row.RecolteID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
-                                '<form method="POST" action="'+baseUrl + '/recolte/' + row.RecolteID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="VgCwyBAy8xM1DsqNDnyi5VBl8x1fUNixo4h3NCcY"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
+                                '<a href="' + baseUrl + '/production/' + row.ProductionID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
+                                '<form method="POST" action="'+baseUrl + '/production/' + row.ProductionID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="VgCwyBAy8xM1DsqNDnyi5VBl8x1fUNixo4h3NCcY"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
                             '</div>';
                 },
                 "type": "html",
@@ -79,7 +79,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Productions <a href="{{ URL::to('recolte/create') }}" class="btn btn-success pull-right">Ajouter une production</a></h1>
+            <h1 class="page-header">Productions <a href="{{ URL::to('production/create') }}" class="btn btn-success pull-right">Ajouter une production</a></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>

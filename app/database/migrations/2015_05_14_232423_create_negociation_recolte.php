@@ -26,7 +26,7 @@ class CreateNegociationRecolte extends Migration {
 		  
 		  Schema::table('negociationrecolte', function($table){
 			$table->foreign('AcheteurID')->references('UtilisateurID')->on('utilisateur');
-			$table->foreign('RecolteID')->references('RecolteID')->on('recolte');			
+			$table->foreign('RecolteID')->references('ProductionID')->on('production');			
 		  });
 	    }
 	}

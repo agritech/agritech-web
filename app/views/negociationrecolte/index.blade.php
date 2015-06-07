@@ -37,12 +37,12 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": "{{ URL::to('negociationrecolte/datatable/ajax') }}",
         "columns": [
-            {"name": "recolte.Poids", "targets": 0, "data": "Poids", className: "text-right"},
-            {"name": "recolte.StatutSoumission", "targets": 1, "data": "StatutSoumission", "type": "text", className: "text-left"},
+            {"name": "production.Poids", "targets": 0, "data": "Poids", className: "text-right"},
+            {"name": "production.StatutSoumission", "targets": 1, "data": "StatutSoumission", "type": "text", className: "text-left"},
             {"name": "agri.agri_nom", "targets": 2, "data": "agri_nom", "type": "text", className: "text-left"},
-            {"name": "recolte.DateSoumission", "targets": 3, "data": "DateSoumission", "type": "date", className: "text-right"},
+            {"name": "production.DateSoumission", "targets": 3, "data": "DateSoumission", "type": "date", className: "text-right"},
             {"name": "produit.Ref", "targets": 4, "data": "produit_ref", "type": "text", className: "text-left"},
-            {"name": "recolte.nbr_negociation", "targets": 5, "data": "nbr_negociation", "type": "text", className: "text-right"},
+            {"name": "production.nbr_negociation", "targets": 5, "data": "nbr_negociation", "type": "text", className: "text-right"},
             {"name": "Action", "targets": 6, "searchable": false, "orderable": false, "width":"60px"}
         ],
         "columnDefs": [

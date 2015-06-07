@@ -39,7 +39,7 @@
                 <li>
                     <a href="#">
                         <div>
-                            <i class="fa fa-envelope fa-fw"></i> Nouvelle recolte
+                            <i class="fa fa-envelope fa-fw"></i> Nouvelle production
                             <span class="pull-right text-muted small">4 minutes environ</span>
                         </div>
                     </a>
@@ -110,7 +110,7 @@
                 </li>
                 @if(Auth::user()->hasRole('ALERT'))
                 <li @if(Request::is('alerte') or Request::is('alerte/create') or Request::is('alerte/*/edit')) class="active" @endif>
-                    <a href="#"><i class="fa fa-exclamation-triangle fa-fw"></i> Alertes<sspan class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-exclamation-triangle fa-fw"></i> Alertes<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a @if(Request::is('alerte') or Request::is('alerte/*/edit')) class="active" @endif href="{{ URL::to('alerte') }}"><i class="fa fa-list fa-fw"></i> Liste des alertes enregistrées</a>
@@ -122,15 +122,15 @@
                     <!-- /.nav-second-level -->
                 </li>
                 @endif
-                @if(Auth::user()->hasRole('RECOLTE'))
-                <li @if(Request::is('recolte') or Request::is('recolte/create') or Request::is('recolte/*/edit')) class="active" @endif>
-                    <a href="#"><i class="fa fa-compass fa-fw"></i> Productions<sspan class="fa arrow"></span></a>
+                @if(Auth::user()->hasRole('PRODUCTION'))
+                <li @if(Request::is('production') or Request::is('production/create') or Request::is('production/*/edit')) class="active" @endif>
+                    <a href="#"><i class="fa fa-compass fa-fw"></i> Productions<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a @if(Request::is('recolte') or Request::is('recolte/*/edit')) class="active" @endif href="{{ URL::to('recolte') }}"><i class="fa fa-list fa-fw"></i> Liste des productions enregistrées</a>
+                            <a @if(Request::is('production') or Request::is('production/*/edit')) class="active" @endif href="{{ URL::to('production') }}"><i class="fa fa-list fa-fw"></i> Liste des productions enregistrées</a>
                         </li>
                         <li>
-                            <a @if(Request::is('recolte/create')) class="active" @endif href="{{ URL::to('recolte/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter une production</a>
+                            <a @if(Request::is('production/create')) class="active" @endif href="{{ URL::to('production/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter une production</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

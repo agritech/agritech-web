@@ -1,13 +1,13 @@
 <?php
 use Illuminate\Support\Facades\Facade;
 
-class RecolteController extends \BaseController {
+class ProductionController extends \BaseController {
     public static $statutSoumissions = array('SOUMIS' => 'Soumis', 'VALIDE' => 'Valide');
     public static $canalSoumissions = array('INTERNET' => 'Internet', 'SMS' => 'SMS', 'TELEPHONE' => 'Téléphone');
   
     public function index()
     {
-      return  View::make('recolte.index');
+      return  View::make('production.index');
     }
 
     public function datatable(){
@@ -20,9 +20,9 @@ class RecolteController extends \BaseController {
       $columns = \Input::get('columns');
 
 
-      $query = DB::table('recolte')
-        ->leftJoin('produit', 'produit.ProduitID', '=', 'recolte.ProduitID')
-        ->leftJoin('utilisateur', 'utilisateur.UtilisateurID', '=', 'recolte.AgriculteurID');
+      $query = DB::table('production')
+        ->leftJoin('produit', 'produit.ProduitID', '=', 'production.ProduitID')
+        ->leftJoin('utilisateur', 'utilisateur.UtilisateurID', '=', 'production.AgriculteurID');
 
       $total = $query->count();
 
@@ -52,7 +52,7 @@ class RecolteController extends \BaseController {
               }
           }
       }
-      $list = $query->select('recolte.*', 'utilisateur.Nom as agri_nom', 'produit.Nom as prod_nom')->get();
+      $list = $query->select('production.*', 'utilisateur.Nom as agri_nom', 'produit.Nom as prod_nom')->get();
 
       $datatable = new DataTableResponse($draw, $total, $total_search, $list, null);
 
@@ -61,7 +61,7 @@ class RecolteController extends \BaseController {
 
     public function create()
     {
-      return View::make('recolte.create')
+      return View::make('production.create')
         ->with('statutSoumissions', self::$statutSoumissions)
         ->with('canalSoumissions', self::$canalSoumissions);
     }
@@ -89,26 +89,26 @@ class RecolteController extends \BaseController {
       );
 
       if ($validation->fails()) {
-          return Redirect::to('recolte/create')
+          return Redirect::to('production/create')
               ->withErrors($validation)
               ->withInput(\Input::all());
         } else {
           $dateSoumission = \Carbon\Carbon::createFromFormat('d/m/Y', Input::get('DateSoumission'));
           
-          $recolte = new Recolte();
-          $recolte->Poids = \Input::get('Poids');
-          $recolte->ProduitID = \Input::get('ProduitID');
-          $recolte->AgriculteurID = \Input::get('AgriculteurID');
-          $recolte->DateSoumission = $dateSoumission->toDateString();
-          $recolte->StatutSoumission = \Input::get('StatutSoumission');
-          $recolte->CanalSoumission = \Input::get('CanalSoumission');
-          $recolte->InitiateurID = Auth::user()->UtilisateurID;
+          $production = new Production();
+          $production->Poids = \Input::get('Poids');
+          $production->ProduitID = \Input::get('ProduitID');
+          $production->AgriculteurID = \Input::get('AgriculteurID');
+          $production->DateSoumission = $dateSoumission->toDateString();
+          $production->StatutSoumission = \Input::get('StatutSoumission');
+          $production->CanalSoumission = \Input::get('CanalSoumission');
+          $production->InitiateurID = Auth::user()->UtilisateurID;
           
-          $recolte->save();
+          $production->save();
 
-          $modifierUrl = URL::to('recolte/' . $recolte->RecolteID . '/edit');
-          Session::flash('success', "<p>Création de la récolte effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la récolte</a></p>");
-          return Redirect::to('recolte');
+          $modifierUrl = URL::to('production/' . $production->ProductionID . '/edit');
+          Session::flash('success', "<p>Création de la production effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la production</a></p>");
+          return Redirect::to('production');
         }
     }
 
@@ -154,41 +154,41 @@ class RecolteController extends \BaseController {
     	);
     
     	if ($validation->fails()) {
-    		return Redirect::to('recolte/create')
+    		return Redirect::to('production/create')
     		->withErrors($validation)
     		->withInput(\Input::all());
     	} else {
     		$dateSoumission = \Carbon\Carbon::createFromFormat('d/m/Y', $submissionData['DateSoumission']);
     
-    		$recolte = new Recolte();
-    		$recolte->Poids = $submissionData['Poids'];
-    		$recolte->ProduitID = $submissionData['ProduitID'];
-    		$recolte->AgriculteurID = $submissionData['AgriculteurID'];
-    		$recolte->DateSoumission = $dateSoumission->toDateString();
-    		$recolte->StatutSoumission = $submissionData['StatutSoumission'];
-    		$recolte->CanalSoumission = $submissionData['CanalSoumission'];
-    		//$recolte->InitiateurID = Auth::user()->UtilisateurID;
-        $recolte->InitiateurID = $user->UtilisateurID;
+    		$production = new Production();
+    		$production->Poids = $submissionData['Poids'];
+    		$production->ProduitID = $submissionData['ProduitID'];
+    		$production->AgriculteurID = $submissionData['AgriculteurID'];
+    		$production->DateSoumission = $dateSoumission->toDateString();
+    		$production->StatutSoumission = $submissionData['StatutSoumission'];
+    		$production->CanalSoumission = $submissionData['CanalSoumission'];
+    		//$production->InitiateurID = Auth::user()->UtilisateurID;
+        $production->InitiateurID = $user->UtilisateurID;
 
-    		$recolte->save();
+    		$production->save();
     		
     		$wsf = new SMSWebServicesFactory(Facade::getFacadeApplication());
         $ws = $wsf->getSMSWebServices(Config::get('agritech.app.sms.gateway'));
-    		$msg = "Votre recolte de " . $submissionData['Poids'] . " KG de " . $submissionData['ProduitID'] . " a bien ete enregistree. Merci."; 
+    		$msg = "Votre production de " . $submissionData['Poids'] . " KG de " . $submissionData['ProduitID'] . " a bien ete enregistree. Merci."; 
     		$ws->sendmsg($sender, $msg);
     
-    		$modifierUrl = URL::to('recolte/' . $recolte->RecolteID . '/edit');
-    		Session::flash('success', "<p>Création de la récolte effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la récolte</a></p>");
+    		$modifierUrl = URL::to('production/' . $production->ProductionID . '/edit');
+    		Session::flash('success', "<p>Création de la production effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la production</a></p>");
     		return Redirect::to('');
     	}
     }
     
     public function edit($id)
     {
-      $recolte = Recolte::find($id);
+      $production = Production::find($id);
 
-      return View::make('recolte.edit')
-        ->with('recolte', $recolte)
+      return View::make('production.edit')
+        ->with('production', $production)
         ->with('statutSoumissions', self::$statutSoumissions)
         ->with('canalSoumissions', self::$canalSoumissions);
 
@@ -218,36 +218,36 @@ class RecolteController extends \BaseController {
       );
 
       if ($validation->fails()) {
-          return Redirect::to('recolte/' . $id . '/edit')
+          return Redirect::to('production/' . $id . '/edit')
               ->withErrors($validation)
               ->withInput(\Input::all());
         } else {
           $dateSoumission = \Carbon\Carbon::createFromFormat('d/m/Y', Input::get('DateSoumission'));
           
-          $recolte = Recolte::find($id);
-          $recolte->Poids = \Input::get('Poids');
-          $recolte->ProduitID = \Input::get('ProduitID');
-          $recolte->AgriculteurID = \Input::get('AgriculteurID');
-          $recolte->DateSoumission = $dateSoumission->toDateString();
-          $recolte->StatutSoumission = \Input::get('StatutSoumission');
-          $recolte->CanalSoumission = \Input::get('CanalSoumission');
+          $production = Production::find($id);
+          $production->Poids = \Input::get('Poids');
+          $production->ProduitID = \Input::get('ProduitID');
+          $production->AgriculteurID = \Input::get('AgriculteurID');
+          $production->DateSoumission = $dateSoumission->toDateString();
+          $production->StatutSoumission = \Input::get('StatutSoumission');
+          $production->CanalSoumission = \Input::get('CanalSoumission');
           
-          $recolte->save();
+          $production->save();
 
-          $modifierUrl = URL::to('recolte/' . $recolte->RecolteID . '/edit');
-          Session::flash('success', "<p>Mise-à-jour de la récolte effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la récolte</a></p>");
-          return Redirect::to('recolte');
+          $modifierUrl = URL::to('production/' . $production->ProductionID . '/edit');
+          Session::flash('success', "<p>Mise-à-jour de la production effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la production</a></p>");
+          return Redirect::to('production');
         }
     }
 
     public function destroy($id)
     {
-      $recolte = Recolte::find($id);
-      $recolte->delete();
+      $production = Production::find($id);
+      $production->delete();
 
       // redirect
-      Session::flash('success', "Récolte supprimée avec succès !");
-      return Redirect::to('recolte');
+      Session::flash('success', "Production supprimée avec succès !");
+      return Redirect::to('production');
     }
 
     private function objectsToArray($objs, $key, $val){

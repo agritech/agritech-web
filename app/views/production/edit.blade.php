@@ -12,7 +12,7 @@
 @extends('templates.normal')
 
 {{-- Page title --}}
-@section('title') Ajouter une production @stop
+@section('title') Modifier une production @stop
 
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
@@ -36,7 +36,7 @@
 $(document).ready(function() {
     $('#DateSoumission').datepicker( $.datepicker.regional["fr"]);
     $('#Poids').mask('#0.00', {reverse: true});
-    
+
     function repoProduitFormatResult(repo) {
       repo.id = repo.ProduitID;
       var markup = '<div class="row">' +
@@ -54,7 +54,7 @@ $(document).ready(function() {
     $('#ProduitID').select2({
         placeholder: "Rechercher un produit",
         minimumInputLength: 1,
-        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+        ajax: {
             url: "{{ URL::to('produit/select2/ajax') }}",
             dataType: 'json',
             quietMillis: 250,
@@ -64,20 +64,26 @@ $(document).ready(function() {
                     page: page
                 };
             },
-            results: function (data, page) { // parse the results into the format expected by Select2.
-                // since we are using custom formatting functions we do not need to alter the remote JSON data
+            results: function (data, page) {
                 var more = (page * 10) < data.recordsFiltered;
                 return { results: data.data, more: more };
             },
             cache: true
         },
-        formatResult: repoProduitFormatResult, 
-        formatSelection: repoProduitFormatSelection,  
-        dropdownCssClass: "bigdrop", 
+        formatResult: repoProduitFormatResult,
+        formatSelection: repoProduitFormatSelection,
+        dropdownCssClass: "bigdrop",
         escapeMarkup: function (m) { return m; },
         id : function(obj){
             return obj.ProduitID;
-        } 
+        },
+        initSelection: function(element, callback) {
+            var id = $(element).val();
+            if (id !== "") {
+                var produit = {{$production->Produit->toJson()}};
+                callback(produit);
+            }
+        },
     });
     
     function repoAgriculteurFormatResult(repo) {
@@ -98,7 +104,7 @@ $(document).ready(function() {
     $('#AgriculteurID').select2({
         placeholder: "Rechercher un agriculteur",
         minimumInputLength: 1,
-        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+        ajax: {
             url: "{{ URL::to('agriculteur/select2/ajax') }}",
             dataType: 'json',
             quietMillis: 250,
@@ -115,12 +121,19 @@ $(document).ready(function() {
             cache: true
         },
         formatResult: repoAgriculteurFormatResult,
-        formatSelection: repoAgriculteurFormatSelection, 
-        dropdownCssClass: "bigdrop", 
-        escapeMarkup: function (m) { return m; },
+        formatSelection: repoAgriculteurFormatSelection,
+        dropdownCssClass: "bigdrop",
+        escapeMarkup: function (m) { return m; } ,
         id : function(obj){
             return obj.UtilisateurID;
-        } 
+        },
+        initSelection: function(element, callback) {
+            var id = $(element).val();
+            if (id !== "") {
+                var utilisateur = {{$production->Agriculteur->toJson()}};
+                callback(utilisateur);
+            }
+        }
     });
 });
 </script>
@@ -132,7 +145,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Ajouter une production </h1>
+            <h1 class="page-header">Mise-à-jour des informations de la production </h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -141,7 +154,7 @@ $(document).ready(function() {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                     Merci de remplir le formulaire ci-dessous
+                    Merci de remplir le formulaire ci-dessous
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -154,23 +167,23 @@ $(document).ready(function() {
                                     </div>
                                 @endforeach
                             @endif
-                            {{ Form::open(array('url' => URL::to('recolte') , 'role' => 'form')) }}
-                                <div class="form-group @if($errors->first('Poids') != '')) has-error @endif">
+                            {{ Form::model($production, array('route' => array('production.update', $production->ProductionID), 'method' => 'put', 'role' => 'form')) }}
+                                <div class="form-group @if($errors->first('Poids') != '') has-error @endif">
                                     <label>Poids *</label>
-                                    {{ Form::text('Poids', Input::old('Poids'), array('class' => 'form-control', 'placeholder' => "Poids", 'id' => 'Poids') ) }}
+                                    {{ Form::text('Poids', Input::old('Poids'), array('class' => 'form-control', 'placeholder' => "Poids (Kg)", 'id' => 'Poids') ) }}
                                     {{ $errors->first('Poids', '<span class="error">:message</span>' ) }}
                                 </div>
                                 <div class="form-group">
                                     <label>Produit *</label>
-                                    <input type="hidden" class="bigdrop form-control" id="ProduitID" name="ProduitID" value="{{Input::old('ProduitID')}}" />
+                                    <input type="hidden" class="bigdrop form-control" id="ProduitID" name="ProduitID" value="{{$productione->ProduitID}}" />
                                 </div>
                                 <div class="form-group">
                                     <label>Agriculteur *</label>
-                                    <input type="hidden" class="bigdrop form-control" id="AgriculteurID" name="AgriculteurID" value="{{Input::old('AgriculteurID')}}" />
+                                    <input type="hidden" class="bigdrop form-control" id="AgriculteurID" name="AgriculteurID" value="{{$production->AgriculteurID}}" />
                                 </div>
-                                <div class="form-group @if($errors->first('Finperiode') != '')) has-error @endif">
+                                <div class="form-group @if($errors->first('Debutperiode') != '')) has-error @endif">
                                     <label>Date de soumission *</label>
-                                    <input type="text" name="DateSoumission" id="DateSoumission" value="{{Input::old('DateSoumission')}}" class="form-control">
+                                    <input type="text" name="DateSoumission" id="DateSoumission" value="{{$production->datesoumission_f}}" class="form-control">
                                     {{ $errors->first('DateSoumission', '<span class="error">:message</span>' ) }}
                                 </div>
                                 <div class="form-group">

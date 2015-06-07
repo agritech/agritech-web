@@ -1,9 +1,9 @@
 <?php
-    class Recolte extends Eloquent
+    class Production extends Eloquent
     {
-      protected $table = 'recolte';
+      protected $table = 'production';
 
-      protected $primaryKey = 'RecolteID';
+      protected $primaryKey = 'ProductionID';
 
       public function __construct() {
         parent::__construct();
@@ -30,12 +30,12 @@
 
       public function getEditUrlAttribute()
       {
-        return URL::to('recolte/' .  $this->attributes['RecolteID'] . '/edit');
+        return URL::to('production/' .  $this->attributes['ProductionID'] . '/edit');
       }
 
       public function getDeleteUrlAttribute()
       {
-          return URL::to('recolte/' . $this->attributes['RecolteID'] );
+          return URL::to('production/' . $this->attributes['ProductionID'] );
       }
 
       protected $appends = array('datesoumission_f', 'edit_url', 'delete_url');

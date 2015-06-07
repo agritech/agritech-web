@@ -22,7 +22,7 @@ class TestDataSeeder extends Seeder {
     public function run()
     {
         DB::table('negociationrecolte')->delete();
-        DB::table('recolte')->delete();
+        DB::table('production')->delete();
         DB::table('produit')->delete();
         DB::table('roles')->delete();
         DB::table('utilisateur')->delete();
@@ -40,7 +40,7 @@ class TestDataSeeder extends Seeder {
         $achat1 = User::where('Username', 'achat1')->firstOrFail();
         
         Roles::create(array('Username' => $part1->Username, 'Role' => 'PARTENAIRE'));
-        Roles::create(array('Username' => $part1->Username, 'Role' => 'RECOLTE')); //Le partenaire gÃ¨re les recoltes en ligne
+        Roles::create(array('Username' => $part1->Username, 'Role' => 'PRODUCTION')); //Le partenaire gère les productions en ligne
         Roles::create(array('Username' => $part1->Username, 'Role' => 'NEGOCIATIONRECOLTE')); // Le partenaire gÃ¨re les nÃ©gociations en ligne
         Roles::create(array('Username' => $achat1->Username, 'Role' => 'ACHETEUR')); 
         Roles::create(array('Username' => $achat1->Username, 'Role' => 'NEGOCIATIONRECOLTE')); // L'acheteur gÃ¨re les nÃ©gociations de recolte en ligne
@@ -53,22 +53,22 @@ class TestDataSeeder extends Seeder {
         
         $mangue = Produit::where('Ref', 'MANGUE')->firstOrFail();
        
-        //Charger les recoltes pour les produit
-        $recolte = new Recolte();
-        $recolte->Poids = 10;
-        $recolte->ProduitID = $mangue->ProduitID;
-        $recolte->AgriculteurID = $agri1->UtilisateurID;
-        $recolte->DateSoumission = '2015-10-10';
-        $recolte->StatutSoumission = 'VALIDE';
-        $recolte->CanalSoumission = 'INTERNET';
-        $recolte->InitiateurID = $agri1->UtilisateurID;
-        $recolte->save();
+        //Charger les productions pour les produit
+        $production = new Production();
+        $production->Poids = 10;
+        $production->ProduitID = $mangue->ProduitID;
+        $production->AgriculteurID = $agri1->UtilisateurID;
+        $production->DateSoumission = '2015-10-10';
+        $production->StatutSoumission = 'VALIDE';
+        $production->CanalSoumission = 'INTERNET';
+        $production->InitiateurID = $agri1->UtilisateurID;
+        $production->save();
         
         //Charger les négociations de recoltes
         $negociationrecolte = new NegociationRecolte();
         $negociationrecolte->Prix = 10;
         $negociationrecolte->AcheteurID = $achat1->UtilisateurID;
-        $negociationrecolte->RecolteID = $recolte->RecolteID;
+        $negociationrecolte->RecolteID = $production->ProductionID;
         $negociationrecolte->DateProposition = '2015-10-10';
         $negociationrecolte->StatutProposition = 'PREPARATION';
         $negociationrecolte->save();
