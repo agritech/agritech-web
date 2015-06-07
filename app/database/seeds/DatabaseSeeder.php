@@ -21,7 +21,7 @@ class TestDataSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('negociationrecolte')->delete();
+        DB::table('negociationproduction')->delete();
         DB::table('production')->delete();
         DB::table('produit')->delete();
         DB::table('roles')->delete();
@@ -41,9 +41,9 @@ class TestDataSeeder extends Seeder {
         
         Roles::create(array('Username' => $part1->Username, 'Role' => 'PARTENAIRE'));
         Roles::create(array('Username' => $part1->Username, 'Role' => 'PRODUCTION')); //Le partenaire gère les productions en ligne
-        Roles::create(array('Username' => $part1->Username, 'Role' => 'NEGOCIATIONRECOLTE')); // Le partenaire gÃ¨re les nÃ©gociations en ligne
+        Roles::create(array('Username' => $part1->Username, 'Role' => 'NEGOCIATIONPRODUCTION')); // Le partenaire gÃ¨re les nÃ©gociations en ligne
         Roles::create(array('Username' => $achat1->Username, 'Role' => 'ACHETEUR')); 
-        Roles::create(array('Username' => $achat1->Username, 'Role' => 'NEGOCIATIONRECOLTE')); // L'acheteur gÃ¨re les nÃ©gociations de recolte en ligne
+        Roles::create(array('Username' => $achat1->Username, 'Role' => 'NEGOCIATIONPRODUCTION')); // L'acheteur gÃ¨re les nÃ©gociations de production en ligne
         Roles::create(array('Username' => $agri1->Username, 'Role' => 'AGRICULTEUR'));
         Roles::create(array('Username' => $agri2->Username, 'Role' => 'AGRICULTEUR'));
         
@@ -64,14 +64,14 @@ class TestDataSeeder extends Seeder {
         $production->InitiateurID = $agri1->UtilisateurID;
         $production->save();
         
-        //Charger les négociations de recoltes
-        $negociationrecolte = new NegociationRecolte();
-        $negociationrecolte->Prix = 10;
-        $negociationrecolte->AcheteurID = $achat1->UtilisateurID;
-        $negociationrecolte->RecolteID = $production->ProductionID;
-        $negociationrecolte->DateProposition = '2015-10-10';
-        $negociationrecolte->StatutProposition = 'PREPARATION';
-        $negociationrecolte->save();
+        //Charger les négociations de productions
+        $negociationproduction = new NegociationProduction();
+        $negociationproduction->Prix = 10;
+        $negociationproduction->AcheteurID = $achat1->UtilisateurID;
+        $negociationproduction->ProductionID = $production->ProductionID;
+        $negociationproduction->DateProposition = '2015-10-10';
+        $negociationproduction->StatutProposition = 'PREPARATION';
+        $negociationproduction->save();
 
 		// Charger les evenements
 		Evenement::create(array('Nom' => 'Meteo', 'Description' => 'Evenement meteorologique (tempête, pluie, vent, ...)'));

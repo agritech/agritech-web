@@ -41,7 +41,7 @@ class CreateUsersRoleTable extends Migration {
 	      {
 	        $table->increments('RoleID');
 	        $table->string('Username');
-			$table->enum('Role', ['OPERATEUR','SUPERUTILISATEUR','ALERT','AGRICULTEUR','ACHETEUR','PARTENAIRE', 'RECOLTE', 'NEGOCIATIONRECOLTE'])
+			$table->enum('Role', ['OPERATEUR','SUPERUTILISATEUR','ALERT','AGRICULTEUR','ACHETEUR','PARTENAIRE', 'PRODUCTION', 'NEGOCIATIONPRODUCTION'])
 				->default('OPERATEUR');
 	      });
 		  

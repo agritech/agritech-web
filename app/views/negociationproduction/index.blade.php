@@ -35,7 +35,7 @@ $(document).ready(function() {
         "dom": 'T<"clear">lfrtip',
         "processing": true,
         "serverSide": true,
-        "ajax": "{{ URL::to('negociationrecolte/datatable/ajax') }}",
+        "ajax": "{{ URL::to('negociationproduction/datatable/ajax') }}",
         "columns": [
             {"name": "production.Poids", "targets": 0, "data": "Poids", className: "text-right"},
             {"name": "production.StatutSoumission", "targets": 1, "data": "StatutSoumission", "type": "text", className: "text-left"},
@@ -77,7 +77,7 @@ $(document).ready(function() {
             },{
                 "render": function ( data, type, row ) {
                     return  '<div class="pull-right">' +
-                                '<a href="' + baseUrl + '/negociationrecolte/' + row.RecolteID + '/create" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
+                                '<a href="' + baseUrl + '/negociationproduction/' + row.ProductionID + '/create" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
                             '</div>';
                 },
                 "type": "html",

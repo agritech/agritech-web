@@ -18,14 +18,14 @@ trait HasRole
 
         foreach ($this->roles as $role) {
             //Vériier par rapport aux roles dun super utilisayeur
-            if(in_array($name, array('ALERT', 'AGRICULTEUR', 'RECOLTE'))){
+            if(in_array($name, array('ALERT', 'AGRICULTEUR', 'PRODUCTION'))){
                 if ($role->Role == 'SUPERUTILISATEUR') {
                     return true;
                 }
             }
 
             //Vérifier par rapport à un opérateur
-            if(in_array($name, array('ALERT', 'AGRICULTEUR', 'RECOLTE'))){
+            if(in_array($name, array('ALERT', 'AGRICULTEUR', 'PRODUCTION'))){
                 if ($role->Role == 'OPERATEUR') {
                     return true;
                 }

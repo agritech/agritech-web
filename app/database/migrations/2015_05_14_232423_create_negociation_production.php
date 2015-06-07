@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNegociationRecolte extends Migration {
+class CreateNegociationProduction extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,21 +12,21 @@ class CreateNegociationRecolte extends Migration {
 	 */
 	public function up()
 	{
-		if(!Schema::hasTable('negociationrecolte')){
-	      Schema::create('negociationrecolte', function($table)
+		if(!Schema::hasTable('negociationproduction')){
+	      Schema::create('negociationproduction', function($table)
 	      {
-	        $table->increments('NegociationRecolteID');
+	        $table->increments('NegociationProductionID');
 	        $table->double('Prix', 15, 0);
 			$table->integer('AcheteurID')->unsigned();
-			$table->integer('RecolteID')->unsigned();
+			$table->integer('ProductionID')->unsigned();
 			$table->date('DateProposition');
 			$table->enum('StatutProposition', ['PREPARATION', 'PUBLIE']);
 			$table->timestamps();
 	      });
 		  
-		  Schema::table('negociationrecolte', function($table){
+		  Schema::table('negociationproduction', function($table){
 			$table->foreign('AcheteurID')->references('UtilisateurID')->on('utilisateur');
-			$table->foreign('RecolteID')->references('ProductionID')->on('production');			
+			$table->foreign('ProductionID')->references('ProductionID')->on('production');			
 		  });
 	    }
 	}
@@ -38,7 +38,7 @@ class CreateNegociationRecolte extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('negociationrecolte');
+		Schema::dropIfExists('negociationproduction');
 	}
 
 }

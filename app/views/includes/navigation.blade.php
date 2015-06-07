@@ -136,9 +136,9 @@
                     <!-- /.nav-second-level -->
                 </li>
                 @endif
-                @if(Auth::user()->hasRole('NEGOCIATIONRECOLTE'))
-                <li @if(Request::is('negociationrecolte') or Request::is('negociationrecolte/*/create') or Request::is('recolte/*/edit/*')) class="active" @endif>
-                    <a @if(Request::is('negociationrecolterecolte') or Request::is('negociationrecolte/*/edit/*') or Request::is('negociationrecolte/*/create')) class="active" @endif href="{{ URL::to('negociationrecolte') }}"><i class="fa fa-money fa-fw"></i> Négociations des productions </a>
+                @if(Auth::user()->hasRole('NEGOCIATIONPRODUCTION'))
+                <li @if(Request::is('negociationproduction') or Request::is('negociationproduction/*/create') or Request::is('production/*/edit/*')) class="active" @endif>
+                    <a @if(Request::is('negociationproduction') or Request::is('negociationproduction/*/edit/*') or Request::is('negociationproduction/*/create')) class="active" @endif href="{{ URL::to('negociationproduction') }}"><i class="fa fa-money fa-fw"></i> Négociations des productions </a>
                 </li>
                 @endif
                 <!-- Zone de Culture -->

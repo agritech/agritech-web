@@ -147,7 +147,7 @@ class AlerteController extends \BaseController {
 
           $modifierUrl = URL::to('alerte/' . $alerte->AlerteID . '/edit');
           Session::flash('success', "<p>Mise-à-jour l'alerte effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier l'alerte</a></p>");
-          return Redirect::to('recolte');
+          return Redirect::to('alerte');
         }
     }
 

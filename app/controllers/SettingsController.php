@@ -34,7 +34,7 @@ class SettingsController extends \BaseController {
         } else {
           $modifierUrl = URL::to('settings');
           Session::flash('success', "<p>Mise-à-jour des paramètres effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la récolte</a></p>");
-          return Redirect::to('recolte');
+          return Redirect::to('settings');
         }
     }
     

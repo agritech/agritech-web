@@ -42,12 +42,12 @@ Route::group(array('prefix','/'), function() {
        Route::get('admin/produit/datatable/ajax', 'ProduitController@datatable');
 	     Route::get('produit/select2/ajax', 'ProduitController@select2');
       
-      Route::resource('negociationrecolte', 'NegociationRecolteController');
-      Route::get('negociationrecolte/{recolteID}/create', 'NegociationRecolteController@negociationRecolteCreate');
-      Route::post('negociationrecolte/{recolteID}/store', 'NegociationRecolteController@negociationRecolteStore');
-      Route::get('negociationrecolte/{recolteID}/edit/{negociationRecoleID}', 'NegociationRecolteController@negociationRecolteEdit');
-      Route::post('negociationrecolte/{recolteID}/update/{negociationRecolteID}', 'NegociationRecolteController@negociationRecolteUpdate');
-      Route::get('negociationrecolte/datatable/ajax', 'NegociationRecolteController@datatable');
+      Route::resource('negociationproduction', 'NegociationProductionController');
+      Route::get('negociationproduction/{productionID}/create', 'NegociationProductionController@negociationProductionCreate');
+      Route::post('negociationproduction/{productionID}/store', 'NegociationProductionController@negociationProductionStore');
+      Route::get('negociationproduction/{productionID}/edit/{negociationRecoleID}', 'NegociationProductionController@negociationProductionEdit');
+      Route::post('negociationproduction/{productionID}/update/{negociationProductionID}', 'NegociationProductionController@negociationProductionUpdate');
+      Route::get('negociationproduction/datatable/ajax', 'NegociationProductionController@datatable');
 
       Route::get('agriculteur/select2/ajax', 'AgriculteurController@select2');
 

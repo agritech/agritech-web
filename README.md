@@ -23,7 +23,7 @@ Pour l'architecture, rien de mieux que les [micro services] Il faut faire plein 
 
 Du coup pour le premier pavé voici la vision (à mettre-à-jour) :
 * Application SMS pour les fonctionnalités agriculteurs ;
-* Application Web pour les internautes (négociation de prix des recoltes postés) ;
+* Application Web pour les internautes ;
 * Application Mobile (Smartphone) pour la localisation des poinst d'eaux et des zones agricoles ;
 * Autre application pour le reste.
 

@@ -12,7 +12,7 @@
 @extends('templates.normal')
 
 {{-- Page title --}}
-@section('title') Ajouter une proposition de prix pour la production @stop
+@section('title') Modifier une proposition de prix pour la production @stop
 
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
@@ -47,7 +47,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Ajouter une proposition de prix pour la production</h1>
+            <h1 class="page-header">Modifier une proposition de prix pour la production</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -64,27 +64,27 @@ $(document).ready(function() {
                         <div class="col-lg-12">    
                             <div class="form-group">
                                 <label>Agriculteur</label>
-                                <p class="form-control-static">{{$recolte->Agriculteur->nom . ' ' . $recolte->Agriculteur->prenom}}</p>
+                                <p class="form-control-static">{{$production->Agriculteur->nom . ' ' . $production->Agriculteur->prenom}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Produit</label>
-                                <p class="form-control-static">{{$recolte->Produit->Ref . ' ' . $recolte->Produit->Nom}}</p>
+                                <p class="form-control-static">{{$production->Produit->Ref . ' ' . $production->Produit->Nom}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Poids de la production (Kg)</label>
-                                <p class="form-control-static">{{$recolte->Poids}}</p>
+                                <p class="form-control-static">{{$production->Poids}}</p>
                             </div>
                             <div class="form-group">
-                                <label>Date de la soumission de la recolte</label>
-                                <p class="form-control-static">{{$recolte->DateSoumission}}</p>
+                                <label>Date de la soumission de la production</label>
+                                <p class="form-control-static">{{$production->DateSoumission}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Statut</label>
-                                <p class="form-control-static">{{$recolte->StatutSoumission}}</p>
+                                <p class="form-control-static">{{$production->StatutSoumission}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Canal</label>
-                                <p class="form-control-static">{{$recolte->CanalSoumission}}</p>
+                                <p class="form-control-static">{{$production->CanalSoumission}}</p>
                             </div>
                         </div>
                         <!-- /.col-lg-6 (nested) -->
@@ -94,11 +94,10 @@ $(document).ready(function() {
             </div>
             <!-- panel -->
         </div>
-        <!-- /.col-lg-4 -->
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Merci de remplir le formulaire ci-dessous pour proposer un nouveau prix pour cette production
+                    Merci de remplir le formulaire ci-dessous pour modifier la proposition de prix pour cette production
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -111,15 +110,19 @@ $(document).ready(function() {
                                     </div>
                                 @endforeach
                             @endif
-                            {{ Form::open(array('url' => URL::to('negociationrecolte/' . $recolte->RecolteID . '/store' ) , 'role' => 'form')) }}
+                            {{ Form::open(array('url' => URL::to('negociationproduction/' . $production->ProductionID . '/update/' . $negociationproduction->NegociationProductionID ) , 'role' => 'form')) }}
+                                <div class="form-group @if($errors->first('Debutperiode') != '')) has-error @endif">
+                                    <label>Date de la proposition</label>
+                                    <p class="form-control-static">{{$negociationproduction->DateProposition}}</p>
+                                </div>
                                 <div class="form-group @if($errors->first('Poids') != '') has-error @endif">
                                     <label>Prix *</label>
-                                    {{ Form::text('Prix', Input::old('Prix'), array('class' => 'form-control', 'placeholder' => "Prix (FCFA)", 'id' => 'Prix') ) }}
+                                    {{ Form::text('Prix', $negociationproduction->Prix, array('class' => 'form-control', 'placeholder' => "Prix (FCFA)", 'id' => 'Prix') ) }}
                                     {{ $errors->first('Prix', '<span class="error">:message</span>' ) }}
                                 </div>
                                 <div class="form-group">
                                     <label>Statut de la proposition</label>
-                                    {{ Form::select('StatutProposition', $statutPropositions, Input::old('StatutProposition'), array('class' => 'form-control')) }}
+                                    {{ Form::select('StatutProposition', $statutPropositions, $negociationproduction->StatutProposition, array('class' => 'form-control')) }}
                                 </div>
                                 {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
@@ -149,7 +152,7 @@ $(document).ready(function() {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($negociationrecoltes as $key => $value)
+                                @foreach($negociationproductions as $key => $value)
                                 <tr>
                                     <td>{{ $value->Acheteur->nom . ' ' . $value->Acheteur->prenom }}</td>
                                     <td>{{$value->Prix}}</td>
@@ -157,8 +160,8 @@ $(document).ready(function() {
                                     <td>{{$value->StatutProposition}}</td>
                                     <td nowrap="nowrap">
                                         <div class="pull-right">
-                                            <a href="{{ URL::to('negociationrecolte/' . $value->RecolteID . '/edit/' . $value->NegociationRecolteID) }}" class="btn btn-sm btn-primary"> <i class="fa fa-edit"></i></a> &nbsp;
-                                            {{ Form::open(array('url' => 'negociationrecolte/' . $value->NegociationRecolteID , 'class' => 'pull-right')) }}
+                                            <a href="{{ URL::to('negociationproduction/' . $value->ProductionID . '/edit/' . $value->NegociationProductionID) }}" class="btn btn-sm btn-primary"> <i class="fa fa-edit"></i></a> &nbsp;
+                                            {{ Form::open(array('url' => 'negociationproduction/' . $value->NegociationProductionID , 'class' => 'pull-right')) }}
                                                 {{ Form::hidden('_method', 'DELETE') }}
                                                 <button type="submit" class="btn btn-sm btn-danger">
                                                     <i class="fa fa-times"></i>

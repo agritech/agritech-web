@@ -1,11 +1,11 @@
 <?php
 
-class NegociationRecolteController extends \BaseController {
+class NegociationProductionController extends \BaseController {
     public static $statutPropositions = array('PREPARATION' => 'En préparation', 'PUBLIE' => 'Publié');
   
     public function index()
     {
-      return  View::make('negociationrecolte.index');
+      return  View::make('negociationproduction.index');
     }
 
     public function datatable(){
@@ -18,10 +18,10 @@ class NegociationRecolteController extends \BaseController {
       $columns = \Input::get('columns');
 
       $query = DB::table('production')
-        ->leftjoin('negociationrecolte', 'negociationrecolte.RecolteID', '=', 'production.ProductionID')
+        ->leftjoin('negociationproduction', 'negociationproduction.ProductionID', '=', 'production.ProductionID')
         ->join('produit', 'production.ProduitID', '=', 'produit.ProduitID')
         ->join('utilisateur as agri', 'agri.UtilisateurID', '=', 'production.AgriculteurID')
-        ->leftjoin('utilisateur', 'utilisateur.UtilisateurID', '=', 'negociationrecolte.AcheteurID')
+        ->leftjoin('utilisateur', 'utilisateur.UtilisateurID', '=', 'negociationproduction.AcheteurID')
         ->groupBy('production.ProductionID');
 
       $total = $query->count();
@@ -52,7 +52,7 @@ class NegociationRecolteController extends \BaseController {
               }
           }
       }
-      $list = $query->select(DB::raw('count(negociationrecolte.RecolteID) as nbr_negociation'), 'negociationrecolte.*', 'production.*', 'agri.Nom as agri_nom', 'agri.Prenom as agri_prenom', 'produit.Ref as produit_ref', 'produit.Nom as produit_nom')->get();
+      $list = $query->select(DB::raw('count(negociationproduction.ProductionID) as nbr_negociation'), 'negociationproduction.*', 'production.*', 'agri.Nom as agri_nom', 'agri.Prenom as agri_prenom', 'produit.Ref as produit_ref', 'produit.Nom as produit_nom')->get();
 
       $datatable = new DataTableResponse($draw, $total, $total_search, $list, null);
 
@@ -62,20 +62,20 @@ class NegociationRecolteController extends \BaseController {
       return Response::json($datatable);      
     }
 
-    public function negociationRecolteCreate($productionID)
+    public function negociationProductionCreate($productionID)
     {
       $production = Production::find($productionID);
 
-      $negociationrecoltes = NegociationRecolte::where('RecolteID', $productionID)->get();
+          $negociationproductions = NegociationProduction::where('ProductionID', $productionID)->get();
       
-      return View::make('negociationrecolte.create')
+      return View::make('negociationproduction.create')
         ->with('production', $production)
         ->with('statutPropositions', self::$statutPropositions)
-        ->with('negociationrecoltes', $negociationrecoltes);
+        ->with('negociationproductions', $negociationproductions);
     }
 
-    public function negociationRecolteStore($productionID){
-      Log::info("Début de l'enregistrement d'une négociation de prix", array('RecolteID' => $productionID));
+    public function negociationProductionStore($productionID){
+      Log::info("Début de l'enregistrement d'une négociation de prix", array('ProductionID' => $productionID));
       $validation = Validator::make(\Input::all(), 
         array(
           'Prix' => 'required|numeric',
@@ -89,45 +89,45 @@ class NegociationRecolteController extends \BaseController {
       );
 
       if ($validation->fails()) {
-          return Redirect::to('negociationrecolte/' . $productionID . '/create')
+          return Redirect::to('negociationproduction/' . $productionID . '/create')
               ->withErrors($validation)
               ->withInput(\Input::all());
         } else {
           $dateProposition = \Carbon\Carbon::now();
           
-          $negociationrecolte = new NegociationRecolte();
-          $negociationrecolte->Prix = \Input::get('Prix');
-          $negociationrecolte->AcheteurID = Auth::user()->UtilisateurID;
-          $negociationrecolte->RecolteID = $productionID;
-          $negociationrecolte->DateProposition = $dateProposition->toDateString();
-          $negociationrecolte->StatutProposition = \Input::get('StatutProposition');
+          $negociationproduction = new NegociationProduction();
+          $negociationproduction->Prix = \Input::get('Prix');
+          $negociationproduction->AcheteurID = Auth::user()->UtilisateurID;
+          $negociationproduction->ProductionID = $productionID;
+          $negociationproduction->DateProposition = $dateProposition->toDateString();
+          $negociationproduction->StatutProposition = \Input::get('StatutProposition');
           
-          $negociationrecolte->save();
+          $negociationproduction->save();
 
-          $modifierUrl = URL::to('negociationrecolte/' . $productionID . '/edit/' . $negociationrecolte->NegociationRecolteID);
+          $modifierUrl = URL::to('negociationproduction/' . $productionID . '/edit/' . $negociationproduction->NegociationProductionID);
           
-          Log::info("Création d'un prix pour la production effectué avec succès", array('RecolteID' => $productionID, 'RecolteNegociationID' => $negociationrecolte->NegociationRecolteID));
+          Log::info("Création d'un prix pour la production effectué avec succès", array('ProductionID' => $productionID, 'ProductionNegociationID' => $negociationproduction->NegociationProductionID));
           
           Session::flash('success', "<p>Création de la négociation de récolte effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la négociation de la récolte</a></p>");
-          return Redirect::to('negociationrecolte');
+          return Redirect::to('negociationproduction');
         }
     }
 
-    public function negociationRecolteEdit($productionID, $negociationRecolteID)
+    public function negociationProductionEdit($productionID, $negociationProductionID)
     {
       $production = Production::find($productionID);
-      $negociationrecolte = NegociationRecolte::find($negociationRecolteID);
+      $negociationproduction = NegociationProduction::find($negociationProductionID);
 
-      $negociationrecoltes = NegociationRecolte::where('RecolteID', $productionID)->get();
+      $negociationproductions = NegociationProduction::where('ProductionID', $productionID)->get();
       
-      return View::make('negociationrecolte.edit')
-        ->with('negociationrecolte', $negociationrecolte)
+      return View::make('negociationproduction.edit')
+        ->with('negociationproduction', $negociationproduction)
         ->with('production', $production)
         ->with('statutPropositions', self::$statutPropositions)
-        ->with('negociationrecoltes', $negociationrecoltes);
+        ->with('negociationproductions', $negociationproductions);
     }
 
-    public function negociationRecolteUpdate($productionID, $negociationRecolteID){
+    public function negociationProductionUpdate($productionID, $negociationProductionID){
       $validation = Validator::make(\Input::all(), 
         array(
           'Prix' => 'required|numeric',
@@ -141,35 +141,35 @@ class NegociationRecolteController extends \BaseController {
       );
 
       if ($validation->fails()) {
-          return Redirect::to('negociationrecolte/' . $productionID . '/edit/' . $negociationRecolteID)
+          return Redirect::to('negociationproduction/' . $productionID . '/edit/' . $negociationProductionID)
               ->withErrors($validation)
               ->withInput(\Input::all());
         } else {
           $dateProposition = \Carbon\Carbon::now();
           
-          $negociationrecolte = NegociationRecolte::find($negociationRecolteID);
-          $negociationrecolte->Prix = \Input::get('Prix');
-          $negociationrecolte->AcheteurID = Auth::user()->UtilisateurID;
-          $negociationrecolte->RecolteID = $productionID;
-          $negociationrecolte->DateProposition = $dateProposition->toDateString();
-          $negociationrecolte->StatutProposition = \Input::get('StatutProposition');
+          $negociationproduction = NegociationProduction::find($negociationProductionID);
+          $negociationproduction->Prix = \Input::get('Prix');
+          $negociationproduction->AcheteurID = Auth::user()->UtilisateurID;
+          $negociationproduction->ProductionID = $productionID;
+          $negociationproduction->DateProposition = $dateProposition->toDateString();
+          $negociationproduction->StatutProposition = \Input::get('StatutProposition');
           
-          $negociationrecolte->save();
+          $negociationproduction->save();
 
-          $modifierUrl = URL::to('negociationrecolte/' . $productionID . '/edit/' . $negociationrecolte->NegociationRecolteID);
+          $modifierUrl = URL::to('negociationproduction/' . $productionID . '/edit/' . $negociationproduction->NegociationProductionID);
           Session::flash('success', "<p>Mise-à-jour de la négociation de la récolte effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la négociation de la récolte</a></p>");
-          return Redirect::to('negociationrecolte');
+          return Redirect::to('negociationproduction');
         }
     }
 
     public function destroy($id)
     {
-      $negociationrecolte = NegociationRecolte::find($id);
-      $negociationrecolte->delete();
+      $negociationproduction = NegociationProduction::find($id);
+      $negociationproduction->delete();
 
       // redirect
       Session::flash('success', "Négociation de la récolte supprimée avec succès !");
-      return Redirect::to('negociationrecolte/' . $negociationrecolte->ProductionID . '/create');
+      return Redirect::to('negociationproduction/' . $negociationproduction->ProductionID . '/create');
     }
 
     private function objectsToArray($objs, $key, $val){

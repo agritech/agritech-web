@@ -92,7 +92,7 @@ class UserController extends \BaseController {
         $roles = array('SUPERUTILISATEUR' => 'Super utilisateur', 
             'OPERATEUR' => 'Opérateur', 
             'ALERT' => 'Gestion des alertes',
-            'RECOLTE' => 'Gestion des récoltes',
+            'PRODUCTIOn' => 'Gestion des production',
             'AGRICULTEUR' => 'Agriculteur',
             'ACHETEUR' => 'Acheteur',
             'PARTENAIRE' => 'Partenaire');

@@ -56,7 +56,7 @@ Route::filter('auth', function()
 		
 		$securityCheck->routeNeedsRole( 'production*', array('PRODUCTION') );
 		
-		$securityCheck->routeNeedsRole( 'negociationrecolte*', array('NEGOCIATIONRECOLTE') );
+		$securityCheck->routeNeedsRole( 'negociationproduction*', array('NEGOCIATIONPRODUCTION') );
 		
 		$securityCheck->routeNeedsRole( 'admin*', array('ADMIN') );
 	}

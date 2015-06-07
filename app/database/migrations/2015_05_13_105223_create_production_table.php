@@ -52,7 +52,7 @@ class CreateProductionTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('recolte');
+		Schema::dropIfExists('production');
 		Schema::dropIfExists('produit');
 	}
 

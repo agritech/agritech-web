@@ -1,9 +1,9 @@
 <?php
-    class NegociationRecolte extends Eloquent
+    class NegociationProduction extends Eloquent
     {
-      protected $table = 'negociationrecolte';
+      protected $table = 'negociationproduction';
 
-      protected $primaryKey = 'NegociationRecolteID';
+      protected $primaryKey = 'NegociationProductionID';
 
       public function __construct() {
         parent::__construct();
@@ -18,9 +18,9 @@
         return $this->belongsTo('User', 'AcheteurID');
       }
 
-      public function Recolte()
+      public function Production()
       {
-        return $this->belongsTo('Recolte', 'RecolteID');
+        return $this->belongsTo('Production', 'ProductionID');
       }
 
       public function getDatepropositionFAttribute(){
@@ -30,12 +30,12 @@
 
       public function getEditUrlAttribute()
       {
-        return URL::to('negociationrecolte/' .  $this->attributes['NegociationRecolteID'] . '/edit');
+        return URL::to('negociationproduction/' .  $this->attributes['NegociationProductionID'] . '/edit');
       }
 
       public function getDeleteUrlAttribute()
       {
-          return URL::to('negociationrecolte/' . $this->attributes['NegociationRecolteID'] );
+          return URL::to('negociationproduction/' . $this->attributes['NegociationProductionID'] );
       }
 
       protected $appends = array('dateproposition_f', 'edit_url', 'delete_url');

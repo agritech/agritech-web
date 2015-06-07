@@ -104,7 +104,7 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
-                <a href="{{ URL::to('recolte') }}">
+                <a href="{{ URL::to('production') }}">
                     <div class="panel-footer">
                         <span class="pull-left">Voir détails</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -126,7 +126,7 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
-                <a href="{{ URL::to('negociationrecolte') }}">
+                <a href="{{ URL::to('negociationproduction') }}">
                     <div class="panel-footer">
                         <span class="pull-left">Voir détails</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
