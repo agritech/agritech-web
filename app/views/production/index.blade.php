@@ -103,6 +103,10 @@ $(document).ready(function() {
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                                 <tr>
+                                    <th>Campagne agricole&nbsp;</th>
+                                    <th>Agriculteur&nbsp;</th>
+                                    <th>Exploitation&nbsp;</th>
+                                    <th>Produit</th>
                                     <th>Poids&nbsp;</th>
                                     <th>Statut&nbsp;</th>
                                     <th>Canal&nbsp;</th>

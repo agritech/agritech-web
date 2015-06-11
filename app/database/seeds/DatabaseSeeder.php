@@ -47,12 +47,30 @@ class TestDataSeeder extends Seeder {
         Roles::create(array('Username' => $agri1->Username, 'Role' => 'AGRICULTEUR'));
         Roles::create(array('Username' => $agri2->Username, 'Role' => 'AGRICULTEUR'));
         
+        //Charger lescampagnes agricoles
+        CampagneAgricole::create(array('Ref' => 'C01', 'Nom' => 'Campagne Agricole 2014', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        CampagneAgricole::create(array('Ref' => 'C02', 'Nom' => 'Campagne Agricole 2015', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        
+        $campagne2015 = CampagneAGricole::where('Ref', 'C02')->firstOrFail();
+        
         // Charger les produits
         Produit::create(array('Ref' => 'PAPAYE', 'Nom' => 'Papaye'));
         Produit::create(array('Ref' => 'MANGUE', 'Nom' => 'Mangue'));
         
         $mangue = Produit::where('Ref', 'MANGUE')->firstOrFail();
+        $papaye = Produit::where('Ref', 'PAPAYE')->firstOrFail();
+        
+        //Exploitation
+        Exploitation::create(array('Ref' => 'E01', 'Nom' => 'Exploitation 1 agri1', 'AgriculteurID'=>$agri1->UtilisateurID, 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        Exploitation::create(array('Ref' => 'E02', 'Nom' => 'Exploitation 2 agri1', 'AgriculteurID'=>$agri1->UtilisateurID, 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        
+        $exploitation1 = Exploitation::where('Ref', 'E01')->firstOrFail();
+        $exploitation2 = Exploitation::where('Ref', 'E02')->firstOrFail();
        
+        //Exploitation produit
+        ExploitationProduit::create(array('ProduitID' => $mangue->ProduitID, 'ExploitationID' => $exploitation1->ExploitationID));
+        ExploitationProduit::create(array('ProduitID' => $papaye->ProduitID, 'ExploitationID' => $exploitation2->ExploitationID));
+        
         //Charger les productions pour les produit
         $production = new Production();
         $production->Poids = 10;
@@ -62,6 +80,8 @@ class TestDataSeeder extends Seeder {
         $production->StatutSoumission = 'VALIDE';
         $production->CanalSoumission = 'INTERNET';
         $production->InitiateurID = $agri1->UtilisateurID;
+        $production->CampagneAgricoleID = $campagne2015->CampagneAgricoleID;
+        $production->ExploitationID = $exploitation1->ExploitationID;
         $production->save();
         
         //Charger les négociations de productions

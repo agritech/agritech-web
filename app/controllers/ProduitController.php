@@ -7,15 +7,19 @@ class ProduitController extends \BaseController {
       return  View::make('admin.produit.index');
     }
 
-    public function select2(){
+    public function select2($exploitationID){
 
       $page = \Input::get('page', 0);
       $length = \Input::get('length', 10);
       $search = \Input::get('q');
       $order = \Input::get('order', 'Ref');
       
-      $query = Produit::getQuery();
+      $query = Produit::getQuery()
+        ->join('exploitation_produit', 'exploitation_produit.ProduitID', '=', 'produit.ProduitID')
+        ->where('exploitation_produit.ExploitationID', '=', $exploitationID);
+      
       $total = $query->count();
+      
       if($search != ''){
         $query->where(function($q) use($search){
           $q->where(DB::raw('LOWER(Ref)'), 'LIKE', Str::lower('%' . trim($search) . '%' ));
@@ -30,7 +34,7 @@ class ProduitController extends \BaseController {
       
       $query->orderBy($order, 'ASC');
       
-      $list = $query->get();
+      $list = $query->select('produit.*')->get();
 
       $datatable = new DataTableResponse(1, $total, $total_search, $list, null);
 

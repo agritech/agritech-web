@@ -61,9 +61,13 @@ class ProductionController extends \BaseController {
 
     public function create()
     {
+      $campagneAgricoles = CampagneAgricole::get();
+      $campagneAgricoles = $this->objectsToArray($campagneAgricoles, 'CampagneAgricoleID', 'Nom');
+       
       return View::make('production.create')
         ->with('statutSoumissions', self::$statutSoumissions)
-        ->with('canalSoumissions', self::$canalSoumissions);
+        ->with('canalSoumissions', self::$canalSoumissions)
+        ->with('campagneAgricoles', $campagneAgricoles);
     }
 
     public function store(){
@@ -74,7 +78,9 @@ class ProductionController extends \BaseController {
           'AgriculteurID' => 'required|numeric',
           'DateSoumission' => 'required|date_format:"d/m/Y"',
           'StatutSoumission' => 'required',
-          'CanalSoumission' => 'required'
+          'CanalSoumission' => 'required',
+          'CampagneAgricoleID' => 'required',
+          'ExploitationID' => 'required'
           ), 
         array(
           'Poids.required' => "Merci de renseigner le poids",
@@ -84,12 +90,40 @@ class ProductionController extends \BaseController {
           'AgriculteurID.numeric' => "L'agriculteur sélectionné n'est pas valide",
           'AgriculteurID.required' => "L'agriculteur sélectionné n'est pas valide",
           'ProduitID.numeric' => "Le produit sélectionné n'est pas valide",
-          'ProduitID.required' => "Le produit sélectionné n'est pas valide"
+          'ProduitID.required' => "Le produit sélectionné n'est pas valide",
+          'CampagneAgricoleID.required' => "Merci de renseigner la campagne agricole",
+          'ExploitationID.required' => "Merci de renseigner l'exploitation concernée"
         )
       );
 
       if ($validation->fails()) {
+          $messages = $validation->messages();
+          
+          $produitJson = "";
+          if (!$messages->has('ProduitID')){
+              $produitID = \Input::get('ProduitID');
+              $produit = Produit::find($produitID);
+              $produitJson = json_encode($produit);
+          }
+          
+          $agriculteurJson = "";
+          if (!$messages->has('AgriculteurID')){
+              $agriculteurID = \Input::get('AgriculteurID');
+              $agriculteur = Agriculteur::find($agriculteurID);
+              $agriculteurJson = json_encode($agriculteur);
+          }
+          
+          $exploitationJson = "";
+          if (!$messages->has('ExploitationID')){
+              $exploitationID = \Input::get('ExploitationID');
+              $exploitation = Exploitation::find($exploitationID);
+              $exploitationJson = json_encode($exploitation);
+          }
+          
           return Redirect::to('production/create')
+              ->with('produitJson', $produitJson)
+              ->with('agriculteurJson', $agriculteurJson)
+              ->with('exploitationJson', $exploitationJson)
               ->withErrors($validation)
               ->withInput(\Input::all());
         } else {
@@ -103,6 +137,8 @@ class ProductionController extends \BaseController {
           $production->StatutSoumission = \Input::get('StatutSoumission');
           $production->CanalSoumission = \Input::get('CanalSoumission');
           $production->InitiateurID = Auth::user()->UtilisateurID;
+          $production->CampagneAgricoleID = \Input::get('CampagneAgricoleID');
+          $production->ExploitationID = \Input::get('ExploitationID');
           
           $production->save();
 
