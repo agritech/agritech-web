@@ -153,77 +153,6 @@ class ProductionController extends \BaseController {
         }
     }
 
-    public function storeSMS(){
-    	
-    	$sender = \Input::get('sender');
-    	$keyword = \Input::get('keyword');
-    	$sendtime = new Datetime( \Input::get('sendtime') );
-    	$param = \Input::get('param');    	
-    	$paramArray = explode(' ', $param);
-    	
-    	$user = User::where('telephone', $sender)->firstOrFail();
-    	$produit = Produit::where('Nom', $paramArray[0])->firstOrFail();
-    	
-    	$submissionData = array(
-    		'Poids' => $paramArray[1],
-    		'ProduitID' => $produit->ProduitID,
-    		'AgriculteurID' => $user->UtilisateurID,
-    		'DateSoumission' => $sendtime->format('d/m/Y'),
-    		'StatutSoumission' => 'SOUMIS',
-    		'CanalSoumission' => 'SMS'
-    	);
-    	
-    	$validation = Validator::make($submissionData,
-    			array(
-    					'Poids' => 'required|numeric',
-    					'ProduitID' => 'required|numeric',
-    					'AgriculteurID' => 'required|numeric',
-    					'DateSoumission' => 'required|date_format:"d/m/Y"',
-    					'StatutSoumission' => 'required',
-    					'CanalSoumission' => 'required'
-    			),
-    			array(
-    					'Poids.required' => "Merci de renseigner le poids",
-    					'Poids.numeric' => "Le poids doit-être au format (#0,00) avec deux chiffres après la virgule",
-    					'DateSoumission.date_format' => "La date de soumission n'est pas une date valide au format (DD/MM/YYYY)",
-    					'DateSoumission.required' => "Merci de remplir le champ Date de soumission",
-    					'AgriculteurID.numeric' => "L'agriculteur sélectionné n'est pas valide",
-    					'AgriculteurID.required' => "L'agriculteur sélectionné n'est pas valide",
-    					'ProduitID.numeric' => "Le produit sélectionné n'est pas valide",
-    					'ProduitID.required' => "Le produit sélectionné n'est pas valide"
-    			)
-    	);
-    
-    	if ($validation->fails()) {
-    		return Redirect::to('production/create')
-    		->withErrors($validation)
-    		->withInput(\Input::all());
-    	} else {
-    		$dateSoumission = \Carbon\Carbon::createFromFormat('d/m/Y', $submissionData['DateSoumission']);
-    
-    		$production = new Production();
-    		$production->Poids = $submissionData['Poids'];
-    		$production->ProduitID = $submissionData['ProduitID'];
-    		$production->AgriculteurID = $submissionData['AgriculteurID'];
-    		$production->DateSoumission = $dateSoumission->toDateString();
-    		$production->StatutSoumission = $submissionData['StatutSoumission'];
-    		$production->CanalSoumission = $submissionData['CanalSoumission'];
-    		//$production->InitiateurID = Auth::user()->UtilisateurID;
-        $production->InitiateurID = $user->UtilisateurID;
-
-    		$production->save();
-    		
-    		$wsf = new SMSWebServicesFactory(Facade::getFacadeApplication());
-        $ws = $wsf->getSMSWebServices(Config::get('agritech.app.sms.gateway'));
-    		$msg = "Votre production de " . $submissionData['Poids'] . " KG de " . $submissionData['ProduitID'] . " a bien ete enregistree. Merci."; 
-    		$ws->sendmsg($sender, $msg);
-    
-    		$modifierUrl = URL::to('production/' . $production->ProductionID . '/edit');
-    		Session::flash('success', "<p>Création de la production effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier la production</a></p>");
-    		return Redirect::to('');
-    	}
-    }
-    
     public function edit($id)
     {
       $campagneAgricoles = CampagneAgricole::get();
@@ -301,6 +230,109 @@ class ProductionController extends \BaseController {
       return Redirect::to('production');
     }
 
+    
+    public function storeSMS(){
+    	
+    	$sender = \Input::get('sender');
+    	$keyword = \Input::get('keyword');
+    	$sendtime = new Datetime( \Input::get('sendtime') );
+    	$param = \Input::get('param');    	
+    	$paramArray = explode(' ', $param);
+        
+        if(count($paramArray) != 3){
+            return Response::make("La requête doit-être de la forme <REFERENCE Exploitation> <REFERENCE Produit> <Quantité produite>", 500);
+        }
+    	
+        //Avoir l'agrculteur avec le numero de telephone utilisé
+    	$users = User::where('telephone', $sender);
+        if($users->count() <= 0){
+            return Response::make("Le numero de telephone est inexistant", 500);
+        }
+        $user = $users->firstOrFail();
+        
+        //Avoir l'exloitation de l'agriculteur qui a la reference
+        $exploitationRef = $paramArray[0];
+        $exploitations = Exploitation::where('Ref', $exploitationRef)->where('AgriculteurID', $user->UtilisateurID);
+        if($exploitations->count() <= 0 ){
+            return Response::make("La référence de l'exploitation n'est pas valide", 500);
+        }
+        $exploitation = $exploitations->firstOrfail();
+        
+        //Avoir le produit de l'agriculteur qui a la reference
+    	$produitRef = $paramArray[1];
+        $produits = Produit::where('Ref', $produitRef);
+        if($produits->count() <= 0 ){
+            return Response::make("La référence du produit n'est pas valide", 500);
+        }
+        $produit = $produits->firstOrfail();
+        
+        //Avoir la camapgne agricole actuelle
+        $campagneAgricoleID = Config::get('agritech.app.campagneAgricole');
+        
+    	//Valider les données
+    	$submissionData = array(
+    		'Poids' => $paramArray[2],
+    		'ProduitID' => $produit->ProduitID,
+    		'AgriculteurID' => $user->UtilisateurID,
+    		'DateSoumission' => $sendtime->format('d/m/Y'),
+    		'StatutSoumission' => 'SOUMIS',
+    		'CanalSoumission' => 'SMS',
+            'CampagneAgricoleID' => $campagneAgricoleID,
+            'ExploitationID' => $exploitation->ExploitationID
+    	);
+    	
+    	$validation = Validator::make($submissionData,
+			array(
+				'Poids' => 'required|numeric',
+				'ProduitID' => 'required|numeric',
+				'AgriculteurID' => 'required|numeric',
+				'DateSoumission' => 'required|date_format:"d/m/Y"',
+				'StatutSoumission' => 'required',
+				'CanalSoumission' => 'required',
+                'CampagneAgricoleID' =>'required',
+                'ExploitationID' => 'required'
+			),
+			array(
+				'Poids.required' => "Merci de renseigner le poids",
+				'Poids.numeric' => "Le poids doit-être au format (#0,00) avec deux chiffres après la virgule",
+				'DateSoumission.date_format' => "La date de soumission n'est pas une date valide au format (DD/MM/YYYY)",
+				'DateSoumission.required' => "Merci de remplir le champ Date de soumission",
+				'AgriculteurID.numeric' => "L'agriculteur sélectionné n'est pas valide",
+				'AgriculteurID.required' => "L'agriculteur sélectionné n'est pas valide",
+				'ProduitID.numeric' => "Le produit sélectionné n'est pas valide",
+				'ProduitID.required' => "Le produit sélectionné n'est pas valide",
+                'CampagneAgricoleID.required' => "La campagne agricole est obligatoire",
+                "ExploitationID.required" => "L'exploitation est obligatoire"
+			)
+    	);
+    
+    	if ($validation->fails()) {
+    		return Response::make(json_encode($validation->messages()), 500);
+    	} else {
+    		$dateSoumission = \Carbon\Carbon::createFromFormat('d/m/Y', $submissionData['DateSoumission']);
+    
+    		$production = new Production();
+    		$production->Poids = $submissionData['Poids'];
+    		$production->ProduitID = $submissionData['ProduitID'];
+    		$production->AgriculteurID = $submissionData['AgriculteurID'];
+    		$production->DateSoumission = $dateSoumission->toDateString();
+    		$production->StatutSoumission = $submissionData['StatutSoumission'];
+    		$production->CanalSoumission = $submissionData['CanalSoumission'];
+    		$production->InitiateurID = $submissionData['AgriculteurID'];
+            $production->CampagneAgricoleID = $submissionData['CampagneAgricoleID'];
+            $production->ExploitationID = $submissionData['ExploitationID'];
+
+    		$production->save();
+    		
+    		$wsf = new SMSWebServicesFactory(Facade::getFacadeApplication());
+            $ws = $wsf->getSMSWebServices(Config::get('agritech.app.sms.gateway'));
+    		$msg = "Votre production de " . $production->Poids . "  du produit (" . $produit->Nom . ") de votre exploitation (" . $exploitation->Nom . ") a bien été enregistrée. Merci !"; 
+    		$ws->sendmsg($sender, $msg);
+    
+    	   return Response::make($msg);
+    	}
+    }
+    
     private function objectsToArray($objs, $key, $val){
       $arr = array();
       foreach($objs as $obj){
