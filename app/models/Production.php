@@ -13,9 +13,19 @@
         //all dates like 2014-03-25 17:37:54 look like 25-03-2014 17:37:54 now
       }
 
+      public function CampagneAgricole()
+      {
+        return $this->belongsTo('CampagneAgricole', 'CampagneAgricoleID');
+      }
+      
       public function Agriculteur()
       {
         return $this->belongsTo('Agriculteur', 'AgriculteurID');
+      }
+      
+      public function Exploitation()
+      {
+        return $this->belongsTo('Exploitation', 'ExploitationID');
       }
 
       public function Produit()

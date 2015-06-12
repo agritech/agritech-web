@@ -37,73 +37,23 @@ $(document).ready(function() {
     $('#DateSoumission').datepicker( $.datepicker.regional["fr"]);
     $('#Poids').mask('#0.00', {reverse: true});
 
-    function repoProduitFormatResult(repo) {
-      repo.id = repo.ProduitID;
-      var markup = '<div class="row">' +
-           '<div class="col-lg-3"><i class="fa fa-code-fork"></i> Ref : ' + repo.Ref + '</div>' +
-           '<div class="col-lg-3"><i class="fa fa-code-fork"></i> Nom : ' + repo.Nom + '</div>' +
-        '</div>';
-
-      return markup;
-    }
-
-    function repoProduitFormatSelection(repo) {
-      return 'Ref : ' + repo.Ref + ' - Nom : ' + repo.Nom;
-    }
-
-    $('#ProduitID').select2({
-        placeholder: "Rechercher un produit",
-        minimumInputLength: 1,
-        ajax: {
-            url: "{{ URL::to('produit/select2/ajax') }}",
-            dataType: 'json',
-            quietMillis: 250,
-            data: function (term, page) {
-                return {
-                    q: term, // search term
-                    page: page
-                };
-            },
-            results: function (data, page) {
-                var more = (page * 10) < data.recordsFiltered;
-                return { results: data.data, more: more };
-            },
-            cache: true
-        },
-        formatResult: repoProduitFormatResult,
-        formatSelection: repoProduitFormatSelection,
-        dropdownCssClass: "bigdrop",
-        escapeMarkup: function (m) { return m; },
-        id : function(obj){
-            return obj.ProduitID;
-        },
-        initSelection: function(element, callback) {
-            var id = $(element).val();
-            if (id !== "") {
-                var produit = {{$production->Produit->toJson()}};
-                callback(produit);
-            }
-        },
-    });
-    
     function repoAgriculteurFormatResult(repo) {
       repo.id = repo.UtilisateurID;
       var markup = '<div class="row">' +
-           '<div class="col-lg-3"><i class="fa fa-code-fork"></i> Login : ' + repo.Username + '</div>' +
-           '<div class="col-lg-3"><i class="fa fa-code-fork"></i> Nom : ' + repo.nom + '</div>' +
-           '<div class="col-lg-3"><i class="fa fa-code-fork"></i> Prénom : ' + repo.prenom + '</div>' +
+           '<div class="col-lg-6"><i class="fa fa-user"></i> Login : ' + repo.nom + '</div>' +
+           '<div class="col-lg-6">Prénom : ' + repo.prenom + '</div>' +
         '</div>';
 
       return markup;
     }
 
     function repoAgriculteurFormatSelection(repo) {
-      return 'Login : ' + repo.Username + ' - Nom : ' + repo.nom + ' - Prénom : ' + repo.prenom;
+      return 'Nom : ' + repo.nom + ' - Prénom : ' + repo.prenom;
     }
     
     $('#AgriculteurID').select2({
         placeholder: "Rechercher un agriculteur",
-        minimumInputLength: 1,
+        minimumInputLength: 0,
         ajax: {
             url: "{{ URL::to('agriculteur/select2/ajax') }}",
             dataType: 'json',
@@ -134,7 +84,102 @@ $(document).ready(function() {
                 callback(utilisateur);
             }
         }
+    }).on("change", function (e) { 
+        //Initialiser le select2
+        $('#ExploitationID').select2('val', null).trigger('change');
     });
+    
+    function repoExploitationFormatResult(repo) {
+      repo.id = repo.ExploitationID;
+      var markup = '<div class="row">' +
+           '<div class="col-lg-6"><i class="fa fa-home"></i> Nom : ' + repo.Ref + '</div>' +
+           '<div class="col-lg-6">Prénom : ' + repo.Nom + '</div>' +
+        '</div>';
+
+      return markup;
+    }
+    
+    function repoExploitationFormatSelection(repo) {
+      return 'Réference : ' + repo.Ref + ' - Nom : ' + repo.Nom;
+    }
+    
+    $('#ExploitationID').select2({
+        placeholder: "Rechercher une exploitation ...",
+        minimumInputLength: 0,
+        query: function (query) {
+            var agriculteurID = $('#AgriculteurID').val();
+            if(agriculteurID){
+                $.getJSON("{{ URL::to('exploitation/select2/ajax') }}/" + agriculteurID, function(data){
+                    var more = (query.page * 10) < data.recordsFiltered;
+                    query.callback({results: data.data, more: more }); 
+                });
+            }else{
+                query.callback({results: [], more: false });
+            }
+        },
+        initSelection: function (element, callback) {
+            var id = $(element).val();
+            if (id !== "") {
+                var exploitation = {{$production->Exploitation->toJson()}};
+                callback(exploitation);
+            }
+        },
+        formatResult: repoExploitationFormatResult,
+        formatSelection: repoExploitationFormatSelection, 
+        dropdownCssClass: "bigdrop", 
+        escapeMarkup: function (m) { return m; },
+        id : function(obj){
+            return obj.ExploitationID;
+        } 
+    }).on("change", function (e) { 
+        $('#ProduitID').select2('val', null).trigger('change'); 
+    });
+    
+    function repoProduitFormatResult(repo) {
+      repo.id = repo.ProduitID;
+      var markup = '<div class="row">' +
+           '<div class="col-lg-6"><i class="fa fa-tree"></i> Ref : ' + repo.Ref + '</div>' +
+           '<div class="col-lg-6">Nom : ' + repo.Nom + '</div>' +
+        '</div>';
+
+      return markup;
+    }
+
+    function repoProduitFormatSelection(repo) {
+      return 'Ref : ' + repo.Ref + ' - Nom : ' + repo.Nom;
+    }
+
+    $('#ProduitID').select2({
+        placeholder: "Rechercher un produit",
+        minimumInputLength: 0,
+        query: function (query) {
+            var exploitationID = $('#ExploitationID').val();
+            if(exploitationID){
+                $.getJSON("{{ URL::to('produit/select2/ajax') }}/" + exploitationID, function(data){
+                    var more = (query.page * 10) < data.recordsFiltered;
+                    query.callback({results: data.data, more: more }); 
+                });
+            }else{
+                query.callback({results: [], more: false });
+            }
+        },
+        initSelection: function (element, callback) {
+            var id = $(element).val();
+            if (id !== "") {
+                var produit = {{$production->Produit->toJson()}};
+                callback(produit);
+            }
+        },
+        formatResult: repoProduitFormatResult, 
+        formatSelection: repoProduitFormatSelection,  
+        dropdownCssClass: "bigdrop", 
+        escapeMarkup: function (m) { return m; },
+        id : function(obj){
+            return obj.ProduitID;
+        } 
+    });
+    
+    
 });
 </script>
 @stop
@@ -167,35 +212,65 @@ $(document).ready(function() {
                                     </div>
                                 @endforeach
                             @endif
-                            {{ Form::model($production, array('route' => array('production.update', $production->ProductionID), 'method' => 'put', 'role' => 'form')) }}
+                            {{ Form::model($production, array('route' => array('production.update', $production->ProductionID), 'method' => 'put', 'role' => 'form', 'class' => 'form-horizontal')) }}
+                                <div class="form-group @if($errors->first('CampagneAgricoleID') != '')) has-error @endif">
+                                    <label class="col-lg-3 control-label">Campagne agricole *</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::select('CampagneAgricoleID', $campagneAgricoles, $production->CampagneAgricoleID, array('class' => 'form-control')) }}
+                                    {{ $errors->first('CampagneAgricoleID', '<span class="error">:message</span>' ) }}
+                                    </div>
+                                </div>
+                                <div class="form-group @if($errors->first('AgriculteurID') != '')) has-error @endif">
+                                    <label class="col-lg-3 control-label">Agriculteur *</label>
+                                    <div class="col-lg-9">
+                                        <input type="hidden" class="bigdrop form-control" id="AgriculteurID" name="AgriculteurID" value="{{$production->AgriculteurID}}" />
+                                        {{ $errors->first('AgriculteurID', '<span class="error">:message</span>' ) }}
+                                    </div>
+                                </div>
+                                <div class="form-group @if($errors->first('ExploitationID') != '')) has-error @endif">
+                                    <label class="col-lg-3 control-label">Exploitation *</label>
+                                    <div class="col-lg-9">
+                                        <input type="hidden" class="bigdrop form-control" id="ExploitationID" name="ExploitationID" value="{{$production->ExploitationID}}" />
+                                        {{ $errors->first('ExploitationID', '<span class="error">:message</span>' ) }}
+                                    </div>
+                                </div>
+                                <div class="form-group @if($errors->first('ProduitID') != '')) has-error @endif">
+                                    <label class="col-lg-3 control-label">Produit *</label>
+                                    <div class="col-lg-9">
+                                        <input type="hidden" class="bigdrop form-control" id="ProduitID" name="ProduitID" value="{{$production->ProduitID}}" />
+                                        {{ $errors->first('ProduitID', '<span class="error">:message</span>' ) }}
+                                    </div>
+                                </div>
                                 <div class="form-group @if($errors->first('Poids') != '') has-error @endif">
-                                    <label>Poids *</label>
+                                    <label class="col-lg-3 control-label">Poids *</label>
+                                    <div class="col-lg-9">
                                     {{ Form::text('Poids', Input::old('Poids'), array('class' => 'form-control', 'placeholder' => "Poids (Kg)", 'id' => 'Poids') ) }}
                                     {{ $errors->first('Poids', '<span class="error">:message</span>' ) }}
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Produit *</label>
-                                    <input type="hidden" class="bigdrop form-control" id="ProduitID" name="ProduitID" value="{{$productione->ProduitID}}" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Agriculteur *</label>
-                                    <input type="hidden" class="bigdrop form-control" id="AgriculteurID" name="AgriculteurID" value="{{$production->AgriculteurID}}" />
-                                </div>
-                                <div class="form-group @if($errors->first('Debutperiode') != '')) has-error @endif">
-                                    <label>Date de soumission *</label>
+                                <div class="form-group @if($errors->first('DateSoumission') != '')) has-error @endif">
+                                    <label class="col-lg-3 control-label">Date de soumission *</label>
+                                    <div class="col-lg-9">
                                     <input type="text" name="DateSoumission" id="DateSoumission" value="{{$production->datesoumission_f}}" class="form-control">
                                     {{ $errors->first('DateSoumission', '<span class="error">:message</span>' ) }}
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Statut de la production</label>
+                                    <label class="col-lg-3 control-label">Statut de la production</label>
+                                    <div class="col-lg-9">
                                     {{ Form::select('StatutSoumission', $statutSoumissions, Input::old('StatutSoumission'), array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Canal de soumission de la production</label>
+                                    <label class="col-lg-3 control-label">Canal de soumission de la production</label>
+                                    <div class="col-lg-9">
                                     {{ Form::select('CanalSoumission', $canalSoumissions, Input::old('CanalSoumission'), array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
+                                <div class="col-lg-offset-3 col-lg-9">
                                 {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
+                                </div>
                             {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->

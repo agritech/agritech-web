@@ -21,13 +21,18 @@ class ProductionController extends \BaseController {
 
 
       $query = DB::table('production')
-        ->leftJoin('produit', 'produit.ProduitID', '=', 'production.ProduitID')
-        ->leftJoin('utilisateur', 'utilisateur.UtilisateurID', '=', 'production.AgriculteurID');
+        ->join('produit', 'produit.ProduitID', '=', 'production.ProduitID')
+        ->join('campagne_agricole', 'campagne_agricole.CampagneAgricoleID', '=', 'production.CampagneAgricoleID')
+        ->join('exploitation', 'exploitation.ExploitationID', '=', 'production.ExploitationID')
+        ->join('utilisateur', 'utilisateur.UtilisateurID', '=', 'production.AgriculteurID');
 
       $total = $query->count();
 
       if($search['value'] != ''){
         $query->where(function($q) use($search){
+          $q->where(DB::raw('LOWER(campagne_agricole.Nom)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
+          $q->where(DB::raw('LOWER(exploitation.Ref)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
+          $q->where(DB::raw('LOWER(exploitation.Nom)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
           $q->where(DB::raw('LOWER(produit.Ref)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
           $q->where(DB::raw('LOWER(produit.Nom)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
           $q->where(DB::raw('LOWER(utilisateur.Ref)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
@@ -52,7 +57,7 @@ class ProductionController extends \BaseController {
               }
           }
       }
-      $list = $query->select('production.*', 'utilisateur.Nom as agri_nom', 'produit.Nom as prod_nom')->get();
+      $list = $query->select('production.*', DB::raw('CONCAT(utilisateur.nom, " ", utilisateur.prenom) AS agriculteur_nom'), DB::raw('CONCAT(exploitation.Ref, " ", exploitation.Nom) AS exploitation_nom'), DB::raw('CONCAT(produit.Ref, " ", produit.Nom) AS produit_nom'), 'campagne_agricole.Nom as campagne_agricole_nom')->get();
 
       $datatable = new DataTableResponse($draw, $total, $total_search, $list, null);
 
@@ -221,12 +226,16 @@ class ProductionController extends \BaseController {
     
     public function edit($id)
     {
+      $campagneAgricoles = CampagneAgricole::get();
+      $campagneAgricoles = $this->objectsToArray($campagneAgricoles, 'CampagneAgricoleID', 'Nom');
+      
       $production = Production::find($id);
 
       return View::make('production.edit')
         ->with('production', $production)
         ->with('statutSoumissions', self::$statutSoumissions)
-        ->with('canalSoumissions', self::$canalSoumissions);
+        ->with('canalSoumissions', self::$canalSoumissions)
+        ->with('campagneAgricoles', $campagneAgricoles);
 
     }
 
@@ -239,7 +248,9 @@ class ProductionController extends \BaseController {
           'AgriculteurID' => 'required|numeric',
           'DateSoumission' => 'required|date_format:"d/m/Y"',
           'StatutSoumission' => 'required',
-          'CanalSoumission' => 'required'
+          'CanalSoumission' => 'required',
+          'CampagneAgricoleID' => 'required',
+          'ExploitationID' => 'required'
           ), 
         array(
           'Poids.required' => "Merci de renseigner le poids",
@@ -249,7 +260,9 @@ class ProductionController extends \BaseController {
           'AgriculteurID.numeric' => "L'agriculteur sélectionné n'est pas valide",
           'AgriculteurID.required' => "L'agriculteur sélectionné n'est pas valide",
           'ProduitID.numeric' => "Le produit sélectionné n'est pas valide",
-          'ProduitID.required' => "Le produit sélectionné n'est pas valide"
+          'ProduitID.required' => "Le produit sélectionné n'est pas valide",
+          'CampagneAgricoleID.required' => "Merci de renseigner la campagne agricole",
+          'ExploitationID.required' => "Merci de renseigner l'exploitation concernée"
         )
       );
 
@@ -267,6 +280,8 @@ class ProductionController extends \BaseController {
           $production->DateSoumission = $dateSoumission->toDateString();
           $production->StatutSoumission = \Input::get('StatutSoumission');
           $production->CanalSoumission = \Input::get('CanalSoumission');
+          $production->CampagneAgricoleID = \Input::get('CampagneAgricoleID');
+          $production->ExploitationID = \Input::get('ExploitationID');
           
           $production->save();
 

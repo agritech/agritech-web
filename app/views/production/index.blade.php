@@ -37,28 +37,26 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": "{{ URL::to('production/datatable/ajax') }}",
         "columns": [
-            {"name": "production.Poids", "targets": 0, "data": "Poids", className: "text-right"},
-            {"name": "production.StatutSoumission", "targets": 1, "data": "StatutSoumission", "type": "text", className: "text-left"},
-            {"name": "production.CanalSoumission", "targets": 2, "data": "CanalSoumission", "type": "text", className: "text-left"},
-            {"name": "production.DateSoumission", "targets": 3, "data": "DateSoumission", "type": "date", className: "text-right"},
-            {"name": "Action", "targets": 4, "searchable": false, "orderable": false, "width":"60px"}
+            {"name": "campagne_agricole.Nom", "targets": 0, "data": "campagne_agricole_nom", className: "text-left"},
+            {"name": "utilisateur.Nom", "targets": 1, "data": "agriculteur_nom", className: "text-left"},
+            {"name": "exploitation.Nom", "targets": 2, "data": "exploitation_nom", className: "text-left"},
+            {"name": "produit.Nom", "targets": 3, "data": "produit_nom", className: "text-left"},            
+            {"name": "production.Poids", "targets": 4, "data": "Poids", className: "text-right"},
+            {"name": "production.StatutSoumission", "targets": 5, "data": "StatutSoumission", "type": "text", className: "text-left"},
+            {"name": "production.CanalSoumission", "targets": 6, "data": "CanalSoumission", "type": "text", className: "text-left"},
+            {"name": "production.DateSoumission", "targets": 7, "data": "DateSoumission", "type": "date", className: "text-right"},
+            {"name": "Action", "targets": 8, "searchable": false, "orderable": false, "width":"60px"}
         ],
         "columnDefs": [
             {
                 "render": function ( data, type, row ) {
-                    return row.Poids + ' (Kg)';
-                },
-                "type": "html",
-                "targets": 0
-            },{
-                "render": function ( data, type, row ) {
                     return  '<div class="pull-right">' +
                                 '<a href="' + baseUrl + '/production/' + row.ProductionID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
-                                '<form method="POST" action="'+baseUrl + '/production/' + row.ProductionID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="VgCwyBAy8xM1DsqNDnyi5VBl8x1fUNixo4h3NCcY"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
+                                '<form method="POST" action="'+baseUrl + '/production/' + row.ProductionID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="{{Session::token()}}"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
                             '</div>';
                 },
                 "type": "html",
-                "targets": 4
+                "targets": 8
             },
             //{ "visible": false,  "targets": [ 3 ] }
         ],
