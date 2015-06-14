@@ -14,17 +14,17 @@ class ProductionTest extends TestCase {
     $production1['DateSoumission'] = '10/05/2015';
     $production1['StatutSoumission'] = 'SOUMIS'; // SOUMIS, VALIDE
     $production1['CanalSoumission'] = 'INTERNET'; //INTERNET, SMS, TELEPHONE
+    $production1['CampagneAgricoleID'] = 1;
+    $production1['ExploitationID'] = 1;
     
     //Création entité
     $response = $this->call('POST', '/production', $production1);
-
-    //Vérifier la redirection vers la vue
+    $this->assertResponseStatus(302);
     $this->assertRedirectedTo('production');
     $this->assertSessionHas('success');
     
     //Vérifier que la réponse contient l'url  pour modification
     $message = $response->getSession()->get('success');
-    $content = $response->getContent();
     $pattern = "/production\/([\d]+)\//";
     $this->assertRegExp($pattern, $message);
     preg_match_all($pattern, $message, $productionIdFinded);
@@ -40,6 +40,8 @@ class ProductionTest extends TestCase {
     $production1['DateSoumission'] = '10/05/2015';
     $production1['StatutSoumission'] = 'SOUMIS'; // SOUMIS, VALIDE
     $production1['CanalSoumission'] = 'INTERNET'; //INTERNET, SMS, TELEPHONE
+    $production1['CampagneAgricoleID'] = 1;
+    $production1['ExploitationID'] = 1;
     
     $response = $this->call('PUT', '/production/' . $productionId, $production1);
 
