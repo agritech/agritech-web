@@ -45,7 +45,11 @@ class TestDataSeeder extends Seeder {
         Roles::create(array('Username' => $achat1->Username, 'Role' => 'ACHETEUR')); 
         Roles::create(array('Username' => $achat1->Username, 'Role' => 'NEGOCIATIONPRODUCTION')); // L'acheteur gÃ¨re les nÃ©gociations de production en ligne
         Roles::create(array('Username' => $agri1->Username, 'Role' => 'AGRICULTEUR'));
+        Roles::create(array('Username' => $agri1->Username, 'Role' => 'PRODUCTION'));
+        Roles::create(array('Username' => $agri1->Username, 'Role' => 'EXPLOITATION'));
         Roles::create(array('Username' => $agri2->Username, 'Role' => 'AGRICULTEUR'));
+        Roles::create(array('Username' => $agri2->Username, 'Role' => 'PRODUCTION'));
+        Roles::create(array('Username' => $agri2->Username, 'Role' => 'EXPLOITATION'));
         
         //Charger lescampagnes agricoles
         CampagneAgricole::create(array('Ref' => 'C01', 'Nom' => 'Campagne Agricole 2014', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));

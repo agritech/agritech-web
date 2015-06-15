@@ -38,7 +38,9 @@ Route::group(array('prefix','/'), function() {
       Route::resource('production', 'ProductionController');  
       Route::get('production/datatable/ajax', 'ProductionController@datatable');
       
+      Route::resource('exploitation', 'ExploitationController');
       Route::get('exploitation/select2/ajax/{agriculteurID}', 'ExploitationController@select2');
+      Route::get('exploitation/datatable/ajax', 'ExploitationController@datatable');
       
 	     Route::resource('admin/produit', 'ProduitController');
        Route::get('admin/produit/datatable/ajax', 'ProduitController@datatable');

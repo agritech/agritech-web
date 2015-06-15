@@ -136,6 +136,20 @@
                     <!-- /.nav-second-level -->
                 </li>
                 @endif
+                @if(Auth::user()->hasRole('EXPLOITATION'))
+                <li @if(Request::is('exploitation') or Request::is('exploitation/create') or Request::is('exploitation/*/edit')) class="active" @endif>
+                    <a href="#"><i class="fa fa-compass fa-fw"></i> Exploitations<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a @if(Request::is('exploitation') or Request::is('exploitation/*/edit')) class="active" @endif href="{{ URL::to('exploitation') }}"><i class="fa fa-list fa-fw"></i> Liste des exploitations</a>
+                        </li>
+                        <li>
+                            <a @if(Request::is('exploitation/create')) class="active" @endif href="{{ URL::to('exploitation/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter une exploitation</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                @endif
                 @if(Auth::user()->hasRole('NEGOCIATIONPRODUCTION'))
                 <li @if(Request::is('negociationproduction') or Request::is('negociationproduction/*/create') or Request::is('production/*/edit/*')) class="active" @endif>
                     <a @if(Request::is('negociationproduction') or Request::is('negociationproduction/*/edit/*') or Request::is('negociationproduction/*/create')) class="active" @endif href="{{ URL::to('negociationproduction') }}"><i class="fa fa-money fa-fw"></i> Négociations des productions </a>

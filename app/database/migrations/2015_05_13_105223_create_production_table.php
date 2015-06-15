@@ -36,6 +36,10 @@ class CreateProductionTable extends Migration {
 				$table->increments('ExploitationID');
 				$table->string('Ref');
 				$table->string('Nom');
+				$table->integer('Superficie')->nullable();
+				$table->integer('Longitude')->nullable();
+				$table->integer('Latitude')->nullable();
+				$table->integer('NbrCultivateur')->nullable();
 				$table->integer('AgriculteurID')->unsigned();
 				$table->timestamps();
 			});
