@@ -51,7 +51,13 @@ class TestDataSeeder extends Seeder {
         Roles::create(array('Username' => $agri2->Username, 'Role' => 'PRODUCTION'));
         Roles::create(array('Username' => $agri2->Username, 'Role' => 'EXPLOITATION'));
         
-        //Charger lescampagnes agricoles
+        //ville
+        Ville::create(array('Ref' => 'V01', 'Nom' => 'Niamey'));
+        Ville::create(array('Ref' => 'V01', 'Nom' => 'Rabat'));
+        Ville::create(array('Ref' => 'V01', 'Nom' => 'Bandjoun'));
+        $niamey = Ville::where('Ref', 'V01')->firstOrFail();
+        
+        //Charger les campagnes agricoles
         CampagneAgricole::create(array('Ref' => 'C01', 'Nom' => 'Campagne Agricole 2014', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
         CampagneAgricole::create(array('Ref' => 'C02', 'Nom' => 'Campagne Agricole 2015', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
         
@@ -65,8 +71,8 @@ class TestDataSeeder extends Seeder {
         $papaye = Produit::where('Ref', 'PAPAYE')->firstOrFail();
         
         //Exploitation
-        Exploitation::create(array('Ref' => 'E01', 'Nom' => 'Exploitation 1 agri1', 'AgriculteurID'=>$agri1->UtilisateurID, 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
-        Exploitation::create(array('Ref' => 'E02', 'Nom' => 'Exploitation 2 agri1', 'AgriculteurID'=>$agri1->UtilisateurID, 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        Exploitation::create(array('Ref' => 'E01', 'Nom' => 'Exploitation 1 agri1', 'AgriculteurID'=>$agri1->UtilisateurID, 'VilleID' =>$niamey->VilleID, 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        Exploitation::create(array('Ref' => 'E02', 'Nom' => 'Exploitation 2 agri1', 'AgriculteurID'=>$agri1->UtilisateurID, 'VilleID' =>$niamey->VilleID, 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
         
         $exploitation1 = Exploitation::where('Ref', 'E01')->firstOrFail();
         $exploitation2 = Exploitation::where('Ref', 'E02')->firstOrFail();

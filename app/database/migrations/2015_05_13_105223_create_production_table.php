@@ -31,11 +31,22 @@ class CreateProductionTable extends Migration {
 	      });
 	    }
 		
+		if(!Schema::hasTable('ville')){
+	      Schema::create('ville', function($table)
+	      {
+	        $table->increments('VilleID');
+	        $table->string('Ref', 200);
+			$table->string('Nom', 2000);
+	      });
+	    }
+		
 		if(!Schema::hasTable('exploitation')){
 			Schema::create('exploitation', function($table){
 				$table->increments('ExploitationID');
 				$table->string('Ref');
 				$table->string('Nom');
+				$table->integer('VilleID')->unsigned();
+				$table->string('Village')->nullable();
 				$table->integer('Superficie')->nullable();
 				$table->integer('Longitude')->nullable();
 				$table->integer('Latitude')->nullable();
@@ -46,6 +57,7 @@ class CreateProductionTable extends Migration {
 			
 			Schema::table('exploitation', function($table){
 				$table->foreign('AgriculteurID')->references('UtilisateurID')->on('utilisateur');
+				$table->foreign('VilleID')->references('VilleID')->on('ville');
 		  });
 		}
 		
@@ -101,6 +113,7 @@ class CreateProductionTable extends Migration {
 		Schema::dropIfExists('exploitation');
 		Schema::dropIfExists('produit');
 		Schema::dropIfExists('campagne_agricole');
+		Schema::dropIfExists('ville');
 	}
 
 }
