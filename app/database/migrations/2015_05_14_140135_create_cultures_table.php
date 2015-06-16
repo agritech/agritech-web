@@ -27,11 +27,11 @@ class CreateCulturesTable extends Migration {
 		 DB::table('cultures')
         ->insert(
             array(
-                array('name' => 'ble', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'ble.jpg','created_at'=>date('Y-m-d H:m:s')),
-                array('name' => 'mil', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'mil.jpg','created_at'=>date('Y-m-d H:m:s')),
-                array('name' => 'fonio', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'fonio.jpg','created_at'=>date('Y-m-d H:m:s')),
-				array('name' => 'mais', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'mais.jpg','created_at'=>date('Y-m-d H:m:s')),
-				array('name' => 'riz', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'riz.jpg','created_at'=>date('Y-m-d H:m:s'))
+                array('name' => 'ble', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'ble.jpg','created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')),
+                array('name' => 'mil', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'mil.jpg','created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')),
+                array('name' => 'fonio', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'fonio.jpg','created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')),
+				array('name' => 'mais', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'mais.jpg','created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')),
+				array('name' => 'riz', 'description'=> 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', 'image'=> 'riz.jpg','created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s'))
             )
         );
 		

@@ -17,11 +17,19 @@
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
 @section('css')
+{{ HTML::style('assets/jquery-ui-1.11.2/themes/base/all.css') }}
 @stop
 
 {{-- Page specific JS files --}}
 {{-- {{ HTML::script('--Path to js--') }} --}}
 @section('scripts')
+{{ HTML::script('assets/jquery-ui-1.11.2/ui/datepicker.js') }}
+{{ HTML::script('assets/jquery-ui-1.11.2/demos/datepicker/datepicker-fr.js') }}
+<script>
+$(document).ready(function() {
+    $('#date_naissance').datepicker( $.datepicker.regional["fr"]);
+});
+</script>
 @stop
 
 {{-- Page content --}}
@@ -52,31 +60,103 @@
                                     </div>
                                 @endforeach
                             @endif
-                            {{ Form::open(array('url' => URL::to('admin/user') , 'role' => 'form')) }}
+                            {{ Form::open(array('url' => URL::to('admin/user') , 'role' => 'form', 'class' => 'form-horizontal')) }}
                                 <div class="form-group @if($errors->first('Username') != '') has-error @endif">
-                                    <label>Login *</label>
+                                    <label class="col-lg-3 control-label">Login *</label>
+                                    <div class="col-lg-9">
                                     {{ Form::text('Username', Input::old('Username'), array('class' => 'form-control', 'autofocus' => '' ) ) }}
                                     {{ $errors->first('Username', '<span class="error">:message</span>' ) }}
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Est un administrateur ?</label>
-                                    {{ Form::checkbox('isadmin', Input::old('isadmin') ) }}
+                                    <label class="col-lg-3 control-label">Nom</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('nom', Input::old('nom'), array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <label class="col-lg-3 control-label">Prénom</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('prenom', Input::old('prenom'), array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Date de naissance</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="date_naissance" id="date_naissance" value="{{Input::old('date_naissance')}}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Sexe</label>
+                                    <div class="col-lg-9">
+                                        {{ Form::select('sexe', array('MASCULIN' => 'Masculin', 'FEMININ' => 'Feminin'), Input::old('sexe'), array('class' => 'form-control' ) ) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Email</label>
+                                    <div class="col-lg-9">
                                     {{ Form::email('Mail', Input::old('Mail'), array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Téléphone</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('telephone', Input::old('telephone'), array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Adresse</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('adresse', Input::old('adresse'), array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Ville</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('ville', Input::old('ville'), array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Pays</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('pays', Input::old('pays'), array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Fonction</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('fonction', Input::old('fonction'), array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Société</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('societe', Input::old('societe'), array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Est un administrateur ?</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::checkbox('isadmin', Input::old('isadmin') ) }}
+                                    </div>
                                 </div>
                                 <div class="form-group @if($errors->first('password') != '') has-error @endif">
-                                    <label>Mot de passe *</label>
+                                    <label class="col-lg-3 control-label">Mot de passe *</label>
+                                    <div class="col-lg-9">
                                     {{ Form::password('password', array('class' => 'form-control')) }}
                                     {{ $errors->first('password', '<span class="error">:message</span>' ) }}
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Vérifier le mot de passe</label>
+                                    <label class="col-lg-3 control-label">Vérifier le mot de passe</label>
+                                    <div class="col-lg-9">
                                     {{ Form::password('password_confirmation', array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
+                                <div class="col-lg-offset-3 col-lg-9">
                                 {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
+                                </div>
                             {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->

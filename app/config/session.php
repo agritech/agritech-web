@@ -96,7 +96,7 @@ return array(
 	|
 	*/
 
-	'cookie' => 'dossoagri_session',
+	'cookie' => 'agritech_session',
 
 	/*
 	|--------------------------------------------------------------------------

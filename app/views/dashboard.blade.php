@@ -22,13 +22,60 @@
 @stop
 
 {{-- Page specific JS files --}}
-{{-- {{ HTML::script('--Path to js--') }} --}}
 @section('scripts')
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+{{ HTML::script('assets/Highcharts-4.0.4/js/highcharts.js') }}
+{{ HTML::script('assets/Highcharts-4.0.4/js/modules/data.js') }}
+{{ HTML::script('assets/Highcharts-4.0.4/js/modules/exporting.js') }}
+
 <script>
 $(document).ready(function() {
-    $('#dataTables-example').dataTable();
-});
+    $(function () {
+        // Get the CSV and create the chart
+        $.getJSON('{{URL::to('')}}/jsonp?filename=analytics.csv&callback=?', function (jsonData) {
+            
+            $('#container').highcharts({
+                
+                series: jsonData.series,
+                
+                chart: {
+                    type: 'column'
+                },
+        
+                title: {
+                    text: 'Utilisateurs groupés par types'
+                },
+        
+                xAxis: {
+                    categories: ['Agriculteur', 'Acheteur', 'Partenaire', 'Professionnel']
+                },
+        
+                yAxis: {
+                    allowDecimals: false,
+                    min: 0,
+                    title: {
+                        text: 'Nombre d\'utilisateurs'
+                    }
+                },
+        
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.x + '</b><br/>' +
+                            this.series.name + ': ' + this.y + '<br/>' +
+                            'Total: ' + this.point.stackTotal;
+                    }
+                },
+        
+                plotOptions: {
+                    column: {
+                        stacking: 'normal'
+                    }
+                }
+            });
+        });
+    });
+
+
+});//fin document.ready
 </script>
 @stop
 
@@ -57,7 +104,7 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
-                <a href="{{ URL::to('recolte') }}">
+                <a href="{{ URL::to('production') }}">
                     <div class="panel-footer">
                         <span class="pull-left">Voir détails</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -79,7 +126,7 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
-                <a href="{{ URL::to('negociationrecolte') }}">
+                <a href="{{ URL::to('negociationproduction') }}">
                     <div class="panel-footer">
                         <span class="pull-left">Voir détails</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -111,7 +158,12 @@ $(document).ready(function() {
             </div>
         </div>
     </div>
-    
+    <!-- row -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+    </div>
 </div>
 <!-- /#page-wrapper -->
 

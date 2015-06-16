@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost:88/dossoagri/',
+	'url' => 'http://localhost:88/agritech/',
 
 	/*
 	|--------------------------------------------------------------------------

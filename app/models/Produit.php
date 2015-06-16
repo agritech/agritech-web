@@ -4,4 +4,16 @@
       protected $table = 'produit';
       
       protected $primaryKey = 'ProduitID';
+      
+      public $timestamps = false;
+      
+      public function getEditUrlAttribute()
+      {
+        return URL::to('admin/produit/' .  $this->attributes['ProduitID'] . '/edit');
+      }
+
+      public function getDeleteUrlAttribute()
+      {
+          return URL::to('admin/produit/' . $this->attributes['ProduitID'] );
+      }
     }   

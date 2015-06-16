@@ -1,6 +1,6 @@
 <?php
 
-class SMSWebServices extends Playsms\Webservices {
+class SMSWebServices {
 	public $url = 'http://41.138.57.242:8001/itechsmsdev/index.php?app=ws';
 	public $username = 'dossoagri';
 	public $password = 'dossoagripass';
@@ -13,26 +13,32 @@ class SMSWebServices extends Playsms\Webservices {
 	
 	public function sendmsg($to, $msg) {
 
-		$this->getToken();
+		$ws = new Playsms\Webservices();
+		$ws->url = $this->url;
+		$ws->username = $this->username;
+		$ws->password = $this->password;
+
+		$ws->getToken();
+		$ws->getData();
 		
-		if ($this->getStatus()) {
+		if ($ws->getStatus()) {
 		
-			$this->token = $this->getData()->token;
-			$this->to = $to;
-			$this->msg = $msg;
-			$this->sendSms();
+			$ws->token = $ws->getData()->token;
+			$ws->to = $to;
+			$ws->msg = $msg;
+			$ws->sendSms();
 			
 			return array(
-					'status' => $this->getStatus(),
-					'return' => $this->getData()
+					'status' => $ws->getStatus(),
+					'return' => $ws->getData()
 			);
 		
 		} else {
 			return array(
 					'status' => false,
 					'return' => array (
-										'errorCode' => $this->getError(),
-										'errorString' => $this->getErrorString()
+										'errorCode' => $ws->getError(),
+										'errorString' => $ws->getErrorString()
 								)
 					);
 		}

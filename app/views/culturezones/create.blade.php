@@ -143,9 +143,7 @@ $(document).ready(function()
                                 
                                 <div class="form-group">
                                     <label>Description</label>
-                                    {{ Form::textarea('description', Input::old('description'), array('class' => 'form-control')) }}
-                                    
-                                    
+                                    {{ Form::textarea('description', Input::old('description'), array('class' => 'form-control')) }}                                   
                                 </div>
                                 
                                 <div class="control-group" id="fields">

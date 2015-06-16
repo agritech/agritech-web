@@ -7,8 +7,9 @@ Bienvenu sur le site du projet AGRITECH
 ## Personnes concernées
 AGRITECH est une initiative qui a pour but de mettre en relation :
 
-* Les petits agriculteurs ;
-* Les acheteur finaux ;
+* Les agriculteurs ;
+* Les acheteur pour la vente (finaux) ;
+* Les partenaires interessés d'avoir des données consolidées sur l'activité agricole d'une région données sous forme de rapport et de base de données ;
 * Les professionnels de l'agriculture ;
 * Et les pouvoir publics et ONG qui travaillent dans l'agriculture.
 
@@ -24,8 +25,6 @@ Pour l'architecture, rien de mieux que les [micro services] Il faut faire plein 
 
 Du coup pour le premier pavé voici la vision (à mettre-à-jour) :
 * Application SMS pour les fonctionnalités agriculteurs ;
-* Application Web pour les internautes (négociation de prix des recoltes postés, rapports divers pour les professionels du monde agricole ) ;
-* Application mobile pour consulter les zones cltivables et autres informations utiles.
 
 ## Production
 

@@ -17,11 +17,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="DossoAgri, plateforme d'échange entre les agriculteurs, les acheteurs et les povoirs publiques'">
-    <meta name="keywords" content="Dossoagri, Dosso, agriculture, acheteurs, pourvoir publiques, météo, Niger">
+    <meta name="description" content="AGRITECH, plateforme de marché d'échange entre les agriculteurs, les acheteurs et les povoirs publiques'">
+    <meta name="keywords" content="AGRITECH, technique, achat, vente, produits, production, agriculture, acheteurs, pourvoir publiques, météo, Niger, Afrique">
     <meta name="author" content="Lim Consulting, IsofLab">
 
-    <title>@yield('title') - DossoAgri</title>
+    <title>@yield('title') - AGRITECH</title>
 
     <!-- Bootstrap Core CSS -->
     {{ HTML::style('assets/css/bootstrap.min.css') }}
@@ -33,7 +33,7 @@
     {{ HTML::style('assets/css/sb-admin-2.css') }}
     
     <!-- Custom Fonts -->
-    {{ HTML::style('assets/font-awesome-4.1.0/css/font-awesome.min.css') }}
+    {{ HTML::style('assets/font-awesome-4.3.0/css/font-awesome.min.css') }}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

@@ -18,41 +18,59 @@ Route::group(array('prefix','/'), function() {
 
   Route::get('logout','UserController@logout');
 
-  Route::get('recolte/addsms/ajax', 'RecolteController@storeSMS');
+  Route::get('production/addsms/ajax', 'ProductionController@storeSMS');
+  
+  Route::get('oauth/provider/{provider}', 'OAuthController@login');
+  
+  Route::get('register', 'RegisterController@create');
+  Route::post('register', 'RegisterController@store');
   
   // Secure-Routes
   Route::group(array('before' => array('auth')), function()
   {
       Route::get('', 'DashboardController@showDashboard');
+      Route::get('jsonp', 'DashboardController@jsonp');
       
-      Route::resource('recolte', 'RecolteController');  
-      Route::get('recolte/datatable/ajax', 'RecolteController@datatable');
+      Route::resource('profile', 'ProfileController');
+      Route::post('profile/{user}/photo', 'ProfileController@photoPost');
+      Route::get('profile/{user}/photo/{photo}', 'ProfileController@photoGet');
       
-	   
-	     Route::get('produit/select2/ajax', 'ProduitController@select2');
+      Route::resource('production', 'ProductionController');  
+      Route::get('production/datatable/ajax', 'ProductionController@datatable');
       
-      Route::resource('negociationrecolte', 'NegociationRecolteController');
-      Route::get('negociationrecolte/{recolteID}/create', 'NegociationRecolteController@negociationRecolteCreate');
-      Route::post('negociationrecolte/{recolteID}/store', 'NegociationRecolteController@negociationRecolteStore');
-      Route::get('negociationrecolte/{recolteID}/edit/{negociationRecoleID}', 'NegociationRecolteController@negociationRecolteEdit');
-      Route::post('negociationrecolte/{recolteID}/update/{negociationRecolteID}', 'NegociationRecolteController@negociationRecolteUpdate');
-      Route::get('negociationrecolte/datatable/ajax', 'NegociationRecolteController@datatable');
+      Route::resource('exploitation', 'ExploitationController');
+      Route::get('exploitation/select2/ajax/{agriculteurID}', 'ExploitationController@select2');
+      Route::get('exploitation/datatable/ajax', 'ExploitationController@datatable');
+      
+	     Route::resource('admin/produit', 'ProduitController');
+       Route::get('admin/produit/datatable/ajax', 'ProduitController@datatable');
+	     Route::get('produit/select2/ajax/{exploitationID}', 'ProduitController@select2');
+      
+      Route::resource('negociationproduction', 'NegociationProductionController');
+      Route::get('negociationproduction/{productionID}/create', 'NegociationProductionController@negociationProductionCreate');
+      Route::post('negociationproduction/{productionID}/store', 'NegociationProductionController@negociationProductionStore');
+      Route::get('negociationproduction/{productionID}/edit/{negociationRecoleID}', 'NegociationProductionController@negociationProductionEdit');
+      Route::post('negociationproduction/{productionID}/update/{negociationProductionID}', 'NegociationProductionController@negociationProductionUpdate');
+      Route::get('negociationproduction/datatable/ajax', 'NegociationProductionController@datatable');
 
       Route::get('agriculteur/select2/ajax', 'AgriculteurController@select2');
 
+  	  // Alerte controller.
+  	  Route::resource('alerte', 'AlerteController');
+  	  Route::get('alerte/datatable/ajax', 'AlerteController@datatable');
+      Route::get('alerte/addsms/ajax', 'AlerteController@storeSMS');
       
-	  // Alerte controller.
-	  Route::resource('alerte', 'AlerteController');
-	  Route::get('alerte/datatable/ajax', 'AlerteController@datatable');
-    Route::get('alerte/addsms/ajax', 'AlerteController@storeSMS');
-      
-	  Route::get('evenement/select2/ajax', 'EvenementController@select2');
+  	  Route::get('evenement/select2/ajax', 'EvenementController@select2');
 
 
       // Admin
       Route::resource('admin/user', 'UserController');
+      Route::post('admin/user/{user}/photo', 'UserController@photoPost');
+      Route::get('admin/user/{user}/photo/{photo}', 'UserController@photoGet');
 
       Route::resource('admin/role', 'RoleController');
+      
+      Route::resource('admin/settings', 'SettingsController');
       
       // Cultures 
       Route::resource('cultures', 'CultureController@index');

@@ -34,7 +34,7 @@ ClassLoader::addDirectories(array(
 |
 */
 
-Log::useFiles(storage_path().'/logs/dossoagri.log');
+Log::useFiles(storage_path().'/logs/agritech.log');
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +99,4 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+require app_path().'/config/agritech.php';

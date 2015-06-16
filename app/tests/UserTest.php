@@ -8,7 +8,7 @@ class UserTest extends TestCase {
     $user->login(array('email' => 'admin', 'password' => 'admin'));
 
     $user1 = array();
-    $user1['Mail'] = 'test1@dossoagri.com';
+    $user1['Mail'] = 'test1@agritech.com';
     $user1['Username'] = 'test1';
     $user1['isadmin'] = '0';
     $user1['password'] = 'test1';

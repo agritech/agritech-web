@@ -6,8 +6,6 @@ class AlerteController extends \BaseController {
   
     public function index()
     {
-      $baseid = Auth::user()->BaseID; 
-
       return  View::make('alerte.index');
     }
 
@@ -23,7 +21,7 @@ class AlerteController extends \BaseController {
 
       $query = DB::table('alerte')
         ->leftJoin('evenement', 'evenement.EvenementID', '=', 'alerte.EvenementID')
-		 ->leftJoin('utilisateur', 'utilisateur.UtilisateurID', '=', 'alerte.initiateurID');
+        ->leftJoin('utilisateur', 'utilisateur.UtilisateurID', '=', 'alerte.initiateurID');
         
 
       $total = $query->count();
@@ -149,7 +147,7 @@ class AlerteController extends \BaseController {
 
           $modifierUrl = URL::to('alerte/' . $alerte->AlerteID . '/edit');
           Session::flash('success', "<p>Mise-à-jour l'alerte effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier l'alerte</a></p>");
-          return Redirect::to('recolte');
+          return Redirect::to('alerte');
         }
     }
 

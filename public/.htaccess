@@ -11,5 +11,5 @@
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ /dossoagri/index.php [L]
+    RewriteRule ^ /agritech/index.php [L]
 </IfModule>
