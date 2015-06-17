@@ -60,9 +60,6 @@ Route::group(array('prefix','/'), function() {
   	  Route::get('alerte/datatable/ajax', 'AlerteController@datatable');
       Route::get('alerte/addsms/ajax', 'AlerteController@storeSMS');
       
-  	  Route::get('evenement/select2/ajax', 'EvenementController@select2');
-
-
       // Admin
       Route::resource('admin/user', 'UserController');
       Route::post('admin/user/{user}/photo', 'UserController@photoPost');

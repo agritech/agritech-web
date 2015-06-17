@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Facade;
 
 class AlerteController extends \BaseController {
-   
+   public static $icones = array('info' => 'Information', 'warning' => 'Attention', 'danger' => 'Danger', 'success' => 'Succès');
   
     public function index()
     {
@@ -18,18 +18,17 @@ class AlerteController extends \BaseController {
       $order = \Input::get('order');
       $columns = \Input::get('columns');
 
-
       $query = DB::table('alerte')
-        ->leftJoin('evenement', 'evenement.EvenementID', '=', 'alerte.EvenementID')
-        ->leftJoin('utilisateur', 'utilisateur.UtilisateurID', '=', 'alerte.initiateurID');
-        
+        ->join('evenement', 'evenement.EvenementID', '=', 'alerte.EvenementID')
+        ->join('utilisateur', 'utilisateur.UtilisateurID', '=', 'alerte.initiateurID');
 
       $total = $query->count();
 
       if($search['value'] != ''){
         $query->where(function($q) use($search){
           $q->where(DB::raw('LOWER(evenement.Nom)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
-          $q->where(DB::raw('LOWER(evenement.Description)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
+          $q->where(DB::raw('LOWER(utilisateur.nom)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
+          $q->where(DB::raw('LOWER(utilisateur.prenom)'), 'LIKE', Str::lower('%' . trim($search['value']) . '%' ));
           
         });
       }
@@ -50,7 +49,7 @@ class AlerteController extends \BaseController {
               }
           }
       }
-      $list = $query->select('alerte.*', 'evenement.Nom as event_nom')->get();
+      $list = $query->select('alerte.*', DB::raw('CONCAT(utilisateur.Nom, " ", utilisateur.prenom)  as InitiateurNom'), 'evenement.Nom as EvenementNom')->get();
 
       $datatable = new DataTableResponse($draw, $total, $total_search, $list, null);
 
@@ -59,7 +58,9 @@ class AlerteController extends \BaseController {
 
     public function create()
     {
-      return View::make('alerte.create');
+      return View::make('alerte.create')
+        ->with('evenements', $this->objectsToArray(Evenement::get(), 'EvenementID', 'Nom'))
+        ->with('icones', self::$icones);
        
     }
 
@@ -73,7 +74,7 @@ class AlerteController extends \BaseController {
         array(
           'EvenementID.required' => "L'evenement selectionne n'est pas valide",
           'EvenementID.numeric' => "L'evenement selectionne n'est pas valide",
-          'DateCreation.date_format' => "La date de creation n'est pas une date valide au format (DD/MM/YYYY)",
+          'DateCreation.date_format' => "La date de création n'est pas une date valide au format (DD/MM/YYYY)",
           'DateCreation.required' => "Merci de remplir le champ Date de creation"        
         )
       );
@@ -86,14 +87,11 @@ class AlerteController extends \BaseController {
           $dateCreation = \Carbon\Carbon::createFromFormat('d/m/Y', Input::get('DateCreation'));
           
           $alerte = new Alerte();
-          
           $alerte->EvenementID = \Input::get('EvenementID');
-          
           $alerte->DateCreation = $dateCreation->toDateString();
           $alerte->Message = \Input::get('Message');
-          
+          $alerte->Icone = \Input::get('Icone');
           $alerte->InitiateurID = Auth::user()->UtilisateurID;
-          
           $alerte->save();
 
           $modifierUrl = URL::to('alerte/' . $alerte->AlerteID . '/edit');
@@ -107,9 +105,9 @@ class AlerteController extends \BaseController {
       $alerte = Alerte::find($id);
 
       return View::make('alerte.edit')
-        ->with('alerte', $alerte);
-      
-
+        ->with('alerte', $alerte)
+        ->with('evenements', $this->objectsToArray(Evenement::get(), 'EvenementID', 'Nom'))
+        ->with('icones', self::$icones);
     }
 
     public function update($id){
@@ -136,13 +134,10 @@ class AlerteController extends \BaseController {
           $dateCreation = \Carbon\Carbon::createFromFormat('d/m/Y', Input::get('DateCreation'));
           
           $alerte = Alerte::find($id);
-          
           $alerte->EvenementID = \Input::get('EvenementID');
-          
           $alerte->DateCreation = $dateCreation->toDateString();
           $alerte->Message = \Input::get('Message');
-         
-          
+          $alerte->Icone = \Input::get('Icone');
           $alerte->save();
 
           $modifierUrl = URL::to('alerte/' . $alerte->AlerteID . '/edit');
