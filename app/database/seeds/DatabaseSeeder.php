@@ -64,8 +64,8 @@ class TestDataSeeder extends Seeder {
         $campagne2015 = CampagneAGricole::where('Ref', 'C02')->firstOrFail();
         
         // Charger les produits
-        Produit::create(array('Ref' => 'PAPAYE', 'Nom' => 'Papaye'));
-        Produit::create(array('Ref' => 'MANGUE', 'Nom' => 'Mangue'));
+        Produit::create(array('Ref' => 'PAPAYE', 'Nom' => 'Papaye', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        Produit::create(array('Ref' => 'MANGUE', 'Nom' => 'Mangue', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
         
         $mangue = Produit::where('Ref', 'MANGUE')->firstOrFail();
         $papaye = Produit::where('Ref', 'PAPAYE')->firstOrFail();
@@ -104,21 +104,28 @@ class TestDataSeeder extends Seeder {
         $negociationproduction->save();
 
 		// Charger les evenements
-		Evenement::create(array('Nom' => 'Meteo', 'Description' => 'Evenement meteorologique (tempête, pluie, vent, ...)'));
+		Evenement::create(array('Nom' => 'Meteo', 'Description' => 'Evenement meteorologique (tempête, pluie, vent, sècheresse...)'));
 		Evenement::create(array('Nom' => 'Travaux', 'Description' => 'Travaux de chantiers...'));
-		Evenement::create(array('Nom' => 'Veto', 'Description' => 'Visite veterinaire....'));
-		Evenement::create(array('Nom' => 'Entretien', 'Description' => 'Conseil entretien betail'));
-		Evenement::create(array('Nom' => 'Service regulation', 'Description' => 'Prix des semences, ...'));
+		Evenement::create(array('Nom' => 'Sanitaire', 'Description' => 'Problèmes santaires'));
+		Evenement::create(array('Nom' => 'Engrais', 'Description' => 'Conseil engrais'));
+		Evenement::create(array('Nom' => 'Invasion', 'Description' => 'Invasions de criquets et autre, ...'));
 		
 		$evenementTempete = Evenement::where('Nom','Meteo')->firstOrFail();
 		
 		// Charger les alertes
 		$alerte = new Alerte();
+        $alerte->Titre = "Tempête de sable sur Dogondoutchi";
 		$alerte->DateCreation = '2015-05-11';
 		$alerte->Message = 'Tempête de sable prevue dans la zone de Dogondoutchi du 18/05 au 21/05 avec tres faible visibilite';
 		$alerte->EvenementID = $evenementTempete->EvenementID;
 		$alerte->InitiateurID = $admin->UtilisateurID;
-		$alerte->save();
+        $alerte->Icone = 'info';
+        $alerte->save();
+        $alerte->Destinataires()->saveMany(array(
+            new AlerteDestinataire(array('DestinataireType' => 'PAYS','DestinataireID' => 1, 'MoyenEnvoie' => 'EMAIL', 'StatutEnvoie' => 'BROUILLON')),
+            new AlerteDestinataire(array('DestinataireType' => 'REGION','DestinataireID' => 1, 'MoyenEnvoie' => 'SLACK', 'StatutEnvoie' => 'BROUILLON')))
+        );
+		
 		
         // Charger les logs
         $log = new DBLog();

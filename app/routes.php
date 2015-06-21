@@ -29,7 +29,9 @@ Route::group(array('prefix','/'), function() {
   Route::group(array('before' => array('auth')), function()
   {
       Route::get('', 'DashboardController@showDashboard');
-      Route::get('jsonp', 'DashboardController@jsonp');
+      
+      Route::get('report/users', 'ReportController@showUsersDashboard');
+      Route::get('jsonp', 'ReportController@jsonp');
       
       Route::resource('profile', 'ProfileController');
       Route::post('profile/{user}/photo', 'ProfileController@photoPost');
@@ -60,9 +62,6 @@ Route::group(array('prefix','/'), function() {
   	  Route::get('alerte/datatable/ajax', 'AlerteController@datatable');
       Route::get('alerte/addsms/ajax', 'AlerteController@storeSMS');
       
-  	  Route::get('evenement/select2/ajax', 'EvenementController@select2');
-
-
       // Admin
       Route::resource('admin/user', 'UserController');
       Route::post('admin/user/{user}/photo', 'UserController@photoPost');

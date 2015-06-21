@@ -5,8 +5,6 @@
       
       protected $primaryKey = 'ProduitID';
       
-      public $timestamps = false;
-      
       public function getEditUrlAttribute()
       {
         return URL::to('admin/produit/' .  $this->attributes['ProduitID'] . '/edit');

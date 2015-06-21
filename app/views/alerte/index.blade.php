@@ -37,39 +37,33 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": "{{ URL::to('alerte/datatable/ajax') }}",
         "columns": [
-            
-            {"name": "alerte.Message", "targets": 0, "data": "Message", "type": "text", className: "text-left"},
-            {"name": "alerte.DateCreation", "targets": 1, "data": "DateCreation", "type": "date", className: "text-left"},
-            {"name": "Action", "targets": 2, "searchable": false, "orderable": false, "width":"60px"}
+            {"name": "Icone", "targets": 0, "searchable": false, "orderable": false, "width":"30px"},
+            {"name": "alerte.Titre", "targets": 1, "data": "Titre", "type": "text", className: "text-left", "width":"70%"},
+            {"name": "alerte.DateCreation", "targets": 2, "data": "DateCreation", "type": "date", className: "text-left", "width":"10%"},
+            {"name": "evenement.Nom", "targets": 3, "data": "EvenementNom", "type": "text", className: "text-left", "width":"10%"},
+            {"name": "utilisateur.nom", "targets": 4, "data": "InitiateurNom", "type": "text", className: "text-left", "width":"10%"},
+            {"name": "Action", "targets": 5, "searchable": false, "orderable": false, "width":"60px"}
         ],
         "columnDefs": [
             {
                 "render": function ( data, type, row ) {
-                    return row.Message;
+                    return  '<div class="text-center">' +
+                                '<i class="fa fa-' + row.Icone + ' fa-2x"></i>' +
+                            '</div>';
                 },
                 "type": "html",
                 "targets": 0
             },
-			
-			{
-                "render": function ( data, type, row ) {
-                    return row.DateCreation;
-                },
-                "type": "html",
-                "targets": 1
-            },
-			
-			{
+            {
                 "render": function ( data, type, row ) {
                     return  '<div class="pull-right">' +
                                 '<a href="' + baseUrl + '/alerte/' + row.AlerteID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
-                                '<form method="POST" action="'+baseUrl + '/alerte/' + row.AlerteID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="VgCwyBAy8xM1DsqNDnyi5VBl8x1fUNixo4h3NCcY"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
+                                '<form method="POST" action="'+baseUrl + '/alerte/' + row.AlerteID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="{{Session::token()}}"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
                             '</div>';
                 },
                 "type": "html",
-                "targets": 2
-            },
-            //{ "visible": false,  "targets": [ 3 ] }
+                "targets": 5
+            }
         ],
         "tableTools": {
             "sSwfPath": "{{ URL::to('/')}}/assets/js/plugins/dataTables/extensions/TableTools-2.2.3/swf/copy_csv_xls_pdf.swf"
@@ -112,8 +106,11 @@ $(document).ready(function() {
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                                 <tr>
-                                    <th>Message&nbsp;</th>
-                                    <th>Date de creation&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                    <th>Titre&nbsp;</th>
+                                    <th>Date&nbsp;</th>
+                                    <th>Type&nbsp;</th>
+                                    <th>Initiateur&nbsp;</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>

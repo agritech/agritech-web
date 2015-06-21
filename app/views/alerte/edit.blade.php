@@ -12,7 +12,7 @@
 @extends('templates.normal')
 
 {{-- Page title --}}
-@section('title') Modifier une récolte @stop
+@section('title') Modifier une alerte @stop
 
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
@@ -36,56 +36,6 @@
 $(document).ready(function() {
     $('#DateCreation').datepicker( $.datepicker.regional["fr"]);
    
-    
-    function repoEvenementFormatResult(repo) {
-      repo.id = repo.EvenementID;
-      var markup = '<div class="row">' +
-           '<div class="col-lg-3"><i class="fa fa-code-fork"></i> Nom : ' + repo.Nom + '</div>' +
-           '<div class="col-lg-3"><i class="fa fa-code-fork"></i> Description : ' + repo.Description + '</div>' +
-        '</div>';
-
-      return markup;
-    }
-
-     function repoEvenementFormatSelection(repo) {
-      return 'Nom : ' + repo.Nom + ' - Description : ' + repo.Description;
-    }
-
-    $('#EvenementID').select2({
-        placeholder: "Rechercher un événement",
-        minimumInputLength: 1,
-        ajax: {
-            url: "{{ URL::to('evenement/select2/ajax') }}",
-            dataType: 'json',
-            quietMillis: 250,
-            data: function (term, page) {
-                return {
-                    q: term, // search term
-                    page: page
-                };
-            },
-            results: function (data, page) {
-                var more = (page * 10) < data.recordsFiltered;
-                return { results: data.data, more: more };
-            },
-            cache: true
-        },
-        formatResult: repoEvenementFormatResult,
-        formatSelection: repoEvenementFormatSelection,
-        dropdownCssClass: "bigdrop",
-        escapeMarkup: function (m) { return m; },
-        id : function(obj){
-            return obj.EvenementID;
-        },
-        initSelection: function(element, callback) {
-            var id = $(element).val();
-            if (id !== "") {
-                var evenement = {{$alerte->Evenement->toJson()}};
-                callback(evenement);
-            }
-        },
-    });
-    
 });
 </script>
 @stop
@@ -118,25 +68,46 @@ $(document).ready(function() {
                                     </div>
                                 @endforeach
                             @endif
-                            {{ Form::model($alerte, array('route' => array('alerte.update', $alerte->AlerteID), 'method' => 'put', 'role' => 'form')) }}
-                                
-                                 <div class="form-group">
-                                    <label>Evenement *</label>
-                                    <input type="hidden" class="bigdrop form-control" id="EvenementID" name="EvenementID" value="{{Input::old('EvenementID')}}" />
+                            {{ Form::model($alerte, array('route' => array('alerte.update', $alerte->AlerteID), 'method' => 'put', 'role' => 'form', 'class' => 'form-horizontal')) }}
+                                <div class="form-group  @if($errors->first('Titre') != '')) has-error @endif">
+                                    <label class="col-lg-3 control-label">Titre *</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::text('Titre', $alerte->Titre, array('class' => 'form-control') ) }}
+                                    {{ $errors->first('Titre', '<span class="error">:message</span>' ) }}
+                                    </div>
                                 </div>
-                                
-                                <div class="form-group @if($errors->first('Finperiode') != '')) has-error @endif">
-                                    <label>Date de creation *</label>
-                                    <input type="text" name="DateCreation" id="DateCreation" value="{{Input::old('DateCreation')}}" class="form-control">
+                                <div class="form-group  @if($errors->first('EvenementID') != '')) has-error @endif">
+                                    <label class="col-lg-3 control-label">Type d'évenement *</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::select('EvenementID', $evenements, $alerte->EvenementID, array('class' => 'form-control') ) }}
+                                    {{ $errors->first('EvenementID', '<span class="error">:message</span>' ) }}
+                                    </div>
+                                </div>
+                                <div class="form-group @if($errors->first('DateCreation') != '')) has-error @endif">
+                                    <label class="col-lg-3 control-label">Date de creation *</label>
+                                    <div class="col-lg-9">
+                                    <input type="text" name="DateCreation" id="DateCreation" value="{{$alerte->Datecreation_f}}" class="form-control">
                                     {{ $errors->first('DateCreation', '<span class="error">:message</span>' ) }}
+                                    </div>
                                 </div>
                                 <div class="form-group @if($errors->first('Message') != '') has-error @endif">
-                                    <label>Message *</label>
-                                    {{ Form::text('Message', Input::old('Message'), array('class' => 'form-control', 'autofocus' => '' ) ) }}
+                                    <label class="col-lg-3 control-label">Message *</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::textarea('Message', $alerte->Message, array('class' => 'form-control', 'autofocus' => ''))}}
                                     {{ $errors->first('Message', '<span class="error">:message</span>' ) }}
+                                    </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Icône</label>
+                                    <div class="col-lg-9">
+                                    {{ Form::select('Icone', $icones, $alerte->Icone, array('class' => 'form-control') ) }}
+                                    {{ $errors->first('Icone', '<span class="error">:message</span>' ) }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-3 col-lg-9">
                                 {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
+                                </div>
                             {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->

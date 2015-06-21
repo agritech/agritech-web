@@ -45,12 +45,13 @@ $(document).ready(function() {
             {"name": "production.StatutSoumission", "targets": 5, "data": "StatutSoumission", "type": "text", className: "text-left"},
             {"name": "production.CanalSoumission", "targets": 6, "data": "CanalSoumission", "type": "text", className: "text-left"},
             {"name": "production.DateSoumission", "targets": 7, "data": "DateSoumission", "type": "date", className: "text-right"},
-            {"name": "Action", "targets": 8, "searchable": false, "orderable": false, "width":"60px"}
+            {"name": "Action", "targets": 8, "searchable": false, "orderable": false, "width":"100px"}
         ],
         "columnDefs": [
             {
                 "render": function ( data, type, row ) {
                     return  '<div class="pull-right">' +
+                                '<a href="' + baseUrl + '/production/' + row.ProductionID + '" class="btn btn-xs btn-primary"> <i class="fa fa-search"></i></a> &nbsp;' +
                                 '<a href="' + baseUrl + '/production/' + row.ProductionID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
                                 '<form method="POST" action="'+baseUrl + '/production/' + row.ProductionID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="{{Session::token()}}"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
                             '</div>';
