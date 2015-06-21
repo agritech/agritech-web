@@ -12,7 +12,7 @@
 @extends('templates.normal')
 
 {{-- Page title --}}
-@section('title') Ajouter une proposition de prix pour la production @stop
+@section('title') Consulter une production @stop
 
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
@@ -34,9 +34,7 @@
 {{ HTML::script('assets/jquery-ui-1.11.2/demos/datepicker/datepicker-fr.js') }}
 <script>
 $(document).ready(function() {
-    $('#DateProposition').datepicker( $.datepicker.regional["fr"]);
-    $('#Prix').mask('#', {reverse: true});
-
+    
 });
 </script>
 @stop
@@ -47,7 +45,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Ajouter une proposition de prix pour la production</h1>
+            <h1 class="page-header">Consulter les informations de la production </h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -56,73 +54,64 @@ $(document).ready(function() {
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Informations sur la production
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">    
-                            <div class="form-group">
-                                <label>Agriculteur</label>
-                                <p class="form-control-static">{{$production->Agriculteur->nom . ' ' . $production->Agriculteur->prenom}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Produit</label>
-                                <p class="form-control-static">{{$production->Produit->Ref . ' ' . $production->Produit->Nom}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Poids de la production (Kg)</label>
-                                <p class="form-control-static">{{$production->Poids}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Date de la soumission de la production</label>
-                                <p class="form-control-static">{{$production->DateSoumission}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Statut</label>
-                                <p class="form-control-static">{{$production->StatutSoumission}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Canal</label>
-                                <p class="form-control-static">{{$production->CanalSoumission}}</p>
-                            </div>
-                        </div>
-                        <!-- /.col-lg-6 (nested) -->
-                    </div>
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- panel -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Merci de remplir le formulaire ci-dessous pour proposer un nouveau prix pour cette production
+                    Informations information sur la production
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            @if ( $errors->count() > 0 )
-                                @foreach( $errors->all() as $message )
-                                    <div class="alert alert-warning">
-                                        {{$message}}
+                            {{ Form::model($production, array('route' => array('production.update', $production->ProductionID), 'method' => 'put', 'role' => 'form', 'class' => 'form-horizontal')) }}
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Campagne agricole</label>
+                                    <div class="col-lg-9">
+                                    <p class="form-control-static">{{$production->CampagneAgricole->Nom}}</p>
                                     </div>
-                                @endforeach
-                            @endif
-                            {{ Form::open(array('url' => URL::to('negociationproduction/' . $production->ProductionID . '/store' ) , 'role' => 'form')) }}
-                                <div class="form-group @if($errors->first('Poids') != '') has-error @endif">
-                                    <label>Prix *</label>
-                                    {{ Form::text('Prix', Input::old('Prix'), array('class' => 'form-control', 'placeholder' => "Prix (FCFA)", 'id' => 'Prix') ) }}
-                                    {{ $errors->first('Prix', '<span class="error">:message</span>' ) }}
                                 </div>
                                 <div class="form-group">
-                                    <label>Statut de la proposition</label>
-                                    {{ Form::select('StatutProposition', $statutPropositions, Input::old('StatutProposition'), array('class' => 'form-control')) }}
+                                    <label class="col-lg-3 control-label">Agriculteur</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$production->Agriculteur->nom . ' ' . $production->Agriculteur->prenom}}</p>
+                                    </div>
                                 </div>
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Exploitation</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$production->Exploitation->Ref . ' ' . $production->Exploitation->Nom}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Produit</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$production->Produit->Ref . ' ' . $production->Produit->Nom}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Poids</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$production->Poids}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Date de soumission</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$production->datesoumission_f}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Statut de la production</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$production->StatutSoumission}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Canal de soumission de la production</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$production->CanalSoumission}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-3 col-lg-9">
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
+                                </div>
                             {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->
@@ -131,9 +120,25 @@ $(document).ready(function() {
                 <!-- /.panel-body -->
             </div>
             <!-- panel -->
+        </div>
+        <!-- /.col-lg-6 -->
+        <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Liste des prix proposés par des acheteurs pour la production
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Actions
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="{{ URL::to('negociationproduction/' . $production->ProductionID . '/create') }}">Proposer un prix</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -172,11 +177,11 @@ $(document).ready(function() {
                         </table>
                     </div>
                 </div>
-                <!-- /.panel-body -->
+                <!--/.panel-body -->
             </div>
-            <!-- panel -->
-        </div>
-        <!-- /.col-lg-4 -->
+            <!-- /.panel -->
+       </div>
+       <!-- /.col-lg-6 -->
     </div>
     <!-- /.row -->
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Facade;
 class ProductionController extends \BaseController {
     public static $statutSoumissions = array('SOUMIS' => 'Soumis', 'VALIDE' => 'Valide');
     public static $canalSoumissions = array('INTERNET' => 'Internet', 'SMS' => 'SMS', 'TELEPHONE' => 'Téléphone');
+    public static $statutPropositions = array('PREPARATION' => 'En préparation', 'PUBLIE' => 'Publié');
   
     public function index()
     {
@@ -64,6 +65,18 @@ class ProductionController extends \BaseController {
       return Response::json($datatable);      
     }
 
+    public function show($id)
+    {
+      $production = Production::find($id);
+      $negociationproductions = NegociationProduction::where('ProductionID', $id)->get();
+      
+      return View::make('production.show')
+        ->with('production', $production)
+        ->with('statutPropositions', self::$statutPropositions)
+        ->with('negociationproductions', $negociationproductions);
+
+    }
+    
     public function create()
     {
       $campagneAgricoles = CampagneAgricole::get();

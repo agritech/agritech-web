@@ -14,6 +14,11 @@ class Alerte extends Eloquent
     return $this->hasMany('AlerteDestinataire', 'AlerteID', 'AlerteID');
   }
   
+  public function Evenement()
+  {
+    return $this->belongsTo('Evenement', 'EvenementID');
+  }
+  
   public function getDatecreationFAttribute(){
     $dt = new \Carbon\Carbon($this->attributes['DateCreation']);
     return $dt->format('d/m/Y');

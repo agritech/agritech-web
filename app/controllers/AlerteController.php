@@ -56,12 +56,18 @@ class AlerteController extends \BaseController {
       return Response::json($datatable);      
     }
 
+    public function show($id){
+        $alerte = Alerte::find($id);
+        
+        return View::make('alerte.show')
+            ->with('alerte', $alerte);
+    }
+    
     public function create()
     {
       return View::make('alerte.create')
         ->with('evenements', $this->objectsToArray(Evenement::get(), 'EvenementID', 'Nom'))
         ->with('icones', self::$icones);
-       
     }
 
     public function store(){
@@ -69,13 +75,15 @@ class AlerteController extends \BaseController {
         array(
           'EvenementID' => 'required|numeric',
           'DateCreation' => 'required|date_format:"d/m/Y"',
-          'Message' => 'required'
+          'Message' => 'required',
+          'Titre' => 'required'
           ), 
         array(
           'EvenementID.required' => "L'evenement selectionne n'est pas valide",
           'EvenementID.numeric' => "L'evenement selectionne n'est pas valide",
           'DateCreation.date_format' => "La date de création n'est pas une date valide au format (DD/MM/YYYY)",
-          'DateCreation.required' => "Merci de remplir le champ Date de creation"        
+          'DateCreation.required' => "Merci de remplir le champ Date de creation",
+          'Titre.required' => "Le titre de l'alerte est obligatoire"        
         )
       );
 
@@ -92,6 +100,7 @@ class AlerteController extends \BaseController {
           $alerte->Message = \Input::get('Message');
           $alerte->Icone = \Input::get('Icone');
           $alerte->InitiateurID = Auth::user()->UtilisateurID;
+          $alerte->Titre = \Input::get("Titre");
           $alerte->save();
 
           $modifierUrl = URL::to('alerte/' . $alerte->AlerteID . '/edit');
@@ -116,13 +125,15 @@ class AlerteController extends \BaseController {
         array(
           'EvenementID' => 'required|numeric',
           'DateCreation' => 'required|date_format:"d/m/Y"',
-          'Message' => 'required'
+          'Message' => 'required',
+          'Titre' => 'required'
           ), 
         array(
           'EvenementID.required' => "L'evenement selectionne n'est pas valide",
           'EvenementID.numeric' => "L'evenement selectionne n'est pas valide",
           'DateCreation.date_format' => "La date de creation n'est pas une date valide au format (DD/MM/YYYY)",
-          'DateCreation.required' => "Merci de remplir le champ Date de creation"        
+          'DateCreation.required' => "Merci de remplir le champ Date de creation",
+          "Titre.required" => "Le titre de l'alerte est obligatoire"        
         )
       );
 
@@ -138,6 +149,7 @@ class AlerteController extends \BaseController {
           $alerte->DateCreation = $dateCreation->toDateString();
           $alerte->Message = \Input::get('Message');
           $alerte->Icone = \Input::get('Icone');
+          $alerte->Titre = \Input::get('Titre');
           $alerte->save();
 
           $modifierUrl = URL::to('alerte/' . $alerte->AlerteID . '/edit');

@@ -150,11 +150,18 @@
                     <!-- /.nav-second-level -->
                 </li>
                 @endif
-                @if(Auth::user()->hasRole('NEGOCIATIONPRODUCTION'))
-                <li @if(Request::is('negociationproduction') or Request::is('negociationproduction/*/create') or Request::is('production/*/edit/*')) class="active" @endif>
-                    <a @if(Request::is('negociationproduction') or Request::is('negociationproduction/*/edit/*') or Request::is('negociationproduction/*/create')) class="active" @endif href="{{ URL::to('negociationproduction') }}"><i class="fa fa-money fa-fw"></i> Négociations des productions </a>
+                <li @if(Request::is('admin/produit') or Request::is('admin/produit/create') or Request::is('admin/produit/*/edit')) class="active" @endif>
+                    <a href="#"><i class="fa fa-tree fa-fw"></i> Produits<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a @if(Request::is('admin/produit') or Request::is('admin/produit/*/edit')) class="active" @endif href="{{ URL::to('admin/produit') }}"><i class="fa fa-list fa-fw"></i> Liste des produits</a>
+                        </li>
+                        <li>
+                            <a @if(Request::is('admin/produit/create')) class="active" @endif href="{{ URL::to('admin/produit/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter un produit</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
                 </li>
-                @endif
                 <!-- Zone de Culture -->
                 <li @if(Request::is('cultures') or Request::is('culturezones') or Request::is('culture/*') or Request::is('culturezone/*')) class="active" @endif >
                     <a href="#"><i class="fa fa-sitemap fa-fw"></i> Zone de Culture<span class="fa arrow"></span></a>
@@ -170,6 +177,16 @@
                     <!-- /.nav-second-level -->
                 </li>
 				<!-- End Zone de Culture -->
+                <li @if(Request::is('report') or Request::is('report/users') or Request::is('report/*/edit')) class="active" @endif>
+                    <a href="#"><i class="fa fa-compass fa-fw"></i> Rapports<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a @if(Request::is('report/users')) class="active" @endif href="{{ URL::to('report/users') }}"><i class="fa fa-list fa-fw"></i> Répartition des utilisateurs</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+				<!-- End Report -->
                 @if(Auth::user()->hasRole('ADMIN'))
                 <li @if(Request::is('admin/user') or Request::is('admin/user/create') or Request::is('admin/user/*/edit')) class="active" @endif>
                     <a href="#"><i class="fa fa-users fa-fw"></i> Utilisateurs<span class="fa arrow"></span></a>
@@ -179,18 +196,6 @@
                         </li>
                         <li>
                             <a @if(Request::is('admin/user/create')) class="active" @endif href="{{ URL::to('admin/user/create') }}"><i class="fa fa-user-plus fa-fw"></i> Ajouter un utilisateur</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li @if(Request::is('admin/produit') or Request::is('admin/produit/create') or Request::is('admin/produit/*/edit')) class="active" @endif>
-                    <a href="#"><i class="fa fa-tree fa-fw"></i> Produits<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a @if(Request::is('admin/produit') or Request::is('admin/produit/*/edit')) class="active" @endif href="{{ URL::to('admin/produit') }}"><i class="fa fa-list fa-fw"></i> Liste des produits</a>
-                        </li>
-                        <li>
-                            <a @if(Request::is('admin/produit/create')) class="active" @endif href="{{ URL::to('admin/produit/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter un produit</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

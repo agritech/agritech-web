@@ -27,7 +27,7 @@ $app = new Illuminate\Foundation\Application;
 $env = $app->detectEnvironment(array(
 
 	'local' => array('agritech'),
-
+	'openshift' => array('agriconnectafrica-defolandry.rhcloud.com')
 ));
 
 /*

@@ -64,8 +64,8 @@ class TestDataSeeder extends Seeder {
         $campagne2015 = CampagneAGricole::where('Ref', 'C02')->firstOrFail();
         
         // Charger les produits
-        Produit::create(array('Ref' => 'PAPAYE', 'Nom' => 'Papaye'));
-        Produit::create(array('Ref' => 'MANGUE', 'Nom' => 'Mangue'));
+        Produit::create(array('Ref' => 'PAPAYE', 'Nom' => 'Papaye', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        Produit::create(array('Ref' => 'MANGUE', 'Nom' => 'Mangue', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
         
         $mangue = Produit::where('Ref', 'MANGUE')->firstOrFail();
         $papaye = Produit::where('Ref', 'PAPAYE')->firstOrFail();

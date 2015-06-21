@@ -28,6 +28,9 @@ class CreateProductionTable extends Migration {
 	        $table->increments('ProduitID');
 	        $table->string('Ref', 200);
 			$table->string('Nom', 2000);
+			$table->string('description', 500)->nullable();
+			$table->string('image',100)->nullable();
+			$table->timestamps();
 	      });
 	    }
 		

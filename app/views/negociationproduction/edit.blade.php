@@ -136,7 +136,7 @@ $(document).ready(function() {
             <!-- panel -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Liste des propositions de prix pour la production
+                    Liste des prix proposés par des acheteurs pour la production
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
