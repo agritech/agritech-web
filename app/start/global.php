@@ -60,15 +60,22 @@ App::error(function(Exception $exception, $code)
     return;
   }
 
+  try{
   switch ($code)
   {
       case 403:
-          return Response::view('error/403', array(), 403);
-      case 500:
-          return Response::view('error/500', array(), 500);
-      default:
-          return Response::view('error/404', array(), $code);
+            return Response::view('error/403', array(), 403);
+        case 500:
+            return Response::view('error/500', array(), 500);
+        default:
+            return Response::view('error/404', array(), $code);   
   }
+  }catch(Exception $e){
+      Log::error($e);
+      return;
+    }
+     
+  
 });
 
 /*

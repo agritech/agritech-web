@@ -28,7 +28,8 @@ $env = $app->detectEnvironment(array(
 
 	'local' => array('agritech'),
 	'openshift' => array('agriconnectafrica-defolandry.rhcloud.com'),
-	'pprod' => array('iservsmsc')
+	'pprod' => array('iservsmsc'),
+	'landry' => array('Octo')
 ));
 
 /*

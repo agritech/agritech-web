@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'dossoagri',
+			'database'  => 'agritech',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

@@ -9,7 +9,7 @@
  */
 ?>
 {{-- Page template --}}
-@extends('templates.normal')
+@extends('templates.login')
 
 {{-- Page title --}}
 @section('title') Erreur 403 @stop

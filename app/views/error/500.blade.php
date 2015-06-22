@@ -9,7 +9,7 @@
  */
 ?>
 {{-- Page template --}}
-@extends('templates.normal')
+@extends('templates.login')
 
 {{-- Page title --}}
 @section('title') Erreur 500 @stop
@@ -17,11 +17,13 @@
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
 @section('css')
+
 @stop
 
 {{-- Page specific JS files --}}
 {{-- {{ HTML::script('--Path to js--') }} --}}
 @section('scripts')
+
 @stop
 
 {{-- Page content --}}
@@ -30,7 +32,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header  text-danger">Erreur 500 : Une erreur a survenue pendant l'exécution de votre requête</h1>
+            <h1 class="page-header  text-danger">Erreur 500 : Une erreur s'est produite pendant l'exécution de votre requête</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -41,14 +43,13 @@
         </div>
         <div class="col-lg-11">
             <p class="text-danger">
-                Impossible d'afficher la page que vous demandez. 
-                Nous en sommes désolé !
+                Désolé ! Impossible d'afficher la page que vous demandez. 
             </p>
             <p class="text-danger">
                 Nous faisons de nôtre mieux pour que cette page soit à nouveau disponible.
             </p>
             <p class="text-success">
-              Peut-être souhaitez-vous aller à <a href="{{{ URL::to('/') }}}" >l'acceil de l'application</a>?
+              Peut-être souhaitez-vous aller à <a href="{{{ URL::to('/') }}}" >l'acceil de l'application</a> ?
             </p>
         </div>
     </div>
@@ -58,4 +59,3 @@
 <!-- /#page-wrapper -->
 
 @stop
-
