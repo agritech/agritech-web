@@ -36,7 +36,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Cultures <a href="{{ URL::to('culture/new') }}" class="btn btn-primary pull-right">Ajouter une culture</a></h1>
+            <h1 class="page-header">Cultures <a href="{{ URL::to('culture/new') }}" class="btn btn-success pull-right">Ajouter une culture</a></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>

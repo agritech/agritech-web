@@ -51,7 +51,7 @@ $(document).ready(function() {
             {
                 "render": function ( data, type, row ) {
                     return  '<div class="pull-right">' +
-                                '<a href="' + baseUrl + '/production/' + row.ProductionID + '" class="btn btn-xs btn-primary"> <i class="fa fa-search"></i></a> &nbsp;' +
+                                '<a href="' + baseUrl + '/production/' + row.ProductionID + '" class="btn btn-xs btn-success"> <i class="fa fa-search"></i></a> &nbsp;' +
                                 '<a href="' + baseUrl + '/production/' + row.ProductionID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
                                 '<form method="POST" action="'+baseUrl + '/production/' + row.ProductionID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="{{Session::token()}}"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
                             '</div>';

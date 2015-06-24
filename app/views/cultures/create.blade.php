@@ -59,7 +59,7 @@
                                     {{ Form::textarea('description', Input::old('description'), array('class' => 'form-control')) }}
                                 </div>
                                 
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                             {{ Form::close() }}
                         </div>

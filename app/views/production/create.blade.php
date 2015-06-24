@@ -270,7 +270,7 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-3 col-lg-9">
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                                 </div>
                             {{ Form::close() }}

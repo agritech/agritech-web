@@ -109,7 +109,7 @@ $(document).ready(function() {
                                         {{ Form::password('password_confirmation', array('class' => 'form-control')) }}
                                     </div>
                                 </div>
-                                {{ Form::submit('Nous rejoindre !', array('class'=>'btn btn-primary btn-block')) }}
+                                {{ Form::submit('Nous rejoindre !', array('class'=>'btn btn-success btn-block')) }}
                             {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->

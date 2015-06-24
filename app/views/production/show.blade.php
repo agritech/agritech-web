@@ -45,7 +45,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Consulter les informations de la production </h1>
+            <h1 class="page-header">Consulter les informations de la production <a href="{{ URL::to('negociationproduction/' . $production->ProductionID . '/create') }}" class="btn btn-success pull-right">Proposez un prix</a></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -60,6 +60,7 @@ $(document).ready(function() {
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
+                            <!-- Success-Messages -->
                             {{ Form::model($production, array('route' => array('production.update', $production->ProductionID), 'method' => 'put', 'role' => 'form', 'class' => 'form-horizontal')) }}
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Campagne agricole</label>
@@ -142,6 +143,12 @@ $(document).ready(function() {
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ $message }}
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
@@ -162,7 +169,7 @@ $(document).ready(function() {
                                     <td>{{$value->StatutProposition}}</td>
                                     <td nowrap="nowrap">
                                         <div class="pull-right">
-                                            <a href="{{ URL::to('negociationproduction/' . $value->ProductionID . '/edit/' . $value->NegociationProductionID) }}" class="btn btn-sm btn-primary"> <i class="fa fa-edit"></i></a> &nbsp;
+                                            <a href="{{ URL::to('negociationproduction/' . $value->ProductionID . '/edit/' . $value->NegociationProductionID) }}" class="btn btn-sm btn-success"> <i class="fa fa-edit"></i></a> &nbsp;
                                             {{ Form::open(array('url' => 'negociationproduction/' . $value->NegociationProductionID , 'class' => 'pull-right')) }}
                                                 {{ Form::hidden('_method', 'DELETE') }}
                                                 <button type="submit" class="btn btn-sm btn-danger">

@@ -118,7 +118,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Zone de Cultures <a href="{{ URL::to('culturezone/new') }}" class="btn btn-primary pull-right">Ajouter une zone de culture</a></h1>
+            <h1 class="page-header">Zone de Cultures <a href="{{ URL::to('culturezone/new') }}" class="btn btn-success pull-right">Ajouter une zone de culture</a></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>

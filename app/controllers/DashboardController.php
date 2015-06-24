@@ -3,15 +3,13 @@
 class DashboardController extends BaseController {
   
   public function showDashboard(){
-    $nbproductions = Production::count();
-    $nbexploitations = Exploitation::count();
-    $nbalertes = Alerte::count();
+    $negociationproductions = NegociationProduction::get();
+    $produits = Produit::get();
     $alertes = Alerte::get();
 
     return \View::make('dashboard')
-        ->with('nbalertes', $nbalertes)
-        ->with('nbexploitations', $nbexploitations)
-        ->with('nbproductions', $nbproductions)
+        ->with('produits', $produits)
+        ->with('negociationproductions', $negociationproductions)
         ->with('alertes', $alertes);
   }
 

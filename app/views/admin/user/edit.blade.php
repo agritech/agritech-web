@@ -156,7 +156,7 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-3 col-lg-9">
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                                 </div>
                             {{ Form::close() }}
@@ -192,7 +192,7 @@ $(document).ready(function() {
                                     {{ Form::file('photo', array('class' => 'form-control' ) ) }}
                                     {{ $errors->first('photo', '<span class="error">:message</span>' ) }}
                                 </div>
-                                {{ Form::submit('Ajouter', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Ajouter', array('class'=>'btn btn-success')) }}
                             {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->
@@ -219,7 +219,7 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-3 col-lg-9">
-                                {{ Form::submit('Ajouter', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Ajouter', array('class'=>'btn btn-success')) }}
                                 </div>
                             {{ Form::close() }}
                         </div>

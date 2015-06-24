@@ -40,7 +40,7 @@ $(document).ready(function() {
         <div class="col-lg-12">
             <h1 class="page-header">Profile de <small>{{(isset($user->prenom)) ? $user->prenom : $user->Username}}</small>
                 @if($user->UtilisateurID == Auth::user()->UtilisateurID)  
-                <a href="{{ URL::to('profile/' . $user->UtilisateurID . '/edit') }}" class="btn btn-primary pull-right">Modifier le porfile</a>
+                <a href="{{ URL::to('profile/' . $user->UtilisateurID . '/edit') }}" class="btn btn-success pull-right">Modifier le porfile</a>
                 @endif
             </h1>
         </div>

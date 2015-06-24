@@ -59,7 +59,7 @@
                                     {{ Form::textarea('description', $culture->description, array('class' => 'form-control')) }}
                                 </div>
                                  {{ Form::hidden('id', $culture->id) }}
-                                {{ Form::submit('Modifier', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Modifier', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                             {{ Form::close() }}
                         </div>

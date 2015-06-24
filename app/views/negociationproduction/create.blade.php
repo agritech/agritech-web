@@ -62,30 +62,59 @@ $(document).ready(function() {
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">    
+                            {{ Form::model($production, array('route' => array('production.update', $production->ProductionID), 'method' => 'put', 'role' => 'form', 'class' => 'form-horizontal')) }}
                             <div class="form-group">
-                                <label>Agriculteur</label>
-                                <p class="form-control-static">{{$production->Agriculteur->nom . ' ' . $production->Agriculteur->prenom}}</p>
+                                <label class="col-lg-3 control-label">Campagne agricole</label>
+                                <div class="col-lg-9">
+                                <p class="form-control-static">{{$production->CampagneAgricole->Nom}}</p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Produit</label>
-                                <p class="form-control-static">{{$production->Produit->Ref . ' ' . $production->Produit->Nom}}</p>
+                                <label class="col-lg-3 control-label">Agriculteur</label>
+                                <div class="col-lg-9">
+                                    <p class="form-control-static">{{$production->Agriculteur->nom . ' ' . $production->Agriculteur->prenom}}</p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Poids de la production (Kg)</label>
+                                <label class="col-lg-3 control-label">Exploitation</label>
+                                <div class="col-lg-9">
+                                    <p class="form-control-static">{{$production->Exploitation->Ref . ' ' . $production->Exploitation->Nom}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Produit</label>
+                                <div class="col-lg-9">
+                                    <p class="form-control-static">{{$production->Produit->Ref . ' ' . $production->Produit->Nom}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Poids de la production (Kg)</label>
+                                <div class="col-lg-9">
                                 <p class="form-control-static">{{$production->Poids}}</p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Date de la soumission de la production</label>
+                                <label class="col-lg-3 control-label">Date de la soumission de la production</label>
+                                <div class="col-lg-9">
                                 <p class="form-control-static">{{$production->DateSoumission}}</p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Statut</label>
+                                <label class="col-lg-3 control-label">Statut</label>
+                                <div class="col-lg-9">
                                 <p class="form-control-static">{{$production->StatutSoumission}}</p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Canal</label>
+                                <label class="col-lg-3 control-label">Canal</label>
+                                <div class="col-lg-9">
                                 <p class="form-control-static">{{$production->CanalSoumission}}</p>
+                                </div>
                             </div>
+                            <div class="col-lg-offset-3 col-lg-9">
+                                {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
+                            </div>
+                            {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->
                     </div>
@@ -121,7 +150,7 @@ $(document).ready(function() {
                                     <label>Statut de la proposition</label>
                                     {{ Form::select('StatutProposition', $statutPropositions, Input::old('StatutProposition'), array('class' => 'form-control')) }}
                                 </div>
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                             {{ Form::close() }}
                         </div>
@@ -157,7 +186,7 @@ $(document).ready(function() {
                                     <td>{{$value->StatutProposition}}</td>
                                     <td nowrap="nowrap">
                                         <div class="pull-right">
-                                            <a href="{{ URL::to('negociationproduction/' . $value->ProductionID . '/edit/' . $value->NegociationProductionID) }}" class="btn btn-sm btn-primary"> <i class="fa fa-edit"></i></a> &nbsp;
+                                            <a href="{{ URL::to('negociationproduction/' . $value->ProductionID . '/edit/' . $value->NegociationProductionID) }}" class="btn btn-sm btn-success"> <i class="fa fa-edit"></i></a> &nbsp;
                                             {{ Form::open(array('url' => 'negociationproduction/' . $value->NegociationProductionID , 'class' => 'pull-right')) }}
                                                 {{ Form::hidden('_method', 'DELETE') }}
                                                 <button type="submit" class="btn btn-sm btn-danger">

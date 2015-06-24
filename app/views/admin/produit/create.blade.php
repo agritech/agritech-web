@@ -78,7 +78,7 @@ $(document).ready(function() {
                                     {{ Form::text('Nom', Input::old('Nom'), array('class' => 'form-control', 'placeholder' => "Nom", 'id' => 'Nom') ) }}
                                     {{ $errors->first('Nom', '<span class="error">:message</span>' ) }}
                                 </div>
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                             {{ Form::close() }}
                         </div>

@@ -53,7 +53,6 @@ Route::group(array('prefix','/'), function() {
       Route::post('negociationproduction/{productionID}/store', 'NegociationProductionController@negociationProductionStore');
       Route::get('negociationproduction/{productionID}/edit/{negociationRecoleID}', 'NegociationProductionController@negociationProductionEdit');
       Route::post('negociationproduction/{productionID}/update/{negociationProductionID}', 'NegociationProductionController@negociationProductionUpdate');
-      Route::get('negociationproduction/datatable/ajax', 'NegociationProductionController@datatable');
 
       Route::get('agriculteur/select2/ajax', 'AgriculteurController@select2');
 

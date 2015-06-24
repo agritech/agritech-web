@@ -47,7 +47,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Utilisateurs <a href="{{ URL::to('admin/user/create') }}" class="btn btn-primary pull-right">Créer un utilisateur</a></h1>
+            <h1 class="page-header">Utilisateurs <a href="{{ URL::to('admin/user/create') }}" class="btn btn-success pull-right">Créer un utilisateur</a></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>

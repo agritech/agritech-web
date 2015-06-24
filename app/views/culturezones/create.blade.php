@@ -189,7 +189,7 @@ $(document).ready(function()
              <br><br><br><br>
         </div>
                                 
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                             {{ Form::close() }}
                         </div>

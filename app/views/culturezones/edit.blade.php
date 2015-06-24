@@ -224,7 +224,7 @@ $(document).ready(function()
         </div>
                                 
                                  {{ Form::hidden('id', $culturezone->id) }}
-                                {{ Form::submit('Modifier', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Modifier', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                             {{ Form::close() }}
                         </div>

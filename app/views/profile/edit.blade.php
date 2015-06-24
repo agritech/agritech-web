@@ -145,7 +145,7 @@ $(document).ready(function() {
                                         {{ Form::password('password_confirmation', array('class' => 'form-control')) }}
                                     </div>
                                 </div>
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-success')) }}
                                 {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
                             {{ Form::close() }}
                         </div>
@@ -180,7 +180,7 @@ $(document).ready(function() {
                                     {{ Form::file('photo', array('class' => 'form-control' ) ) }}
                                     {{ $errors->first('photo', '<span class="error">:message</span>' ) }}
                                 </div>
-                                {{ Form::submit('Ajouter', array('class'=>'btn btn-primary')) }}
+                                {{ Form::submit('Ajouter', array('class'=>'btn btn-success')) }}
                             {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->
