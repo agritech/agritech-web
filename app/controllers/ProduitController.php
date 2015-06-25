@@ -4,7 +4,7 @@ class ProduitController extends \BaseController {
 
     public function index()
     {
-      return  View::make('admin.produit.index');
+      return  View::make('produit.index');
     }
 
     public function select2($exploitationID){
@@ -85,9 +85,17 @@ class ProduitController extends \BaseController {
       return Response::json($datatable);      
     }
 
+    
+    public function show($id){
+        $produit = Produit::find($id);
+        
+        return View::make('produit.show')
+            ->with('produit', $produit);
+    }
+    
     public function create()
     {
-      return View::make('admin.produit.create');
+      return View::make('produit.create');
     }
 
     public function store(){
@@ -103,7 +111,7 @@ class ProduitController extends \BaseController {
       );
 
       if ($validation->fails()) {
-          return Redirect::to('admin/produit/create')
+          return Redirect::to('produit/create')
               ->withErrors($validation)
               ->withInput(\Input::all());
         } else {
@@ -111,12 +119,13 @@ class ProduitController extends \BaseController {
           $produit = new Produit();
           $produit->Ref = \Input::get('Ref');
           $produit->Nom = \Input::get('Nom');
+          $produit->Description = \Input::get('Description');
           
           $produit->save();
 
-          $modifierUrl = URL::to('admin/produit/' . $produit->ProduitID . '/edit');
+          $modifierUrl = URL::to('produit/' . $produit->ProduitID . '/edit');
           Session::flash('success', "<p>Création du produit effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier le produit</a></p>");
-          return Redirect::to('admin/produit');
+          return Redirect::to('produit');
         }
     }
 
@@ -124,7 +133,7 @@ class ProduitController extends \BaseController {
     {
       $produit = Produit::find($id);
 
-      return View::make('admin.produit.edit')
+      return View::make('produit.edit')
         ->with('produit', $produit);
     }
 
@@ -142,7 +151,7 @@ class ProduitController extends \BaseController {
       );
 
       if ($validation->fails()) {
-          return Redirect::to('admin/produit/' . $id . '/edit')
+          return Redirect::to('produit/' . $id . '/edit')
               ->withErrors($validation)
               ->withInput(\Input::all());
         } else {
@@ -150,12 +159,13 @@ class ProduitController extends \BaseController {
           $produit = Produit::find($id);
           $produit->Ref = \Input::get('Ref');
           $produit->Nom = \Input::get('Nom');
+          $produit->Description = \Input::get('Description');
           
           $produit->save();
 
-          $modifierUrl = URL::to('admin/produit/' . $produit->ProduitID . '/edit');
+          $modifierUrl = URL::to('produit/' . $produit->ProduitID . '/edit');
           Session::flash('success', "<p>Mise-à-jour du produit effectuée avec succès ! <a href='{$modifierUrl}' class='btn btn-success'>Modifier le produit</a></p>");
-          return Redirect::to('admin/produit');
+          return Redirect::to('produit');
         }
     }
 
@@ -166,7 +176,7 @@ class ProduitController extends \BaseController {
 
       // redirect
       Session::flash('success', "Produit supprimée avec succès !");
-      return Redirect::to('admin/produit');
+      return Redirect::to('produit');
     }
 
     private function objectsToArray($objs, $key, $val){

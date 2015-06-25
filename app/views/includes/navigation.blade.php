@@ -150,14 +150,14 @@
                     <!-- /.nav-second-level -->
                 </li>
                 @endif
-                <li @if(Request::is('admin/produit') or Request::is('admin/produit/create') or Request::is('admin/produit/*/edit')) class="active" @endif>
+                <li @if(Request::is('produit') or Request::is('produit/create') or Request::is('produit/*/edit')) class="active" @endif>
                     <a href="#"><i class="fa fa-tree fa-fw"></i> Produits<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a @if(Request::is('admin/produit') or Request::is('admin/produit/*/edit')) class="active" @endif href="{{ URL::to('admin/produit') }}"><i class="fa fa-list fa-fw"></i> Liste des produits</a>
+                            <a @if(Request::is('produit') or Request::is('produit/*/edit')) class="active" @endif href="{{ URL::to('produit') }}"><i class="fa fa-list fa-fw"></i> Liste des produits</a>
                         </li>
                         <li>
-                            <a @if(Request::is('admin/produit/create')) class="active" @endif href="{{ URL::to('admin/produit/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter un produit</a>
+                            <a @if(Request::is('produit/create')) class="active" @endif href="{{ URL::to('produit/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter un produit</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

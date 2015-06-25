@@ -56,6 +56,10 @@ Route::filter('auth', function()
 		
 		$securityCheck->routeNeedsRole( 'exploitation*', array('EXPLOITATION') );
 		
+		$securityCheck->routeNeedsRole( 'produit*', array('PRODUIT') );
+		
+		$securityCheck->routeNeedsRole( 'rapport*', array('RAPPORT') );
+		
 		$securityCheck->routeNeedsRole( 'production*', array('PRODUCTION') );
 		
 		$securityCheck->routeNeedsRole( 'negociationproduction*', array('NEGOCIATIONPRODUCTION') );

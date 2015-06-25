@@ -12,16 +12,16 @@ class ProduitTest extends TestCase {
     $produit['Nom'] = 'PP1'; //Nom du produit
     
     //Création entité
-    $response = $this->call('POST', '/admin/produit', $produit);
+    $response = $this->call('POST', '/produit', $produit);
 
     //Vérifier la redirection vers la vue
-    $this->assertRedirectedTo('admin/produit');
+    $this->assertRedirectedTo('produit');
     $this->assertSessionHas('success');
     
     //Vérifier que la réponse contient l'url  pour modification
     $message = $response->getSession()->get('success');
     $content = $response->getContent();
-    $pattern = "/admin\/produit\/([\d]+)\//";
+    $pattern = "/produit\/([\d]+)\//";
     $this->assertRegExp($pattern, $message);
     preg_match_all($pattern, $message, $produitIdFinded);
     $this->assertCount(2, $produitIdFinded, "Après la création, la vue qui suit doit contenir le numero de l'entité dans le lien de modification");
@@ -33,21 +33,21 @@ class ProduitTest extends TestCase {
     $produit['Ref'] = 'PP1'; //Référence du produit
     $produit['Nom'] = 'PP1'; //Nom du produit
     
-    $response = $this->call('PUT', '/admin/produit/' . $produitId, $produit);
+    $response = $this->call('PUT', '/produit/' . $produitId, $produit);
 
-    $this->assertRedirectedTo('admin/produit');
+    $this->assertRedirectedTo('produit');
     $this->assertSessionHas('success');
     
     //Vérifier que la réponse contient l'url  pour modification
     $message = $response->getSession()->get('success');
     $content = $response->getContent();
-    $pattern = "/admin\/produit\/([\d]+)\//";
+    $pattern = "/produit\/([\d]+)\//";
     $this->assertRegExp($pattern, $message);
     preg_match_all($pattern, $message, $produitIdFinded);
     $this->assertCount(2, $produitIdFinded, "Après la modification, la vue qui suit doit contenir le numero dans le lien de modification");
 
     //Suppression
-    $response = $this->call('DELETE', '/admin/produit/' . $produitId);
+    $response = $this->call('DELETE', '/produit/' . $produitId);
 
   }
 

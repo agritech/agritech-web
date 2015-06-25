@@ -38,11 +38,11 @@ $(document).ready(function() {
         "ajax": "{{ URL::to('alerte/datatable/ajax') }}",
         "columns": [
             {"name": "Icone", "targets": 0, "searchable": false, "orderable": false, "width":"30px"},
-            {"name": "alerte.Titre", "targets": 1, "data": "Titre", "type": "text", className: "text-left", "width":"70%"},
-            {"name": "alerte.DateCreation", "targets": 2, "data": "DateCreation", "type": "date", className: "text-left", "width":"10%"},
-            {"name": "evenement.Nom", "targets": 3, "data": "EvenementNom", "type": "text", className: "text-left", "width":"10%"},
-            {"name": "utilisateur.nom", "targets": 4, "data": "InitiateurNom", "type": "text", className: "text-left", "width":"10%"},
-            {"name": "Action", "targets": 5, "searchable": false, "orderable": false, "width":"60px"}
+            {"name": "alerte.Titre", "targets": 1, "data": "Titre", "type": "text", className: "text-left", "width":"50%"},
+            {"name": "alerte.DateCreation", "targets": 2, "data": "DateCreation", "type": "date", className: "text-left"},
+            {"name": "evenement.Nom", "targets": 3, "data": "EvenementNom", "type": "text", className: "text-left"},
+            {"name": "utilisateur.nom", "targets": 4, "data": "InitiateurNom", "type": "text", className: "text-left"},
+            {"name": "Action", "targets": 5, "searchable": false, "orderable": false, "width":"100px"}
         ],
         "columnDefs": [
             {
@@ -57,6 +57,7 @@ $(document).ready(function() {
             {
                 "render": function ( data, type, row ) {
                     return  '<div class="pull-right">' +
+                                '<a href="' + baseUrl + '/alerte/' + row.AlerteID + '" class="btn btn-xs btn-success"> <i class="fa fa-search"></i></a> &nbsp;' +
                                 '<a href="' + baseUrl + '/alerte/' + row.AlerteID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
                                 '<form method="POST" action="'+baseUrl + '/alerte/' + row.AlerteID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="{{Session::token()}}"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
                             '</div>';

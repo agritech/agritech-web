@@ -12,7 +12,7 @@
 @extends('templates.normal')
 
 {{-- Page title --}}
-@section('title') Modifier un produit @stop
+@section('title') Consulter un produit - {{$produit->Ref . '/ ' . $produit->Nom}} @stop
 
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
@@ -45,7 +45,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Mise-à-jour des informations du produit </h1>
+            <h1 class="page-header">Produit :  {{$produit->Ref . '/ ' . $produit->Nom}}</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -67,19 +67,28 @@ $(document).ready(function() {
                                     </div>
                                 @endforeach
                             @endif
-                            {{ Form::model($produit, array('route' => array('admin.produit.update', $produit->ProduitID), 'method' => 'put', 'role' => 'form')) }}
-                                <div class="form-group @if($errors->first('Ref') != '') has-error @endif">
-                                    <label>Référence *</label>
-                                    {{ Form::text('Ref', Input::old('Ref'), array('class' => 'form-control', 'placeholder' => "Référence", 'id' => 'Ref') ) }}
-                                    {{ $errors->first('Ref', '<span class="error">:message</span>' ) }}
+                            {{ Form::model($produit, array('route' => array('produit.update', $produit->ProduitID), 'method' => 'put', 'role' => 'form', 'class' => 'form-horizontal')) }}
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Référence</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$produit->Ref}}</p>
+                                    </div>
                                 </div>
-                                <div class="form-group @if($errors->first('Nom') != '') has-error @endif">
-                                    <label>Nom *</label>
-                                    {{ Form::text('Nom', Input::old('Nom'), array('class' => 'form-control', 'placeholder' => "Nom", 'id' => 'Nom') ) }}
-                                    {{ $errors->first('Nom', '<span class="error">:message</span>' ) }}
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Nom</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$produit->Nom}}</p>
+                                    </div>
                                 </div>
-                                {{ Form::submit('Enregistrer', array('class'=>'btn btn-success')) }}
-                                {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Description</label>
+                                    <div class="col-lg-9">
+                                        <p class="form-control-static">{{$produit->Description}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-3 col-lg-9">
+                                    {{ link_to(URL::previous(), 'Annuler', ['class' => 'btn btn-default']) }}
+                                </div>
                             {{ Form::close() }}
                         </div>
                         <!-- /.col-lg-6 (nested) -->

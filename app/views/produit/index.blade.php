@@ -35,17 +35,18 @@ $(document).ready(function() {
         "dom": 'T<"clear">lfrtip',
         "processing": true,
         "serverSide": true,
-        "ajax": "{{ URL::to('admin/produit/datatable/ajax') }}",
+        "ajax": "{{ URL::to('produit/datatable/ajax') }}",
         "columns": [
-            {"name": "produit.Ref", "targets": 0, "data": "Ref", className: "text-left"},
-            {"name": "produit.Nom", "targets": 1, "data": "Nom", "type": "text", className: "text-left"}
+            {"name": "produit.Ref", "targets": 0, "data": "Ref", className: "text-left", width:'20%'},
+            {"name": "produit.Nom", "targets": 1, "data": "Nom", "type": "text", className: "text-left", width:'50%'}
         ],
         "columnDefs": [
             {
                 "render": function ( data, type, row ) {
                     return  '<div class="pull-right">' +
-                                '<a href="' + baseUrl + '/admin/produit/' + row.ProduitID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
-                                '<form method="POST" action="'+baseUrl + '/admin/produit/' + row.ProduitID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="VgCwyBAy8xM1DsqNDnyi5VBl8x1fUNixo4h3NCcY"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
+                                '<a href="' + baseUrl + '/produit/' + row.ProduitID + '" class="btn btn-xs btn-success"> <i class="fa fa-search"></i></a> &nbsp;' +
+                                '<a href="' + baseUrl + '/produit/' + row.ProduitID + '/edit" class="btn btn-xs btn-success"> <i class="fa fa-edit"></i></a> &nbsp;' +
+                                '<form method="POST" action="'+baseUrl + '/produit/' + row.ProduitID + '" accept-charset="UTF-8" class="pull-right"><input name="_token" type="hidden" value="{{Session::token()}}"><input name="_method" type="hidden" value="DELETE"><button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></form>'+
                             '</div>';
                 },
                 "type": "html",
@@ -70,7 +71,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Produits <a href="{{ URL::to('admin/produit/create') }}" class="btn btn-success pull-right">Ajouter un produit</a></h1>
+            <h1 class="page-header">Produits <a href="{{ URL::to('produit/create') }}" class="btn btn-success pull-right">Ajouter un produit</a></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>

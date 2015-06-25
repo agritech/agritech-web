@@ -17,7 +17,7 @@ class NegociationProductionTest extends TestCase {
     $this->assertResponseStatus(302);
   
     //Vérifier la redirection vers la vue
-    $this->assertRedirectedTo('negociationproduction');
+    $this->assertRedirectedTo('production/1');
     $this->assertSessionHas('success');
     
     //Vérifier que la réponse contient l'url  pour modification
@@ -30,14 +30,6 @@ class NegociationProductionTest extends TestCase {
 
     $negociationproductionId = $negociationproductionIdFinded[1][0];;
     
-    //vérifier que la liste contient la nouvelle entité
-    //http://symfony.com/doc/master/components/dom_crawler.html
-    $crawler = $this->client->request('GET', '/negociationproduction');
-    $this->assertTrue($this->client->getResponse()->isOk());
-    
-    $response = $this->call('GET', '/negociationproduction/datatable/ajax');
-    $this->assertResponseOk();
-    
     //modification des informations 
     $negociationproduction1 = array();
     $negociationproduction1['Prix'] = 100; //Prix proposé par l'acheteur
@@ -46,7 +38,7 @@ class NegociationProductionTest extends TestCase {
     $response = $this->call('POST', '/negociationproduction/1/update/' . $negociationproductionId, $negociationproduction1);
     $this->assertResponseStatus(302);
 
-    $this->assertRedirectedTo('negociationproduction');
+    $this->assertRedirectedTo('production/1');
     $this->assertSessionHas('success');
     
     //Vérifier que la réponse contient l'url  pour modification

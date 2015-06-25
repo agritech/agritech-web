@@ -7,11 +7,11 @@
       
       public function getEditUrlAttribute()
       {
-        return URL::to('admin/produit/' .  $this->attributes['ProduitID'] . '/edit');
+        return URL::to('produit/' .  $this->attributes['ProduitID'] . '/edit');
       }
 
       public function getDeleteUrlAttribute()
       {
-          return URL::to('admin/produit/' . $this->attributes['ProduitID'] );
+          return URL::to('produit/' . $this->attributes['ProduitID'] );
       }
     }   
