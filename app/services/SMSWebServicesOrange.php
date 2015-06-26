@@ -1,6 +1,6 @@
 <?php
 
-class SMSWebServicesNone {
+class SMSWebServicesOrange {
 	public $app;
 	
 	public function __construct($app)
