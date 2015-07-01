@@ -12,6 +12,33 @@ class CreateUsersRoleTable extends Migration {
 	 */
 	public function up()
 	{
+		
+		if(!Schema::hasTable('pays')){
+	      Schema::create('pays', function($table)
+	      {
+	        $table->increments('PaysID');
+	        $table->string('Ref');
+			$table->string('Nom');
+			$table->string('Description')->nullable();
+	      });
+		  
+	    }
+		
+		if(!Schema::hasTable('ville')){
+	      Schema::create('ville', function($table)
+	      {
+	        $table->increments('VilleID');
+	        $table->string('Ref');
+			$table->string('Nom');
+			$table->string('Description')->nullable();
+			$table->integer('PaysID')->unsigned();
+	      });
+		  
+		  Schema::table('ville', function($table){
+			$table->foreign('PaysID')->references('PaysID')->on('pays');
+		  });
+	    }
+		
 		if(!Schema::hasTable('utilisateur')){
           Schema::create('utilisateur', function($table)
           {
@@ -79,6 +106,8 @@ class CreateUsersRoleTable extends Migration {
 		Schema::dropIfExists('user_provider');
 		Schema::dropIfExists('roles');
 		Schema::dropIfExists('utilisateur');
+		Schema::dropIfExists('ville');
+		Schema::dropIfExists('pays');
 	}
 
 }

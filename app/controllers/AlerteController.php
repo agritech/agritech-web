@@ -167,6 +167,16 @@ class AlerteController extends \BaseController {
       Session::flash('success', "Alerte supprimée avec succès !");
       return Redirect::to('alerte');
     }
+    
+    public function send($id){
+        $alerte = Alerte::find($id);
+        
+        Queue::push('SendEmail', array('alerte' => $alerte));
+        
+        Session::flash('success', "<p>Votre alerte sera envoyée d'ici peu !</p>");
+        
+        return Redirect::to('alerte');
+    }
 
     private function objectsToArray($objs, $key, $val){
       $arr = array();

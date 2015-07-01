@@ -7,7 +7,7 @@ class ProductionSMSTest extends TestCase {
     $dataSubmission = array();
     $dataSubmission['sender'] = '22793339999'; // Envoye par la gateway en meme temps que le SMS
     $dataSubmission['sendtime'] = '2015-05-15'; // De meme
-    $dataSubmission['param'] = 'PAPAYE 500'; // Contenu du message incorrect
+    $dataSubmission['param'] = 'BLE 500'; // Contenu du message incorrect
     
     //Execution
     $this->call('GET', '/production/addsms/ajax', $dataSubmission);
@@ -22,7 +22,7 @@ class ProductionSMSTest extends TestCase {
     $dataSubmission = array();
     $dataSubmission['sender'] = '22793339999'; // Envoye par la gateway en meme temps que le SMS
     $dataSubmission['sendtime'] = '2015-05-15'; // De meme
-    $dataSubmission['param'] = 'E100 PAPAYE 500'; // Contenu du message incorrect
+    $dataSubmission['param'] = 'E100 BLE 500'; // Contenu du message incorrect
     
     //Création entité
     $response = $this->call('GET', '/production/addsms/ajax', $dataSubmission);
@@ -54,7 +54,7 @@ class ProductionSMSTest extends TestCase {
     $dataSubmission = array();
     $dataSubmission['sender'] = 'FAKE'; // Envoye par la gateway en meme temps que le SMS
     $dataSubmission['sendtime'] = '2015-05-15'; // De meme
-    $dataSubmission['param'] = 'E01 PAPAYE 500'; // Contenu du message incorrect
+    $dataSubmission['param'] = 'E01 BLE 500'; // Contenu du message incorrect
     
     //Création entité
     $response = $this->call('GET', '/production/addsms/ajax', $dataSubmission);
@@ -69,7 +69,7 @@ class ProductionSMSTest extends TestCase {
     $dataSubmission = array();
     $dataSubmission['sender'] = '22793339999'; // Envoye par la gateway en meme temps que le SMS
     $dataSubmission['sendtime'] = '2015-05-15'; // De meme
-    $dataSubmission['param'] = 'E01 PAPAYE 500,60'; // Contenu du message incorrect
+    $dataSubmission['param'] = 'E01 BLE 500,60'; // Contenu du message incorrect
     
     //Création entité
     $response = $this->call('GET', '/production/addsms/ajax', $dataSubmission);
@@ -85,12 +85,12 @@ class ProductionSMSTest extends TestCase {
     $dataSubmission = array();
     $dataSubmission['sender'] = '22793339999'; // Envoye par la gateway en meme temps que le SMS
     $dataSubmission['sendtime'] = '2015-05-15'; // De meme
-    $dataSubmission['param'] = 'E02 PAPAYE 500'; // Contenu du message
+    $dataSubmission['param'] = 'E02 BLE 500'; // Contenu du message
     
     //Création entité
     $response = $this->call('GET', '/production/addsms/ajax', $dataSubmission);
     
-    $this->assertEquals("Votre production de 500  du produit (Papaye) de votre exploitation (Exploitation 2 agri1) a bien été enregistrée. Merci !", $this->client->getResponse()->getContent());
+    $this->assertEquals("Votre production de 500  du produit (Blé) de votre exploitation (Exploitation 2 agri1) a bien été enregistrée. Merci !", $this->client->getResponse()->getContent());
     
     $this->assertResponseOk();
   }

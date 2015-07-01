@@ -54,7 +54,7 @@ $(document).ready(function() {
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Informations information sur la production
+                    COnsultation des informations sur la production
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">

@@ -200,6 +200,30 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
+                <li @if(Request::is('admin/ville') or Request::is('admin/ville/create') or Request::is('admin/ville/*/edit')) class="active" @endif>
+                    <a href="#"><i class="fa fa-university fa-fw"></i> Villes<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a @if(Request::is('admin/ville') or Request::is('admin/ville/*/edit')) class="active" @endif href="{{ URL::to('admin/ville') }}"><i class="fa fa-list fa-fw"></i> Liste des villes</a>
+                        </li>
+                        <li>
+                            <a @if(Request::is('admin/ville/create')) class="active" @endif href="{{ URL::to('admin/ville/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter une ville</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li @if(Request::is('admin/pays') or Request::is('admin/pays/create') or Request::is('admin/pays/*/edit')) class="active" @endif>
+                    <a href="#"><i class="fa fa-university fa-fw"></i> Pays<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a @if(Request::is('admin/pays') or Request::is('admin/pays/*/edit')) class="active" @endif href="{{ URL::to('admin/pays') }}"><i class="fa fa-list fa-fw"></i> Liste des pays</a>
+                        </li>
+                        <li>
+                            <a @if(Request::is('admin/pays/create')) class="active" @endif href="{{ URL::to('admin/pays/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter un pays</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
                 <li @if(Request::is('admin/settings')) class="active" @endif>
                     <a @if(Request::is('admin/settings')) class="active" @endif href="{{ URL::to('admin/settings') }}"><i class="fa fa-wrench fa-fw"></i> Paramètres </a>
                 </li>

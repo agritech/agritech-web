@@ -9,7 +9,8 @@
 		"phpunit/phpunit": "4.0.*",
 		"playsms/webservices": "1.0.*",
 		"predis/predis": "0.8.7",
-		"madewithlove/laravel-oauth2": "0.4.*"
+		"madewithlove/laravel-oauth2": "0.4.*",
+		"guzzlehttp/guzzle": "~5.0"
 		
 	},
 	"autoload": {

@@ -40,7 +40,7 @@ $(document).ready(function() {
     function repoAgriculteurFormatResult(repo) {
       repo.id = repo.UtilisateurID;
       var markup = '<div class="row">' +
-           '<div class="col-lg-6"><i class="fa fa-user"></i> Login : ' + repo.nom + '</div>' +
+           '<div class="col-lg-6"><i class="fa fa-user"></i> Nom : ' + repo.nom + '</div>' +
            '<div class="col-lg-6">Prénom : ' + repo.prenom + '</div>' +
         '</div>';
 

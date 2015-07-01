@@ -60,6 +60,7 @@ Route::group(array('prefix','/'), function() {
   	  Route::resource('alerte', 'AlerteController');
   	  Route::get('alerte/datatable/ajax', 'AlerteController@datatable');
       Route::get('alerte/addsms/ajax', 'AlerteController@storeSMS');
+      Route::get('alerte/{id}/send', 'AlerteController@send');
       
       // Admin
       Route::resource('admin/user', 'UserController');
@@ -69,6 +70,14 @@ Route::group(array('prefix','/'), function() {
       Route::resource('admin/role', 'RoleController');
       
       Route::resource('admin/settings', 'SettingsController');
+      
+      Route::resource('admin/ville', 'VilleController');
+      Route::get('ville/datatable/ajax', 'VilleController@datatable');
+	    Route::get('ville/select2/ajax/{paysID}', 'VilleController@select2');
+       
+      Route::resource('admin/pays', 'PaysController');
+      Route::get('pays/datatable/ajax', 'PaysController@datatable');
+	    Route::get('pays/select2/ajax', 'PaysController@select2');
       
       // Cultures 
       Route::resource('cultures', 'CultureController@index');

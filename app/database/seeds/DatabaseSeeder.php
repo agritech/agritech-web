@@ -21,26 +21,42 @@ class TestDataSeeder extends Seeder {
 
     public function run()
     {
-        TestDataSeeder::create_user_role();
+        $this->create_pays();
         
-        TestDataSeeder::create_ville();
+        $this->create_ville();
         
-        TestDataSeeder::create_campagne_agricole();
+        $this->create_user_role();
         
-        TestDataSeeder::create_produit();
+        $this->create_campagne_agricole();
         
-        TestDataSeeder::create_exploitation();
+        $this->create_produit();
+        
+        $this->create_exploitation();
        
-        TestDataSeeder::create_production();
+        $this->create_production();
         
-		TestDataSeeder::create_evenement();
+		$this->create_evenement();
 		
-		TestDataSeeder::create_alerte();
+		$this->create_alerte();
 		
-        TestDataSeeder::create_db_log();
+        $this->create_db_log();
     }
 
-    public static function create_user_role() {
+    public function create_pays(){
+        Pays::create(array('Ref' => 'NG', 'Nom' => 'Niger'));
+        Pays::create(array('Ref' => 'CAM', 'Nom' => 'Cameroun'));
+    }
+    
+    public function create_ville(){
+        $cameroun = Pays::where('Nom', 'Cameroun')->firstOrFail();
+        $niger = Pays::where('Nom', 'Niger')->firstOrFail();
+        
+        Ville::create(array('Ref' => 'V01', 'Nom' => 'Niamey', 'PaysID' => $niger->PaysID));
+        Ville::create(array('Ref' => 'V02', 'Nom' => 'Bandjoun', 'PaysID' => $cameroun->PaysID));
+        
+    }
+    
+    public function create_user_role() {
         
         User::create(array('Mail' => 'admin@agritech.com', 'Username' => 'admin', 'password' => Hash::make('admin'), 'nom' => 'Admin', 'prenom' => 'Utilisateur', 'telephone' => '', 'isadmin' => 1));
         User::create(array('Mail' => 'agri1@agritech.com', 'Username' => 'agri1', 'password' => Hash::make('agri1'), 'nom' => 'agri1', 'prenom' => 'agri1', 'telephone' => '22793339999', 'isadmin' => 0, 'pays' => 'Niger', 'ville' => 'Dosso'));
@@ -68,37 +84,29 @@ class TestDataSeeder extends Seeder {
         
     }
     
-    public static function create_ville(){
-        //ville
-        Ville::create(array('Ref' => 'V01', 'Nom' => 'Niamey'));
-        Ville::create(array('Ref' => 'V01', 'Nom' => 'Rabat'));
-        Ville::create(array('Ref' => 'V01', 'Nom' => 'Bandjoun'));
-        
-    }
-    
-    public static function create_campagne_agricole(){
+    public function create_campagne_agricole(){
         //Charger les campagnes agricoles
         CampagneAgricole::create(array('Ref' => 'C01', 'Nom' => 'Campagne Agricole 2014', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
         CampagneAgricole::create(array('Ref' => 'C02', 'Nom' => 'Campagne Agricole 2015', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
         
     }
     
-    public static function create_produit(){
+    public function create_produit(){
         // Charger les produits
-        Produit::create(array('Ref' => 'PAPAYE', 'Nom' => 'Papaye', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
-        Produit::create(array('Ref' => 'MANGUE', 'Nom' => 'Mangue', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        Produit::create(array('Ref' => 'GOMBO', 'Nom' => 'Gombo', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
+        Produit::create(array('Ref' => 'BLE', 'Nom' => 'Blé', 'created_at'=>date('Y-m-d H:m:s'),'updated_at'=>date('Y-m-d H:m:s')));
         
     }
     
-    public static function create_exploitation(){
+    public function create_exploitation(){
         $admin = User::where('Username', 'admin')->firstOrFail();
         $part1 = User::where('Username', 'part1')->firstOrFail();
         $agri1 = User::where('Username', 'agri1')->firstOrFail();
         $agri2 = User::where('Username', 'agri2')->firstOrFail();
         $achat1 = User::where('Username', 'achat1')->firstOrFail();
         
-        $mangue = Produit::where('Ref', 'MANGUE')->firstOrFail();
-        $papaye = Produit::where('Ref', 'PAPAYE')->firstOrFail();
+        $ble = Produit::where('Nom', 'Blé')->firstOrFail();
+        $gombo = Produit::where('Nom', 'Gombo')->firstOrFail();
         
         $niamey = Ville::where('Ref', 'V01')->firstOrFail();
         
@@ -110,11 +118,11 @@ class TestDataSeeder extends Seeder {
         $exploitation2 = Exploitation::where('Ref', 'E02')->firstOrFail();
         
         //Exploitation produit
-        ExploitationProduit::create(array('ProduitID' => $mangue->ProduitID, 'ExploitationID' => $exploitation1->ExploitationID));
-        ExploitationProduit::create(array('ProduitID' => $papaye->ProduitID, 'ExploitationID' => $exploitation2->ExploitationID));        
+        ExploitationProduit::create(array('ProduitID' => $gombo->ProduitID, 'ExploitationID' => $exploitation1->ExploitationID));
+        ExploitationProduit::create(array('ProduitID' => $ble->ProduitID, 'ExploitationID' => $exploitation2->ExploitationID));        
     }
     
-    public static function create_production(){
+    public function create_production(){
         $admin = User::where('Username', 'admin')->firstOrFail();
         $part1 = User::where('Username', 'part1')->firstOrFail();
         $agri1 = User::where('Username', 'agri1')->firstOrFail();
@@ -123,8 +131,8 @@ class TestDataSeeder extends Seeder {
         
         $campagne2015 = CampagneAgricole::where('Ref', 'C02')->firstOrFail();
         
-        $mangue = Produit::where('Ref', 'MANGUE')->firstOrFail();
-        $papaye = Produit::where('Ref', 'PAPAYE')->firstOrFail();
+        $gombo = Produit::where('Nom', 'Gombo')->firstOrFail();
+        $ble = Produit::where('Nom', 'Blé')->firstOrFail();
         
         $exploitation1 = Exploitation::where('Ref', 'E01')->firstOrFail();
         $exploitation2 = Exploitation::where('Ref', 'E02')->firstOrFail();
@@ -132,7 +140,7 @@ class TestDataSeeder extends Seeder {
         //Charger les productions pour les produit
         $production = new Production();
         $production->Poids = 10;
-        $production->ProduitID = $mangue->ProduitID;
+        $production->ProduitID = $gombo->ProduitID;
         $production->AgriculteurID = $agri1->UtilisateurID;
         $production->DateSoumission = '2015-10-10';
         $production->StatutSoumission = 'VALIDE';
@@ -153,7 +161,7 @@ class TestDataSeeder extends Seeder {
 
     }
     
-    public static function create_evenement(){
+    public function create_evenement(){
         // Charger les evenements
 		Evenement::create(array('Nom' => 'Meteo', 'Description' => 'Evenement meteorologique (tempête, pluie, vent, sècheresse...)'));
 		Evenement::create(array('Nom' => 'Travaux', 'Description' => 'Travaux de chantiers...'));
@@ -163,7 +171,7 @@ class TestDataSeeder extends Seeder {
 		
     }
     
-    public static function create_alerte(){
+    public function create_alerte(){
         $admin = User::where('Username', 'admin')->firstOrFail();
         $part1 = User::where('Username', 'part1')->firstOrFail();
         $agri1 = User::where('Username', 'agri1')->firstOrFail();
@@ -188,7 +196,7 @@ class TestDataSeeder extends Seeder {
 		
     }
     
-    public static function create_db_log(){
+    public function create_db_log(){
         // Charger les logs
         $log = new DBLog();
         $log->log_type = 'USER_LIST';
