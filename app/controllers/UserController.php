@@ -95,7 +95,8 @@ class UserController extends \BaseController {
             'PRODUCTIOn' => 'Gestion des production',
             'AGRICULTEUR' => 'Agriculteur',
             'ACHETEUR' => 'Acheteur',
-            'PARTENAIRE' => 'Partenaire');
+            'PARTENAIRE' => 'Partenaire',
+            'EXPLOITATION' => 'Exploitation');
 
         $user = User::find($id);
 

@@ -207,6 +207,9 @@
                             <a @if(Request::is('admin/ville') or Request::is('admin/ville/*/edit')) class="active" @endif href="{{ URL::to('admin/ville') }}"><i class="fa fa-list fa-fw"></i> Liste des villes</a>
                         </li>
                         <li>
+                            <a @if(Request::is('admin/ville/import/wikipedia')) class="active" @endif href="{{ URL::to('admin/ville/import/wikipedia') }}"><i class="fa fa-download fa-fw"></i> Importer depuis wikipédia</a>
+                        </li>
+                        <li>
                             <a @if(Request::is('admin/ville/create')) class="active" @endif href="{{ URL::to('admin/ville/create') }}"><i class="fa fa-plus fa-fw"></i> Ajouter une ville</a>
                         </li>
                     </ul>

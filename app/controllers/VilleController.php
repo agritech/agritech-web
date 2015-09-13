@@ -196,6 +196,26 @@ class VilleController extends \BaseController {
       Session::flash('success', "Ville supprimée avec succès !");
       return Redirect::to('admin/ville');
     }
+    
+    public function importWikipedia(){
+      //Avoir la liste des pays dans la page wikipedia pour lesquels on va importer les villes
+      $client = new GuzzleHttp\Client(['base_url' => 'https://fr.wikipedia.org']);
+      $response = $client->get('/wiki/Listes_des_villes_du_monde', ['future' => true]);
+      $response->then(
+        function ($response) {
+          echo $response->getStatusCode();
+          if ($body = $response->getBody()) {
+            $crawler = new Crawler($body);
+          }
+        },
+        function ($error) {
+          echo 'Exception: ' . $error->getMessage();
+          throw $error;
+        }
+      );
+      
+      return View::make('admin.ville.importwikipedia');
+    }
 
     private function objectsToArray($objs, $key, $val){
       $arr = array();

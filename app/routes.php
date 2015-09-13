@@ -74,6 +74,7 @@ Route::group(array('prefix','/'), function() {
       Route::resource('admin/ville', 'VilleController');
       Route::get('ville/datatable/ajax', 'VilleController@datatable');
 	    Route::get('ville/select2/ajax/{paysID}', 'VilleController@select2');
+      Route::get('admin/ville/import/wikipedia', 'VilleController@importWikipedia');
        
       Route::resource('admin/pays', 'PaysController');
       Route::get('pays/datatable/ajax', 'PaysController@datatable');

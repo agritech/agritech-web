@@ -12,7 +12,7 @@
 @extends('templates.normal')
 
 {{-- Page title --}}
-@section('title') Liste des villes @stop
+@section('title') Liste des villes importées depuis Wikipedia @stop
 
 {{-- Page specific CSS files --}}
 {{-- {{ HTML::style('--Path to css--') }} --}}
@@ -72,11 +72,7 @@ $(document).ready(function() {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
-                Villes 
-                <a href="{{ URL::to('admin/ville/create') }}" class="btn btn-success pull-right">Ajouter une ville</a>
-                <a href="{{ URL::to('admin/ville/import/wikipedia') }}" class="btn btn-success pull-right">Importer depuis Wikipédia</a>
-            </h1>
+            <h1 class="page-header">Villes importées depuis Wikipedia <a href="{{ URL::to('admin/ville/import/merge') }}" class="btn btn-success pull-right">Merger les villes importées</a></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
