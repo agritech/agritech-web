@@ -3,7 +3,7 @@
 	<head>
 		<title>Agritech</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="AGRITECH, plateforme de marché d'échange entre les agriculteurs, les acheteurs et les povoirs publiques'">
+		<meta name="description" content="AGRITECH, plateforme de marché d'échange entre les agriculteurs, les acheteurs et les pouvoirs publiques'">
     	<meta name="keywords" content="AGRITECH, technique, achat, vente, produits, production, agriculture, acheteurs, pourvoir publiques, météo, Niger, Afrique">
 		<meta name="author" content="Lim Consulting, IsofLab">
 		<!--[if lte IE 8]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><![endif]-->
