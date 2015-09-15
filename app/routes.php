@@ -25,10 +25,12 @@ Route::group(array('prefix','/'), function() {
   Route::get('register', 'RegisterController@create');
   Route::post('register', 'RegisterController@store');
   
+  Route::get('', 'PublicController@showPublic');
+  
   // Secure-Routes
   Route::group(array('before' => array('auth')), function()
   {
-      Route::get('', 'DashboardController@showDashboard');
+      Route::get('dashboard', 'DashboardController@showDashboard');
       
       Route::get('report/users', 'ReportController@showUsersDashboard');
       Route::get('jsonp', 'ReportController@jsonp');
