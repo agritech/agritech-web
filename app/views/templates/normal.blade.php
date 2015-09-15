@@ -51,8 +51,8 @@
     @yield('css')
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="icon" href="/v2/public/favicon.ico">
+    <link rel="apple-touch-icon" href="{{ URL::to('/') }}/assets/images/favicons/apple-icon.png">
+    <link rel="icon" href="{{ URL::to('/') }}/assets/images/favicons/favicon.ico">
 </head>
 
 <body>

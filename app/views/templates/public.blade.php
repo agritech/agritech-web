@@ -5,6 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="AGRITECH, plateforme de marché d'échange entre les agriculteurs, les acheteurs et les povoirs publiques'">
     	<meta name="keywords" content="AGRITECH, technique, achat, vente, produits, production, agriculture, acheteurs, pourvoir publiques, météo, Niger, Afrique">
+		<meta name="author" content="Lim Consulting, IsofLab">
 		<!--[if lte IE 8]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><![endif]-->
 		{{ HTML::script('assets/templated-spatial/js/jquery.min.js') }}
 		{{ HTML::script('assets/templated-spatial/js/skel.min.js') }}
@@ -15,6 +16,9 @@
 			{{ HTML::style('assets/templated-spatial/css/style.css') }}
 			{{ HTML::style('assets/templated-spatial/css/style-xlarge.css') }}
 		</noscript>
+		
+		<link rel="apple-touch-icon" href="{{ URL::to('/') }}/assets/images/favicons/apple-icon.png">
+    	<link rel="icon" href="{{ URL::to('/') }}/assets/images/favicons/favicon.ico">
 	</head>
 	<body class="landing">
 		<!-- Header -->
