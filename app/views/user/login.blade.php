@@ -35,11 +35,10 @@
             <div class="jumbotron" >
                 <h1 class="text-center" style="margin-top: 10%">AGRITECH</h1>
                 <div class="row">
-                    <div class="col-md-6">
-                        <img src="{{ URL::to('/') }}/assets/images/agritech-logo.png" class="img-responsive" alt="AGRITECH" />
-                    </div>
-                    <div class="col-md-6">
-                        <img src="{{ URL::to('/') }}/assets/images/cipmen.png" class="img-responsive" alt="Logo Organisateur du Hackathon" />
+                    <div class="col-md-12 text-center">
+                        <a href="{{ URL::to('/') }}">
+                            <img src="{{ URL::to('/') }}/assets/images/agritech-logo.png" alt="AGRITECH" />
+                        </a>
                     </div>
                 </div>
                 <p class="lead text-center">Plateforme d'échange entre les agriculteurs, les acheteurs et les pouvoirs publiques</p>
