@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{ URL::to('/') }}"> AGRITECH (béta)</a>
+        <a class="navbar-brand" href="{{ URL::to('/dashboard') }}"> AGRITECH (béta)</a>
     </div>
     <!-- /.navbar-header -->
 
@@ -106,7 +106,7 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
-                    <a @if(Request::is('/')) class="active" @endif href="{{ URL::to('') }}"><i class="fa fa-dashboard fa-fw"></i> Tableau de bord</a>
+                    <a @if(Request::is('/')) class="active" @endif href="{{ URL::to('/dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Tableau de bord</a>
                 </li>
                 @if(Auth::user()->hasRole('ALERT'))
                 <li @if(Request::is('alerte') or Request::is('alerte/create') or Request::is('alerte/*/edit')) class="active" @endif>

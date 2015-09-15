@@ -175,7 +175,7 @@ class UserController extends \BaseController {
                 $user->login_date = $loginDate->toDateTimeString();
                 $user->save();
                 //Rediriger vers l'accueil
-                return \Redirect::to('');
+                return \Redirect::to('/dashboard');
             } else {
                 return \Redirect::to(\Request::url())
                                 ->withErrors($add)

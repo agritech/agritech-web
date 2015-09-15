@@ -18,7 +18,7 @@ class OAuthController extends \BaseController {
 	
     public function login($providerKey){
         if(!in_array($providerKey, array('google', 'facebook'))){
-            return Redirect::to('');
+            return Redirect::to('/login');
         }
         
         $provider = OAuth2::provider($providerKey, array(
@@ -67,7 +67,7 @@ class OAuthController extends \BaseController {
             }
         }
         
-        return Redirect::to('');
+        return Redirect::to('/dashboard');
     }
 	
 }
