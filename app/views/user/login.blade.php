@@ -100,10 +100,10 @@
                                     <a class="btn btn-danger btn-lg btn-block" href="{{URL::to('register')}}" role="button">Créer un compte (agriculteur)</a>
                                 </td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td style="vertical-align: middle;"><a href="{{URL::to('oauth/provider/facebook')}}"><i class="fa fa-facebook-official fa-2x"></i></a></td>
                                 <td style="vertical-align: middle;"><a href="{{URL::to('oauth/provider/facebook')}}">Facebook</a></td>
-                            </tr>
+                            </tr>-->
                             <tr>
                                 <td style="vertical-align: middle;"><a href="{{URL::to('oauth/provider/google')}}"><i class="fa fa-google-plus fa-2x"></i></a></td>
                                 <td style="vertical-align: middle;"><a href="{{URL::to('oauth/provider/google')}}">Google</a></td>
